@@ -1,0 +1,22 @@
+body {
+  background-color: #f4f7fb;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+}
+
+header h1 {
+  font-weight: 700;
+}
+
+#reservationMessage,
+#invoiceBox,
+#loginMessage,
+#serviceMessage,
+#adminLoginMessage,
+#dayRequestsBox,
+#planActivityMessage {
+  min-height: 40px;
+}

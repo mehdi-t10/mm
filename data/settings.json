@@ -1,0 +1,38 @@
+{
+  "site_name": "FootCamp Dreams",
+  "price_per_night": 45,
+  "deposit_default": 80,
+  "discounts": [10, 20, 50],
+  "activities_catalog": [
+    {
+      "name": "Entrainement collectif",
+      "price": 12
+    },
+    {
+      "name": "Match amical",
+      "price": 18
+    },
+    {
+      "name": "Atelier tirs au but",
+      "price": 8
+    },
+    {
+      "name": "Analyse video",
+      "price": 10
+    }
+  ],
+  "services_catalog": [
+    {
+      "name": "Repas VIP",
+      "price": 25
+    },
+    {
+      "name": "Maillot personnalise",
+      "price": 30
+    },
+    {
+      "name": "Transport stade",
+      "price": 15
+    }
+  ]
+}

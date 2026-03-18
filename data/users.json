@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "nom": "Demo",
+        "prenom": "Lea",
+        "email": "demo@footcamp.test",
+        "password": "demo2026",
+        "role": "client"
+    },
+    {
+        "id": 2,
+        "nom": "Admin",
+        "prenom": "Super",
+        "email": "admin@footcamp.test",
+        "password": "admin2026",
+        "role": "admin"
+    },
+    {
+        "id": 3,
+        "nom": "MRABEUT",
+        "prenom": "Mehdi",
+        "email": "mrabeutm@gmail.com",
+        "password": "mehdi2026",
+        "role": "client"
+    }
+]

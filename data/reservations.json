@@ -1,0 +1,39 @@
+[
+    {
+        "id": 1,
+        "nom": "MRABEUT",
+        "prenom": "Mehdi",
+        "email": "mrabeutm@gmail.com",
+        "telephone": "0749339015",
+        "date_arrivee": "2026-05-12",
+        "date_depart": "2026-02-20",
+        "nb_personnes": 2,
+        "activities": [
+            "Entrainement collectif",
+            "Match amical"
+        ],
+        "services": [],
+        "discount_percent": 0,
+        "deposit": 80,
+        "status": "validee",
+        "room": "Chambre A"
+    },
+    {
+        "id": 2,
+        "nom": "iloniavo",
+        "prenom": "rand",
+        "email": "dfljkfhkljhf@gmail.com",
+        "telephone": "07465984358",
+        "date_arrivee": "2026-03-26",
+        "date_depart": "2026-03-28",
+        "nb_personnes": 2,
+        "activities": [
+            "Match amical"
+        ],
+        "services": [],
+        "discount_percent": 0,
+        "deposit": 80,
+        "status": "en_attente",
+        "room": ""
+    }
+]

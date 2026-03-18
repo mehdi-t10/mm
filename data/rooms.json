@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "Chambre A",
+        "capacity": 4,
+        "occupied": 1
+    },
+    {
+        "id": 2,
+        "name": "Chambre B",
+        "capacity": 4,
+        "occupied": 0
+    },
+    {
+        "id": 3,
+        "name": "Chambre C",
+        "capacity": 2,
+        "occupied": 0
+    }
+]
