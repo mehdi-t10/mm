@@ -35,5 +35,41 @@
         "deposit": 80,
         "status": "en_attente",
         "room": ""
+    },
+    {
+        "id": 3,
+        "nom": "Test",
+        "prenom": "test",
+        "email": "test@gmail.com",
+        "telephone": "0705020306",
+        "date_arrivee": "2026-03-18",
+        "date_depart": "2026-03-17",
+        "nb_personnes": 6,
+        "activities": [
+            "Analyse video"
+        ],
+        "services": [],
+        "discount_percent": 0,
+        "deposit": 80,
+        "status": "en_attente",
+        "room": ""
+    },
+    {
+        "id": 4,
+        "nom": "Test",
+        "prenom": "test",
+        "email": "test@gmail.com",
+        "telephone": "0705020306",
+        "date_arrivee": "2026-03-18",
+        "date_depart": "2026-03-19",
+        "nb_personnes": 10,
+        "activities": [
+            "Atelier tirs au but"
+        ],
+        "services": [],
+        "discount_percent": 0,
+        "deposit": 80,
+        "status": "en_attente",
+        "room": ""
     }
 ]
