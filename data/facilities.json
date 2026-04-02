@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Stade Principal",
+        "type": "Terrain 11v11",
+        "capacity": 22,
+        "price_per_hour": 150,
+        "features": ["Gazon naturel", "Éclairage", "Tribunes"]
+    },
+    {
+        "id": 2,
+        "name": "Terrain Secondaire",
+        "type": "Terrain 7v7",
+        "capacity": 14,
+        "price_per_hour": 80,
+        "features": ["Gazon synthétique", "Éclairage"]
+    },
+    {
+        "id": 3,
+        "name": "Petit Terrain",
+        "type": "Terrain 5v5",
+        "capacity": 10,
+        "price_per_hour": 45,
+        "features": ["Gazon synthétique"]
+    }
+]

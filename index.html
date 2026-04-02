@@ -358,21 +358,33 @@
           </div>
           <div>
             <label style="display: block; margin-bottom: 8px; font-weight: 600;">Date d'arrivée *</label>
-            <input type="date" min="2026-04-02" required style="width: 100%; padding: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;">
+            <input type="date" min="2026-04-02" onchange="loadRoomsForReservation()" required style="width: 100%; padding: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;">
           </div>
           <div>
             <label style="display: block; margin-bottom: 8px; font-weight: 600;">Date de départ *</label>
-            <input type="date" min="2026-04-03" required style="width: 100%; padding: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;">
+            <input type="date" min="2026-04-03" onchange="loadRoomsForReservation()" required style="width: 100%; padding: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;">
           </div>
           <div>
             <label style="display: block; margin-bottom: 8px; font-weight: 600;">Nombre de personnes *</label>
-            <input type="number" min="1" required style="width: 100%; padding: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;">
+            <input type="number" min="1" onchange="loadRoomsForReservation()" required style="width: 100%; padding: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif;">
           </div>
         </div>
 
         <div style="margin-bottom: 20px;">
           <label style="display: block; margin-bottom: 12px; font-weight: 600;">Activités (optionnel)</label>
           <div id="activitiesReservation" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
+        </div>
+
+        <!-- FACILITIES SECTION -->
+        <div id="facilitiesSection" style="margin-bottom: 20px; display: none;">
+          <label style="display: block; margin-bottom: 12px; font-weight: 600; color: var(--green);">🏟️ Stades/Terrains Disponibles</label>
+          <div id="facilitiesContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px; background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 12px;"></div>
+        </div>
+
+        <!-- ROOMS SECTION -->
+        <div id="roomsSection" style="margin-bottom: 20px; display: none;">
+          <label style="display: block; margin-bottom: 12px; font-weight: 600; color: var(--green);">🛏️ Chambres Disponibles</label>
+          <div id="roomsContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px; background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 12px;"></div>
         </div>
 
         <button type="submit" style="width: 100%; padding: 14px; background: linear-gradient(135deg, var(--green), #00c853); color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s;">🚀 SOUMETTRE MA RÉSERVATION</button>
@@ -429,6 +441,7 @@
         <div style="text-align: center; margin-bottom: 20px;">
           <span style="font-weight: 600; color: var(--gold);">Connexion Admin</span>
         </div>
+        <div class="tabs-container">
           <button class="tab-button active" onclick="switchTab(event, 'admin-login')">Connexion</button>
           <button class="tab-button" onclick="switchTab(event, 'admin-register')">Créer un compte</button>
         </div>
@@ -686,10 +699,18 @@
               cursor: pointer;
               transition: all 0.2s;
             `;
-            label.innerHTML = `
-              <input type="checkbox" value="${activity.id}" style="margin-right: 10px; cursor: pointer;">
-              <span style="flex: 1;">${activity.icon} ${activity.name} - ${activity.price}€</span>
-            `;
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = activity.id;
+            checkbox.style.cssText = 'margin-right: 10px; cursor: pointer;';
+            checkbox.onchange = loadFacilitiesForReservation;
+            
+            const span = document.createElement('span');
+            span.style.cssText = 'flex: 1;';
+            span.textContent = `${activity.icon} ${activity.name} - ${activity.price}€`;
+            
+            label.appendChild(checkbox);
+            label.appendChild(span);
             label.onmouseover = () => label.style.background = 'rgba(0,230,118,0.1)';
             label.onmouseout = () => label.style.background = 'rgba(255,255,255,0.03)';
             container.appendChild(label);
@@ -697,6 +718,191 @@
         },
         error: function() {
           console.error('Erreur chargement activités');
+        }
+      });
+    }
+
+    function loadFacilitiesForReservation() {
+      const checkboxes = document.querySelectorAll('#activitiesReservation input[type="checkbox"]:checked');
+      const activityIds = Array.from(checkboxes).map(cb => cb.value).join(',');
+      
+      const facilitiesSection = document.getElementById('facilitiesSection');
+      const facilitiesContainer = document.getElementById('facilitiesContainer');
+      
+      if (!activityIds) {
+        facilitiesSection.style.display = 'none';
+        loadRoomsForReservation(); // Still load rooms
+        return;
+      }
+      
+      $.ajax({
+        url: 'api/get_facilities_for_activities.php?activities=' + activityIds,
+        type: 'GET',
+        dataType: 'json',
+        success: function(resp) {
+          if (resp.success && resp.facilities && resp.facilities.length > 0) {
+            facilitiesContainer.innerHTML = '';
+            resp.facilities.forEach(facility => {
+              const card = document.createElement('div');
+              card.style.cssText = `
+                padding: 12px;
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(0,230,118,0.3);
+                border-radius: 8px;
+                transition: all 0.2s;
+              `;
+              card.innerHTML = `
+                <div style="font-weight: 600; color: var(--green);">${facility.name}</div>
+                <div style="font-size: 0.85rem; color: var(--muted); margin: 4px 0;">${facility.type}</div>
+                <div style="font-size: 0.8rem; color: var(--muted);">👥 ${facility.capacity} pers. | 💰 ${facility.price_per_hour}€/h</div>
+                <div style="font-size: 0.75rem; color: var(--muted); margin-top: 6px;">${facility.features.join(' • ')}</div>
+              `;
+              card.onmouseover = () => card.style.background = 'rgba(0,230,118,0.15)';
+              card.onmouseout = () => card.style.background = 'rgba(255,255,255,0.05)';
+              facilitiesContainer.appendChild(card);
+            });
+            facilitiesSection.style.display = 'block';
+          } else {
+            facilitiesSection.style.display = 'none';
+          }
+          loadRoomsForReservation(); // Load rooms after facilities
+        },
+        error: function() {
+          facilitiesSection.style.display = 'none';
+          loadRoomsForReservation();
+        }
+      });
+    }
+
+    function loadRoomsForReservation() {
+      const roomsSection = document.getElementById('roomsSection');
+      const roomsContainer = document.getElementById('roomsContainer');
+      
+      // Récupérer les valeurs du formulaire
+      const arrivalVal = document.querySelector('input[type="date"]:nth-of-type(5)').value;
+      const departureVal = document.querySelector('input[type="date"]:nth-of-type(6)').value;
+      const nbPersonnes = parseInt(document.querySelector('input[type="number"]').value || 1);
+      
+      if (!arrivalVal || !departureVal) {
+        roomsSection.style.display = 'none';
+        return;
+      }
+      
+      // Calculer nombre de nuits
+      const arrival = new Date(arrivalVal);
+      const departure = new Date(departureVal);
+      const nights = Math.ceil((departure - arrival) / (1000 * 60 * 60 * 24));
+      
+      $.ajax({
+        url: 'data/rooms.json',
+        type: 'GET',
+        dataType: 'json',
+        success: function(rooms) {
+          if (!rooms || rooms.length === 0) {
+            roomsSection.style.display = 'none';
+            return;
+          }
+          
+          roomsContainer.innerHTML = '';
+          let foundRooms = false;
+          
+          // Trier par disponibilité
+          const sortedRooms = rooms.slice().sort((a, b) => {
+            const aAvail = a.capacity - a.occupied;
+            const bAvail = b.capacity - b.occupied;
+            return bAvail - aAvail;
+          });
+          
+          sortedRooms.forEach(room => {
+            if (room.capacity >= nbPersonnes) {
+              foundRooms = true;
+              const card = document.createElement('div');
+              const available = (room.capacity - room.occupied) > 0;
+              const availableCount = room.capacity - room.occupied;
+              const occupancyPercent = Math.round((room.occupied / room.capacity) * 100);
+              const totalPrice = room.price_per_night * nights;
+              
+              card.style.cssText = `
+                padding: 16px;
+                background: ${available ? 'linear-gradient(135deg, rgba(0,230,118,0.1), rgba(0,230,118,0.05))' : 'linear-gradient(135deg, rgba(255,0,0,0.1), rgba(255,0,0,0.05))'};
+                border: 2px solid ${available ? 'rgba(0,230,118,0.4)' : 'rgba(255,0,0,0.4)'};
+                border-radius: 12px;
+                transition: all 0.3s;
+                cursor: ${available ? 'pointer' : 'not-allowed'};
+                opacity: ${available ? 1 : 0.65};
+              `;
+              
+              card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                  <div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--green);">${room.name}</div>
+                    <div style="font-size: 0.85rem; color: var(--muted); margin-top: 4px;">
+                      👥 ${room.capacity} places | 💤 ${nights} nuit${nights > 1 ? 's' : ''}
+                    </div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="color: #ffd740; font-weight: 700; font-size: 1.3rem;">${totalPrice}€</div>
+                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">${room.price_per_night}€/nuit</div>
+                  </div>
+                </div>
+                
+                <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                  <div style="flex: 1;">
+                    <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 6px;">Occupation</div>
+                    <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                      <div style="width: ${occupancyPercent}%; height: 100%; background: ${occupancyPercent > 75 ? '#ff6b6b' : 'var(--green)'}; transition: width 0.3s;"></div>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;"><strong>${occupancyPercent}%</strong> (${room.occupied}/${room.capacity})</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 6px;">Dispo</div>
+                    <div style="font-weight: 700; font-size: 1.2rem; color: ${available ? 'var(--green)' : '#ff6b6b'};">${availableCount}</div>
+                    <div style="font-size: 0.75rem; color: var(--muted);">place${availableCount !== 1 ? 's' : ''}</div>
+                  </div>
+                </div>
+                
+                <div style="display: flex; gap: 8px;">
+                  ${available ? `
+                    <div style="flex: 1; padding: 8px; background: var(--green)20; border: 1px solid var(--green); border-radius: 6px; text-align: center; color: var(--green); font-weight: 600; font-size: 0.85rem;">
+                      ✅ Disponible
+                    </div>
+                  ` : `
+                    <div style="flex: 1; padding: 8px; background: #ff6b6b20; border: 1px solid #ff6b6b; border-radius: 6px; text-align: center; color: #ff6b6b; font-weight: 600; font-size: 0.85rem;">
+                      ❌ Complet
+                    </div>
+                  `}
+                </div>
+              `;
+              
+              if (available) {
+                card.onmouseover = () => {
+                  card.style.background = 'linear-gradient(135deg, rgba(0,230,118,0.15), rgba(0,230,118,0.1))';
+                  card.style.transform = 'translateY(-2px)';
+                };
+                card.onmouseout = () => {
+                  card.style.background = 'linear-gradient(135deg, rgba(0,230,118,0.1), rgba(0,230,118,0.05))';
+                  card.style.transform = 'translateY(0)';
+                };
+              }
+              
+              roomsContainer.appendChild(card);
+            }
+          });
+          
+          if (foundRooms) {
+            roomsSection.style.display = 'block';
+          } else {
+            roomsContainer.innerHTML = `
+              <div style="grid-column: 1/-1; text-align: center; padding: 24px; background: rgba(255,0,0,0.1); border-radius: 12px; border: 1px solid rgba(255,0,0,0.3);">
+                <p style="color: #ff6b6b; font-weight: 600;">❌ Aucune chambre disponible</p>
+                <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">pour ${nbPersonnes} personne${nbPersonnes > 1 ? 's' : ''} du ${arrival.toLocaleDateString('fr-FR')} au ${departure.toLocaleDateString('fr-FR')}</p>
+              </div>
+            `;
+            roomsSection.style.display = 'block';
+          }
+        },
+        error: function() {
+          roomsSection.style.display = 'none';
         }
       });
     }

@@ -68,5 +68,6 @@ writeJson('reservations.json', $reservations);
 
 jsonResponse([
     'success' => true,
-    'message' => 'Demande de réservation enregistrée.'
+    'message' => 'Demande de réservation enregistrée.',
+    'reservation_id' => $newReservation['id']
 ]);

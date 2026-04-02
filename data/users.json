@@ -41,24 +41,6 @@
         "role": "client"
     },
     {
-        "id": 6,
-        "nom": "ilo",
-        "prenom": "ran",
-        "email": "dfljkfhkljh@gmail.com",
-        "password": "rand2026",
-        "telephone": "0550723455",
-        "role": "client"
-    },
-    {
-        "id": 7,
-        "nom": "mhd",
-        "prenom": "mehdi",
-        "email": "iloreus.1@gmail.com",
-        "password": "mehdi2026",
-        "telephone": "0550456879",
-        "role": "client"
-    },
-    {
         "id": 8,
         "nom": "sss",
         "prenom": "ss",

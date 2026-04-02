@@ -460,6 +460,26 @@
       background: rgba(239,83,80,0.15);
       color: #ef5350;
     }
+
+    /* Room Selection Modal Styles */
+    .room-selection-item {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .room-selection-item:hover {
+      background: rgba(0,230,118,0.1);
+      border-color: var(--green);
+      transform: translateX(4px);
+    }
+
+    .room-selection-item:active {
+      transform: translateX(2px);
+    }
   </style>
 </head>
 <body>
@@ -474,7 +494,10 @@
         <h1>⚽ TABLEAU DE BORD ADMIN</h1>
         <p>Gestion complète des réservations et analyser les données</p>
       </div>
-      <button class="logout-btn" onclick="logout()">🚪 Déconnexion</button>
+      <div style="display: flex; gap: 12px;">
+        <button class="logout-btn" onclick="location.href='email-logs.html'" style="background: rgba(0,230,118,0.15); color: var(--green);">📧 Historique Emails</button>
+        <button class="logout-btn" onclick="logout()">🚪 Déconnexion</button>
+      </div>
     </header>
 
     <div id="message" class="msg-box"></div>
@@ -545,10 +568,17 @@
       </div>
     </div>
 
-    <!-- ROOM OCCUPANCY -->
+    <!-- ROOMS OCCUPANCY -->
     <div class="room-list">
-      <div class="chart-title">Occupation des Salles</div>
-      <div id="roomsList"></div>
+      <div class="chart-title">🛏️ Disponibilité des Chambres</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;" id="roomsAvailabilityContainer"></div>
+    </div>
+
+    <!-- CLIENTS MANAGEMENT -->
+    <div class="room-list" style="margin-top: 40px;">
+      <div class="chart-title">👥 Gestion des Clients</div>
+      
+      <div id="clientsList" style="display: grid; gap: 15px;"></div>
     </div>
 
     <!-- RESERVATIONS MANAGEMENT -->
@@ -604,6 +634,7 @@
               new Date(b.date_arrivee) - new Date(a.date_arrivee)
             );
             loadRooms();
+            loadClients();
             updateDashboard();
           }
         },
@@ -631,6 +662,92 @@
             { id: 3, name: 'Chambre C', capacity: 2, price_per_night: 80 }
           ];
           updateDashboard();
+        }
+      });
+    }
+
+    function loadClients() {
+      $.ajax({
+        url: 'data/users.json',
+        method: 'GET',
+        dataType: 'json',
+        success: function(users) {
+          // Filtrer seulement les clients (role = 'client')
+          const clients = users.filter(u => u.role === 'client');
+          displayClients(clients);
+        },
+        error: function() {
+          document.getElementById('clientsList').innerHTML = '<p style="color: var(--muted);">Erreur chargement clients</p>';
+        }
+      });
+    }
+
+    function displayClients(clients) {
+      const container = document.getElementById('clientsList');
+      
+      if (!clients || clients.length === 0) {
+        container.innerHTML = '<p style="color: var(--muted); text-align: center;">Aucun client</p>';
+        return;
+      }
+      
+      container.innerHTML = '';
+      clients.forEach(client => {
+        const card = document.createElement('div');
+        card.className = 'reservation-card';
+        card.style.cssText = `
+          border: 1px solid var(--border);
+          border-left: 4px solid var(--gold);
+          padding: 16px;
+          background: var(--panel);
+          border-radius: 12px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        `;
+        
+        const clientReservations = allReservations.filter(r => r.email === client.email).length;
+        
+        card.innerHTML = `
+          <div style="flex: 1;">
+            <h4 style="color: var(--text); margin: 0 0 8px 0;">${client.prenom} ${client.nom}</h4>
+            <p style="color: var(--muted); margin: 4px 0; font-size: 0.9rem;">📧 ${client.email}</p>
+            <p style="color: var(--muted); margin: 4px 0; font-size: 0.9rem;">📱 ${client.telephone || 'N/A'}</p>
+            <p style="color: var(--gold); margin: 8px 0 0 0; font-size: 0.85rem;">📋 ${clientReservations} réservation(s)</p>
+          </div>
+          <button onclick="deleteClient(${client.id}, '${client.prenom} ${client.nom}')" 
+                  style="background: #ef5350; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s;">
+            🗑️ Supprimer
+          </button>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    function deleteClient(clientId, clientName) {
+      if (!confirm('Êtes-vous sûr de vouloir supprimer le client ' + clientName + ' et toutes ses réservations?')) {
+        return;
+      }
+      
+      const currentAdmin = localStorage.getItem('currentAdmin') || sessionStorage.getItem('currentAdmin');
+      
+      $.ajax({
+        url: 'api/admin_delete_client.php',
+        method: 'POST',
+        data: {
+          clientId: clientId,
+          currentAdmin: currentAdmin
+        },
+        success: function(resp) {
+          if (resp.success) {
+            showMsg('message', '✓ Client supprimé!', true);
+            loadData();
+          } else {
+            showMsg('message', '✗ ' + (resp.message || 'Erreur'), false);
+          }
+        },
+        error: function() {
+          showMsg('message', '✗ Erreur serveur', false);
         }
       });
     }
@@ -793,36 +910,77 @@
     }
 
     function updateRoomOccupancy() {
-      const roomsContainer = document.getElementById('roomsList');
+      const roomsContainer = document.getElementById('roomsAvailabilityContainer');
+      if (!roomsContainer) return;
+      
       roomsContainer.innerHTML = '';
 
       allRooms.forEach(room => {
         const reservationsInRoom = allReservations.filter(r => r.room === room.id && r.status === 'validee').length;
-        const occupancy = Math.round((reservationsInRoom / 12) * 100); // Assuming 12 slots per room
-        const pricePerNight = room.price_per_night || 100; // Defaut a 100 si pas de tarif
+        const availableSpaces = Math.max(0, room.capacity - room.occupied);
+        const occupancyPercent = Math.round((room.occupied / room.capacity) * 100);
+        const pricePerNight = room.price_per_night || 100;
 
-        const roomHtml = `
-          <div class="room-item">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-              <div>
-                <div class="room-name">${room.name || 'Salle ' + room.id}</div>
-                <div style="font-size: 0.9rem; color: var(--muted);">Capacite: ${room.capacity} personnes</div>
-              </div>
-              <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                <div style="color: var(--green); font-weight: 700; font-size: 1.1rem;">${pricePerNight}€</div>
-                <div style="font-size: 0.9rem; color: var(--muted);">par nuit</div>
+        const roomCard = document.createElement('div');
+        roomCard.style.cssText = `
+          padding: 20px;
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          background: var(--panel);
+          backdrop-filter: blur(10px);
+          border-left: 4px solid ${availableSpaces > 0 ? 'var(--green)' : '#ef5350'};
+        `;
+
+        roomCard.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+            <div>
+              <h3 style="color: var(--text); margin: 0 0 8px 0; font-size: 1.1rem;">${room.name || 'Chambre ' + room.id}</h3>
+              <p style="color: var(--muted); margin: 4px 0; font-size: 0.9rem;">💰 ${pricePerNight}€ par nuit</p>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 8px;">Statut</div>
+              <div style="padding: 6px 12px; background: ${availableSpaces > 0 ? 'var(--green)20' : '#ef535020'}; color: ${availableSpaces > 0 ? 'var(--green)' : '#ef5350'}; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
+                ${availableSpaces > 0 ? '✅ Libres' : '❌ Complet'}
               </div>
             </div>
-            <div class="occupancy-bar">
-              <div class="occupancy-fill" style="width: ${Math.min(occupancy, 100)}%"></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div style="padding: 12px; background: rgba(0,230,118,0.1); border-radius: 8px; border: 1px solid rgba(0,230,118,0.2);">
+              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">CAPACITÉ</div>
+              <div style="font-size: 1.3rem; color: var(--green); font-weight: 700;">${room.capacity}</div>
+              <div style="font-size: 0.75rem; color: var(--muted);">places</div>
             </div>
-            <div class="room-stats">
-              <span>Occupation: <strong>${Math.min(occupancy, 100)}%</strong></span>
-              <span>Reservations: <strong>${reservationsInRoom}</strong></span>
+            <div style="padding: 12px; background: rgba(255,215,64,0.1); border-radius: 8px; border: 1px solid rgba(255,215,64,0.2);">
+              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">OCCUPÉES</div>
+              <div style="font-size: 1.3rem; color: #ffd740; font-weight: 700;">${room.occupied}</div>
+              <div style="font-size: 0.75rem; color: var(--muted);">places</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <div style="font-size: 0.85rem; font-weight: 600; color: var(--text);">Occupation</div>
+              <div style="font-size: 0.85rem; font-weight: 600; color: ${occupancyPercent > 80 ? '#ff6b6b' : 'var(--green)'};">${occupancyPercent}%</div>
+            </div>
+            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+              <div style="width: ${occupancyPercent}%; height: 100%; background: ${occupancyPercent > 80 ? '#ff6b6b' : 'var(--green)'}; transition: width 0.3s;"></div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div style="padding: 10px; background: rgba(0,230,118,0.15); border-radius: 8px; text-align: center;">
+              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">DISPONIBLES</div>
+              <div style="font-size: 1.2rem; color: var(--green); font-weight: 700;">${availableSpaces}</div>
+            </div>
+            <div style="padding: 10px; background: rgba(255,107,107,0.15); border-radius: 8px; text-align: center;">
+              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">RÉSERVÉES</div>
+              <div style="font-size: 1.2rem; color: #ff6b6b; font-weight: 700;">${reservationsInRoom}</div>
             </div>
           </div>
         `;
-        roomsContainer.innerHTML += roomHtml;
+
+        roomsContainer.appendChild(roomCard);
       });
     }
 
@@ -951,20 +1109,102 @@
       displayReservations();
     }
 
+    let currentValidatingReservationId = null;
+
     function validateRes(id) {
+      const res = allReservations.find(r => r.id === id);
+      if (!res) {
+        showMsg('message', '✗ Réservation introuvable', false);
+        return;
+      }
+      
+      // Ouvrir modale de sélection de chambre
+      openRoomSelectionModal(id, res.nom, res.prenom);
+    }
+
+    function openRoomSelectionModal(id, nom, prenom) {
+      currentValidatingReservationId = id;
+      
+      const availableRooms = allRooms.filter(r => r.occupied < r.capacity);
+      
+      if (availableRooms.length === 0) {
+        showMsg('message', '✗ Aucune chambre disponible', false);
+        return;
+      }
+
+      let roomsHtml = availableRooms.map(room => {
+        const available = room.capacity - room.occupied;
+        return `
+          <div class="room-selection-item" onclick="selectRoomForValidation(${room.id})">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <div>
+                <div style="font-weight: 600; color: var(--green); font-size: 16px;">${room.name}</div>
+                <div style="color: var(--muted); font-size: 12px; margin-top: 4px;">
+                  Prix: ${room.price_per_night}€/nuit
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 24px; font-weight: bold; color: var(--green);">${available}</div>
+                <div style="color: var(--muted); font-size: 12px;">place(s) libre(s)</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const modalHtml = `
+        <div id="roomSelectionModal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+          <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 30px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <h2 style="margin: 0; color: var(--green);">🏠 Sélectionner une chambre</h2>
+              <button onclick="closeRoomSelectionModal()" style="background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer;">✕</button>
+            </div>
+            
+            <div style="background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; padding: 12px; margin-bottom: 20px;">
+              <strong>Validation pour:</strong> ${nom} ${prenom}
+            </div>
+
+            <div style="display: grid; gap: 12px; margin-bottom: 20px;">
+              ${roomsHtml}
+            </div>
+
+            <button onclick="closeRoomSelectionModal()" style="width: 100%; padding: 12px; background: var(--border); border: none; color: var(--text); border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 20px;">
+              ✕ Annuler
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+    }
+
+    function selectRoomForValidation(roomId) {
+      if (!currentValidatingReservationId) return;
+      
+      closeRoomSelectionModal();
+      
+      // Appeler l'API pour valider avec la chambre sélectionnée
       $.ajax({
-        url: 'api/admin_validate_reservation.php',
+        url: 'api/admin_validate_reservation_with_room.php',
         method: 'POST',
-        data: { id: id },
+        data: { 
+          id: currentValidatingReservationId,
+          room_id: roomId
+        },
         success: function(resp) {
           if (resp.success) {
-            const res = allReservations.find(r => r.id === id);
+            const res = allReservations.find(r => r.id === currentValidatingReservationId);
             if (res) {
               res.status = 'validee';
+              res.room = resp.room_name;
             }
+            
+            // Afficher les identifiants dans une modale
+            showCredentialsModal(resp.credentials, resp.reservation_id, resp.email_sent);
+            
+            // Rafraîchir le dashboard
             displayReservations();
             updateDashboard();
-            showMsg('message', '✓ Réservation validée!', true);
           } else {
             showMsg('message', '✗ ' + (resp.message || 'Erreur'), false);
           }
@@ -973,6 +1213,88 @@
           showMsg('message', '✗ Erreur lors de la validation', false);
         }
       });
+    }
+
+    function showCredentialsModal(credentials, reservationId, emailSent) {
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3000;
+        padding: 20px;
+      `;
+      
+      const credentialHtml = `
+        <div style="background: var(--panel); border: 2px solid var(--green); border-radius: 12px; padding: 40px; max-width: 550px; width: 100%; max-height: 80vh; overflow-y: auto;">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h2 style="margin: 0 0 10px 0; color: var(--green); font-size: 1.5rem;">✅ Réservation Validée!</h2>
+            <p style="margin: 0; color: var(--muted);">Identifiants d'accès client</p>
+          </div>
+          
+          <div style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); border-radius: 8px; padding: 20px; margin-bottom: 24px;">
+            <div style="display: grid; gap: 16px;">
+              <div>
+                <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;">📧 EMAIL CLIENT</div>
+                <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                  <code style="color: var(--green); font-weight: 600; word-break: break-all;">${credentials.email}</code>
+                  <button onclick="copyToClipboard('${credentials.email}')" style="background: var(--green); color: #001a0a; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; margin-left: 8px;">
+                    📋 Copier
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;">🔐 MOT DE PASSE</div>
+                <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                  <code style="color: var(--green); font-weight: 600; word-break: break-all;">${credentials.password}</code>
+                  <button onclick="copyToClipboard('${credentials.password}')" style="background: var(--green); color: #001a0a; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; margin-left: 8px;">
+                    📋 Copier
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+            <div style="font-size: 0.9rem; color: var(--muted);">
+              <p style="margin: 0 0 8px 0;"><strong>📋 Numéro de réservation:</strong> #${String(reservationId).padStart(6, '0')}</p>
+              <p style="margin: 0 0 8px 0;"><strong>📧 Email envoyé:</strong> ${emailSent ? '✅ Oui' : '⚠️ Configuration SMTP non disponible'}</p>
+              <p style="margin: 0;"><strong>💡 Info:</strong> Si l'email n'a pas été reçu, les identifiants sont affichés ci-dessus. Le client peut se connecter directement.</p>
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <button onclick="location.href='email-logs.html'" style="padding: 12px; background: rgba(0,230,118,0.15); border: 1px solid var(--green); color: var(--green); border-radius: 8px; font-weight: 600; cursor: pointer;">
+              📧 Voir logs email
+            </button>
+            <button onclick="this.closest('[style*=position]').remove()" style="padding: 12px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+              ✓ Fermer
+            </button>
+          </div>
+        </div>
+      `;
+      
+      modal.innerHTML = credentialHtml;
+      document.body.appendChild(modal);
+      
+      showMsg('message', '✅ Réservation validée! Les identifiants sont affichés.', true);
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showMsg('message', '📋 Copié dans le presse-papiers!', true);
+      });
+    }
+
+    function closeRoomSelectionModal() {
+      const modal = document.getElementById('roomSelectionModal');
+      if (modal) {
+        modal.remove();
+      }
     }
 
     function rejectRes(id) {
