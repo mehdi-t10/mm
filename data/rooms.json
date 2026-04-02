@@ -3,18 +3,21 @@
         "id": 1,
         "name": "Chambre A",
         "capacity": 4,
-        "occupied": 1
+        "occupied": 4,
+        "price_per_night": 120
     },
     {
         "id": 2,
         "name": "Chambre B",
         "capacity": 4,
-        "occupied": 0
+        "occupied": 1,
+        "price_per_night": 110
     },
     {
         "id": 3,
         "name": "Chambre C",
         "capacity": 2,
-        "occupied": 0
+        "occupied": 0,
+        "price_per_night": 80
     }
 ]

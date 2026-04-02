@@ -14,7 +14,8 @@ foreach ($users as $user) {
     ) {
         jsonResponse([
             'success' => true,
-            'message' => 'Connexion admin réussie'
+            'message' => 'Connexion admin réussie',
+            'user' => $user
         ]);
     }
 }

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FootCamp Dreams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a0f;
+      --green: #00e676;
+      --green-dark: #00c853;
+      --gold: #ffd740;
+      --text: #f0f4f8;
+      --muted: #8a9bb0;
+      --panel: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.07);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── BG EFFECTS ─── */
+    .bg-orbs {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+    }
+    .orb-1 { width: 600px; height: 600px; background: #00e676; top: -150px; left: -100px; animation: drift 12s ease-in-out infinite; }
+    .orb-2 { width: 500px; height: 500px; background: #ffd740; bottom: -100px; right: -100px; animation: drift 15s ease-in-out infinite reverse; }
+    .orb-3 { width: 400px; height: 400px; background: #2979ff; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: drift 18s ease-in-out infinite 3s; }
+
+    @keyframes drift {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(30px,-20px) scale(1.05); }
+      66% { transform: translate(-20px,30px) scale(0.95); }
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(7,10,15,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+    }
+    .logo span { color: var(--green); }
+
+    nav { display: flex; gap: 32px; align-items: center; }
+    nav a { color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: var(--text); }
+
+    .nav-ctas { display: flex; gap: 12px; }
+
+    .pill {
+      padding: 9px 20px;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .pill-green { background: var(--green); color: #001a0a; }
+    .pill-green:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,230,118,0.3); }
+    .pill-ghost { border: 1px solid var(--border); color: var(--muted); }
+    .pill-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,230,118,0.1);
+      border: 1px solid rgba(0,230,118,0.25);
+      color: #86efac;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .eyebrow::before { content: '⚽'; font-size: 0.9rem; }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 0.92;
+      letter-spacing: 2px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--green);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      max-width: 560px;
+      margin: 0 auto 52px;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    /* ─── DUAL PORTALS ─── */
+    .portals {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+
+    .portal {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      padding: 36px 28px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .portal:hover { transform: translateY(-6px); }
+
+    .portal-client:hover {
+      border-color: rgba(0,230,118,0.3);
+      box-shadow: 0 24px 60px rgba(0,230,118,0.12);
+    }
+    .portal-admin:hover {
+      border-color: rgba(255,215,64,0.3);
+      box-shadow: 0 24px 60px rgba(255,215,64,0.12);
+    }
+
+    .portal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .portal-client::before { background: linear-gradient(90deg, var(--green), transparent); }
+    .portal-admin::before { background: linear-gradient(90deg, var(--gold), transparent); }
+
+    .portal-icon {
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 18px;
+    }
+    .portal-client .portal-icon { background: rgba(0,230,118,0.1); }
+    .portal-admin .portal-icon { background: rgba(255,215,64,0.1); }
+
+    .portal-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .portal-client .portal-label { color: var(--green); }
+    .portal-admin .portal-label { color: var(--gold); }
+
+    .portal h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .portal p {
+      color: var(--muted);
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .portal-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .portal-btn::after { content: '→'; transition: transform 0.2s; }
+    .portal:hover .portal-btn::after { transform: translateX(4px); }
+
+    .portal-client .portal-btn { background: var(--green); color: #001a0a; }
+    .portal-admin .portal-btn { background: var(--gold); color: #1a1000; }
+
+    /* ─── SCROLL HINT ─── */
+    .scroll-hint {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--muted); font-size: 0.75rem; letter-spacing: 0.05em;
+      animation: fadeUp 0.8s ease 0.8s both;
+    }
+    .scroll-dot {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--green), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100% { opacity:0.3; } 50% { opacity:1; } }
+
+    /* ─── FEATURES ─── */
+    .features {
+      position: relative; z-index: 1;
+      padding: 80px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--green); margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .section-sub { color: var(--muted); line-height: 1.7; max-width: 580px; margin-bottom: 52px; }
+
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feat {
+      padding: 28px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feat:hover { border-color: rgba(0,230,118,0.15); transform: translateY(-3px); }
+
+    .feat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: rgba(0,230,118,0.15);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .feat h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .feat p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; }
+
+    /* ─── STATS STRIP ─── */
+    .stats-strip {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 48px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .stat-item strong {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      letter-spacing: 1px;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-item span { color: var(--muted); font-size: 0.875rem; }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 80px 48px;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, rgba(0,230,118,0.08), rgba(255,215,64,0.05));
+      border: 1px solid rgba(0,230,118,0.15);
+      border-radius: 32px;
+      padding: 64px 40px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .cta-box h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .cta-box p { color: var(--muted); margin-bottom: 36px; line-height: 1.7; }
+
+    .cta-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    .btn-large {
+      padding: 16px 32px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    .btn-large-green { background: var(--green); color: #001a0a; }
+    .btn-large-green:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,230,118,0.3); }
+    .btn-large-ghost { border: 1px solid var(--border); color: var(--muted); }
+    .btn-large-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--muted); font-size: 0.85rem;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      header { padding: 16px 24px; }
+      nav { display: none; }
+      .portals { grid-template-columns: 1fr; max-width: 400px; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); padding: 32px 24px; }
+      .features, .cta-section { padding: 60px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <header>
+    <div class="logo">Foot<span>Camp</span> Dreams</div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="#features">Fonctionnalités</a>
+      <a href="booking.html">Réserver</a>
+    </nav>
+    <div class="nav-ctas">
+      <a href="login.html" class="pill pill-ghost">Connexion client</a>
+      <a href="admin.html" class="pill pill-green">Admin</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Centre de vacances football · Été 2026</div>
+
+    <h1>Bienvenue sur<br><em>FootCamp</em><br>Dreams</h1>
+
+    <p class="hero-sub">
+      La plateforme de gestion de ton camp de football. Réserve, suis tes séjours et accède à ton espace en quelques secondes.
+    </p>
+
+    <div class="portals">
+      <!-- CLIENT PORTAL -->
+      <a href="login.html" class="portal portal-client">
+        <div class="portal-icon">👤</div>
+        <div class="portal-label">Espace client</div>
+        <h2>Je suis client</h2>
+        <p>Connectez-vous pour consulter vos réservations, ajouter des prestations et télécharger vos factures.</p>
+        <div class="portal-btn">Connexion client</div>
+      </a>
+
+      <!-- ADMIN PORTAL -->
+      <a href="admin.html" class="portal portal-admin">
+        <div class="portal-icon">🛡️</div>
+        <div class="portal-label">Espace admin</div>
+        <h2>Je suis admin</h2>
+        <p>Gérez les réservations, planifiez les activités et suivez les demandes du jour depuis votre tableau de bord.</p>
+        <div class="portal-btn">Connexion admin</div>
+      </a>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Découvrir</span>
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-tag">⚡ Fonctionnalités</div>
+    <h2 class="section-title">Tout ce dont vous avez besoin</h2>
+    <p class="section-sub">Une plateforme pensée pour simplifier la gestion du camp côté client comme côté administration.</p>
+
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-num">01</div>
+        <h4>Réservation en ligne</h4>
+        <p>Réservez un stage directement depuis le site. Choix du séjour, dates et nombre de participants en quelques clics.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">02</div>
+        <h4>Espace client dédié</h4>
+        <p>Chaque client dispose d'un accès personnel pour suivre ses réservations, ajouter des extras et gérer ses infos.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">03</div>
+        <h4>Dashboard administrateur</h4>
+        <p>L'admin peut filtrer les demandes par jour, valider les réservations et planifier les activités du camp.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">04</div>
+        <h4>Prestations complémentaires</h4>
+        <p>Repas VIP, maillots personnalisés, transport… le client peut enrichir son séjour depuis son espace.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">05</div>
+        <h4>Planification d'activités</h4>
+        <p>L'admin programme les entraînements, matchs et ateliers avec coach et arbitre assignés.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">06</div>
+        <h4>Gestion des factures</h4>
+        <p>Téléchargement PDF des factures, historique des prestations et notifications disponibles pour chaque client.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-strip">
+    <div class="stat-item"><strong>500+</strong><span>Participants par été</span></div>
+    <div class="stat-item"><strong>12</strong><span>Séjours disponibles</span></div>
+    <div class="stat-item"><strong>98%</strong><span>Taux de satisfaction</span></div>
+    <div class="stat-item"><strong>24h</strong><span>Délai de confirmation</span></div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-box">
+      <h2>Prêt à commencer ?</h2>
+      <p>Rejoignez FootCamp Dreams et offrez à vos enfants une expérience football inoubliable cet été.</p>
+      <div class="cta-actions">
+        <a href="login.html" class="btn-large btn-large-green">Connexion client</a>
+        <a href="booking.html" class="btn-large btn-large-ghost">Faire une réservation</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo" style="font-size:1.1rem;">Foot<span style="color:var(--green)">Camp</span> Dreams</div>
+    <span>© 2026 FootCamp Dreams · Tous droits réservés</span>
+    <div style="display:flex; gap:16px;">
+      <a href="login.html" style="color:var(--muted)">Espace client</a>
+      <a href="admin.html" style="color:var(--muted)">Espace admin</a>
+    </div>
+  </footer>
+</body>
+</html>

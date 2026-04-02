@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ma Réservation - FootCamp Dreams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a0f;
+      --green: #00e676;
+      --green-dark: #00c853;
+      --gold: #ffd740;
+      --text: #f0f4f8;
+      --muted: #8a9bb0;
+      --panel: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.07);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .bg-orbs {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+    }
+    .orb-1 { width: 600px; height: 600px; background: #00e676; top: -150px; left: -100px; animation: drift 12s ease-in-out infinite; }
+    .orb-2 { width: 500px; height: 500px; background: #ffd740; bottom: -100px; right: -100px; animation: drift 15s ease-in-out infinite reverse; }
+
+    @keyframes drift {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(30px,-20px) scale(1.05); }
+      66% { transform: translate(-20px,30px) scale(0.95); }
+    }
+
+    header {
+      position: relative; z-index: 50;
+      padding: 24px 48px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7,10,15,0.7);
+      backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+    }
+    .logo span { color: var(--green); }
+
+    .user-menu {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .user-name {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .btn-logout {
+      background: var(--green);
+      color: #001a0a;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .btn-logout:hover {
+      background: var(--green-dark);
+    }
+
+    .container-main {
+      position: relative; z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+      color: var(--green);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .form-card {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: 24px 24px 0 0;
+      background: linear-gradient(90deg, var(--green), transparent);
+    }
+
+    .form-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      color: var(--green);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .form-control:disabled {
+      background: rgba(255,255,255,0.04);
+      opacity: 0.7;
+    }
+
+    .form-control:focus {
+      background: rgba(255,255,255,0.12);
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(0,230,118,0.1);
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .checkbox-item:hover {
+      background: rgba(0,230,118,0.1);
+      border-color: var(--green);
+    }
+
+    .checkbox-item input {
+      margin-right: 8px;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--green);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background: var(--green);
+      color: #001a0a;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 20px;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: var(--green-dark);
+      box-shadow: 0 8px 24px rgba(0,230,118,0.3);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .msg-box {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .msg-success {
+      background: rgba(0,230,118,0.15);
+      border: 1px solid rgba(0,230,118,0.3);
+      color: #86efac;
+    }
+
+    .msg-error {
+      background: rgba(255,107,107,0.15);
+      border: 1px solid rgba(255,107,107,0.3);
+      color: #ff9999;
+    }
+
+    /* CALENDAR STYLES */
+    .calendar-card {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .calendar-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: 24px 24px 0 0;
+      background: linear-gradient(90deg, var(--green), transparent);
+    }
+
+    .calendar-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      color: var(--green);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .calendar-nav {
+      display: flex; gap: 8px;
+    }
+
+    .calendar-nav button {
+      background: rgba(0,230,118,0.1);
+      border: 1px solid rgba(0,230,118,0.3);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .calendar-nav button:hover {
+      background: rgba(0,230,118,0.2);
+      border-color: var(--green);
+    }
+
+    .calendar-month {
+      margin-bottom: 24px;
+    }
+
+    .calendar-month-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .weekday {
+      text-align: center;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.75rem;
+      padding: 6px;
+    }
+
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: rgba(255,255,255,0.02);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .calendar-day:hover {
+      background: rgba(0,230,118,0.1);
+      border-color: var(--green);
+    }
+
+    .calendar-day.other-month {
+      color: var(--muted);
+      opacity: 0.4;
+    }
+
+    .calendar-day.today {
+      background: rgba(0,230,118,0.15);
+      border-color: var(--green);
+      font-weight: 700;
+    }
+
+    .calendar-day.has-booking::after {
+      content: '';
+      position: absolute;
+      bottom: 1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 3px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 1200px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+
+  <header>
+    <div class="logo">Foot<span>Camp</span> Dreams</div>
+    <div class="user-menu">
+      <div class="user-name">Bienvenue, <span id="userName">User</span></div>
+      <button class="btn-logout" onclick="logout()">Déconnexion</button>
+    </div>
+  </header>
+
+  <div class="container-main">
+    <h1 class="page-title">Créer une Réservation</h1>
+
+    <div class="content-grid">
+      <!-- FORM SECTION -->
+      <div class="form-card">
+        <h3>Formulaire de Réservation</h3>
+        <form id="reservationForm" onsubmit="handleReservation(event)">
+          
+          <div class="form-group">
+            <label class="form-label">Nom</label>
+            <input type="text" class="form-control" id="nom" readonly>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Prénom</label>
+            <input type="text" class="form-control" id="prenom" readonly>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" readonly>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Téléphone *</label>
+            <input type="tel" class="form-control" id="telephone" pattern="[0-9]{10}" placeholder="0612345678" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Date d'arrivée * (doit être avant la date de départ)</label>
+            <input type="date" class="form-control" id="date_arrivee" required min="2026-04-02">
+            <div class="error-message" id="arrivalError"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Date de départ * (doit être après la date d'arrivée)</label>
+            <input type="date" class="form-control" id="date_depart" required min="2026-04-03">
+            <div class="error-message" id="departureError"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nombre de personnes *</label>
+            <input type="number" class="form-control" id="nb_personnes" min="1" max="10" value="1" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Activités</label>
+            <div class="checkbox-group" id="activitiesGroup"></div>
+          </div>
+
+          <div class="form-group" id="roomsAvailability" style="display: none;">
+            <label class="form-label">🏠 Chambres Disponibles pour vos dates</label>
+            <div id="roomsList" style="display: grid; gap: 10px;"></div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="btnSubmit">Valider la Réservation</button>
+          <div id="reservationMsg"></div>
+        </form>
+      </div>
+
+      <!-- CALENDAR SECTION -->
+      <div class="calendar-card">
+        <h3>Disponibilités</h3>
+        <div class="calendar-header">
+          <div>Calendrier des réservations</div>
+          <div class="calendar-nav">
+            <button onclick="previousMonth()">←</button>
+            <button onclick="todayMonth()">Auj</button>
+            <button onclick="nextMonth()">→</button>
+          </div>
+        </div>
+
+        <div id="calendarContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 FootCamp Dreams. Centre de vacances football.</p>
+  </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    let userData = null;
+    let reservations = [];
+    let currentDate = new Date(2026, 3, 1); // Avril 2026
+    let allActivities = [];
+    let facilityData = {};
+
+    // ===== INIT =====
+    document.addEventListener('DOMContentLoaded', function() {
+      loadUserData();
+      loadActivities();
+      loadReservations();
+      setupDateValidation();
+    });
+
+    // ===== USER DATA =====
+    function loadUserData() {
+      try {
+        const stored = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
+        if (!stored) {
+          redirectToLogin();
+          return;
+        }
+        
+        userData = JSON.parse(stored);
+        document.getElementById('userName').textContent = userData.prenom;
+        document.getElementById('nom').value = userData.nom;
+        document.getElementById('prenom').value = userData.prenom;
+        document.getElementById('email').value = userData.email;
+        document.getElementById('telephone').value = userData.telephone || '';
+      } catch (e) {
+        redirectToLogin();
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem('currentUser');
+      localStorage.removeItem('currentUser');
+      window.location.href = 'index.html';
+    }
+
+    function redirectToLogin() {
+      window.location.href = 'index.html';
+    }
+
+    // ===== ACTIVITIES =====
+    function loadActivities() {
+      $.get('data/activities.json', function(activities) {
+        allActivities = activities || [];
+        
+        // Store activities for later use
+        const groupEl = document.getElementById('activitiesGroup');
+        groupEl.innerHTML = '';
+        
+        allActivities.forEach(act => {
+          const label = document.createElement('label');
+          label.className = 'checkbox-item';
+          label.innerHTML = `
+            <input type="checkbox" name="activity" value="${act.name}" onchange="onActivityChange()">
+            <span>${act.icon} ${act.name} (${act.price}€)</span>
+          `;
+          groupEl.appendChild(label);
+        });
+      });
+
+      // Load room/facility data
+      $.get('data/rooms.json', function(rooms) {
+        facilityData = {};
+        (rooms || []).forEach(room => {
+          facilityData[room.id] = room;
+        });
+      });
+    }
+
+    function onActivityChange() {
+      const arrivalVal = document.getElementById('date_arrivee').value;
+      const departureVal = document.getElementById('date_depart').value;
+      
+      if (arrivalVal && departureVal) {
+        displayAvailableRooms();
+      } else {
+        displayStadesForActivities();
+      }
+    }
+
+    // ===== DATE VALIDATION =====
+    function setupDateValidation() {
+      const arrival = document.getElementById('date_arrivee');
+      const departure = document.getElementById('date_depart');
+
+      [arrival, departure].forEach(el => {
+        el.addEventListener('change', validateDates);
+      });
+    }
+
+    function validateDates() {
+      const arrivalVal = document.getElementById('date_arrivee').value;
+      const departureVal = document.getElementById('date_depart').value;
+      
+      const arrivalError = document.getElementById('arrivalError');
+      const departureError = document.getElementById('departureError');
+      
+      arrivalError.textContent = '';
+      departureError.textContent = '';
+
+      if (!arrivalVal || !departureVal) {
+        displayAvailableRooms();
+        return true;
+      }
+
+      const arrival = new Date(arrivalVal);
+      const departure = new Date(departureVal);
+
+      if (arrival >= departure) {
+        const msg = '⚠️ La date de départ doit être strictement après la date d\'arrivée';
+        arrivalError.textContent = msg;
+        departureError.textContent = msg;
+        document.getElementById('roomsAvailability').style.display = 'none';
+        return false;
+      }
+      
+      displayAvailableRooms();
+      return true;
+    }
+
+    // ===== DISPLAY AVAILABLE ROOMS =====
+    function displayAvailableRooms() {
+      const arrivalVal = document.getElementById('date_arrivee').value;
+      const departureVal = document.getElementById('date_depart').value;
+
+      if (!arrivalVal || !departureVal) {
+        document.getElementById('roomsAvailability').style.display = 'none';
+        return;
+      }
+
+      // Recuperer les activites selectionnees
+      const selectedActivities = [];
+      document.querySelectorAll('[name="activity"]:checked').forEach(checkbox => {
+        selectedActivities.push(parseInt(checkbox.value));
+      });
+
+      // Appeler l'API pour obtenir les chambres disponibles avec les tarifs
+      $.ajax({
+        url: 'api/get_available_rooms.php',
+        method: 'POST',
+        data: {
+          activities: selectedActivities.length > 0 ? selectedActivities : [],
+          date_arrivee: arrivalVal,
+          date_depart: departureVal
+        },
+        dataType: 'json',
+        success: function(resp) {
+          const roomsContainer = document.getElementById('roomsList');
+          const roomsSection = document.getElementById('roomsAvailability');
+
+          if (!resp.success || !resp.rooms || resp.rooms.length === 0) {
+            roomsContainer.innerHTML = '<p style="color: var(--muted);">Aucune chambre disponible pour ces dates et activites</p>';
+            roomsSection.style.display = 'block';
+            return;
+          }
+
+          const nights = Math.round(resp.nights * 10) / 10; // Arrondir a 1 decimal
+
+          roomsContainer.innerHTML = resp.rooms.map(room => {
+            return `
+              <div style="background: linear-gradient(135deg, rgba(0,230,118,0.1), rgba(255,215,64,0.05)); border: 1px solid var(--border); padding: 14px; border-radius: 8px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                  <div>
+                    <strong style="font-size: 1.1rem;">${room.name}</strong>
+                    <div style="font-size: 0.9rem; color: var(--muted); margin-top: 4px;">
+                      Capacite: ${room.capacity} personnes
+                    </div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="color: var(--green); font-weight: 700; font-size: 1.2rem;">
+                      ${room.total_price}€
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--muted);">
+                      ${room.price_per_night}€/nuit x ${nights} nuit${nights > 1 ? 's' : ''}
+                    </div>
+                  </div>
+                </div>
+                <button onclick="selectRoom(${room.id}, ${room.total_price})" style="width: 100%; padding: 8px; background: linear-gradient(135deg, var(--green), #00c853); color: #000; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                  Choisir cette chambre
+                </button>
+              </div>
+            `;
+          }).join('');
+
+          roomsSection.style.display = 'block';
+        },
+        error: function() {
+          const roomsContainer = document.getElementById('roomsList');
+          const roomsSection = document.getElementById('roomsAvailability');
+          roomsContainer.innerHTML = '<p style="color: #ef5350;">Erreur lors du chargement des chambres</p>';
+          roomsSection.style.display = 'block';
+        }
+      });
+    }
+
+    // ===== DISPLAY STADIUMS FOR SELECTED ACTIVITIES =====
+    function displayStadesForActivities() {
+      const selectedActivities = [];
+      document.querySelectorAll('[name="activity"]:checked').forEach(checkbox => {
+        selectedActivities.push(checkbox.value);
+      });
+
+      const roomsContainer = document.getElementById('roomsList');
+      
+      if (selectedActivities.length === 0) {
+        return;
+      }
+
+      // Get all facilities needed for selected activities
+      const requiredFacilities = new Set();
+      allActivities.forEach(activity => {
+        if (selectedActivities.includes(activity.name)) {
+          (activity.facilities || []).forEach(id => {
+            requiredFacilities.add(id);
+          });
+        }
+      });
+
+      // Add activity stadiums section
+      if (requiredFacilities.size > 0) {
+        const facilitiesArray = Array.from(requiredFacilities);
+        
+        let stadesHtml = '<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">';
+        stadesHtml += '<h4 style="color: var(--green); margin-bottom: 12px;">⚽ Stades/Terrains pour vos activités</h4>';
+        
+        facilitiesArray.forEach(facilityId => {
+          const facility = facilityData[facilityId];
+          if (facility) {
+            const available = facility.capacity - facility.occupied;
+            const percentageUsed = Math.round((facility.occupied / facility.capacity) * 100);
+            
+            stadesHtml += `
+              <div style="background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.3); padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <strong style="color: var(--text);">${facility.name}</strong>
+                  <span style="color: ${available > 0 ? 'var(--green)' : '#ef5350'}; font-weight: 600;">
+                    ${available > 0 ? '✅ ' : '❌ '}${available}/${facility.capacity}
+                  </span>
+                </div>
+                <div style="background: var(--border); height: 5px; border-radius: 3px; overflow: hidden;">
+                  <div style="background: linear-gradient(90deg, var(--green), var(--gold)); width: ${percentageUsed}%; height: 100%;"></div>
+                </div>
+                <small style="color: var(--muted);">Disponibilité: ${100 - percentageUsed}%</small>
+              </div>
+            `;
+          }
+        });
+        
+        stadesHtml += '</div>';
+        roomsContainer.innerHTML += stadesHtml;
+      }
+    }
+    // ===== SELECT ROOM =====
+    function selectRoom(roomId, totalPrice) {
+      // Stocker la chambre selectionnee et le prix
+      const reservationData = {
+        room_id: roomId,
+        room_price: totalPrice,
+        selected_at: new Date().toISOString()
+      };
+      
+      sessionStorage.setItem('selectedRoom', JSON.stringify(reservationData));
+      
+      // Afficher un message de confirmation
+      const msg = document.getElementById('reservationMsg');
+      msg.className = 'msg-box msg-success';
+      msg.textContent = 'Chambre selectionnee! Prix total: ' + totalPrice + '€. Continuez pour finaliser votre reservation.';
+      msg.scrollIntoView({ behavior: 'smooth' });
+    }
+    // ===== RESERVATION =====
+    function handleReservation(e) {
+      e.preventDefault();
+
+      // Verification chambre selectionnee
+      const selectedRoomData = JSON.parse(sessionStorage.getItem('selectedRoom') || 'null');
+      if (!selectedRoomData) {
+        showMsg('reservationMsg', 'Veuillez selectionner une chambre', false);
+        document.getElementById('roomsAvailability').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+
+      // Validation du telephone
+      const telephone = document.getElementById('telephone').value;
+      if (!telephone || !/^[0-9]{10}$/.test(telephone)) {
+        showMsg('reservationMsg', 'Telephone invalide (10 chiffres requis)', false);
+        document.getElementById('telephone').focus();
+        return;
+      }
+
+      if (!validateDates()) {
+        showMsg('reservationMsg', 'Erreur de dates', false);
+        return;
+      }
+
+      const activities = [];
+      document.querySelectorAll('[name="activity"]:checked').forEach(checkbox => {
+        activities.push(checkbox.value);
+      });
+
+      const data = {
+        nom: document.getElementById('nom').value,
+        prenom: document.getElementById('prenom').value,
+        email: document.getElementById('email').value,
+        telephone: document.getElementById('telephone').value,
+        date_arrivee: document.getElementById('date_arrivee').value,
+        date_depart: document.getElementById('date_depart').value,
+        nb_personnes: document.getElementById('nb_personnes').value,
+        activities: JSON.stringify(activities),
+        room_id: selectedRoomData.room_id,
+        room_price: selectedRoomData.room_price
+      };
+
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.textContent = 'Enregistrement...';
+
+      $.ajax({
+        url: 'api/reserve.php',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        timeout: 8000,
+        success: function(resp) {
+          if (resp.success) {
+            showMsg('reservationMsg', 'Reservation creee! Redirection...', true);
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1500);
+          } else {
+            showMsg('reservationMsg', resp.message || 'Erreur', false);
+            btn.disabled = false;
+            btn.textContent = 'Valider la Reservation';
+          }
+        },
+        error: function(xhr, status, error) {
+          showMsg('reservationMsg', 'Erreur: ' + status, false);
+          btn.disabled = false;
+          btn.textContent = 'Valider la Reservation';
+        }
+      });
+    }
+
+    function showMsg(elementId, text, isSuccess) {
+      const elem = document.getElementById(elementId);
+      elem.className = 'msg-box ' + (isSuccess ? 'msg-success' : 'msg-error');
+      elem.textContent = text;
+    }
+
+    // ===== CALENDAR =====
+    async function loadReservations() {
+      try {
+        const response = await fetch('api/admin_list_reservations.php');
+        const data = await response.json();
+        if (data.success && data.reservations) {
+          reservations = data.reservations;
+        }
+      } catch (e) {
+        console.log('Erreur chargement réservations');
+      } finally {
+        renderCalendar();
+      }
+    }
+
+    function renderCalendar() {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      
+      let html = '';
+      for (let m = 0; m < 2; m++) {
+        const displayMonth = new Date(year, month + m, 1);
+        html += renderMonth(displayMonth);
+      }
+
+      document.getElementById('calendarContainer').innerHTML = html;
+    }
+
+    function renderMonth(date) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+      
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const prevLastDay = new Date(year, month, 0);
+
+      const firstDayOfWeek = firstDay.getDay() || 7;
+      const lastDate = lastDay.getDate();
+      const lastDayOfWeek = lastDay.getDay() || 7;
+      const prevLastDate = prevLastDay.getDate();
+
+      let html = `<div class="calendar-month">
+        <div class="calendar-month-title">${monthNames[month]} ${year}</div>
+        <div class="calendar-weekdays">
+          <div class="weekday">L</div>
+          <div class="weekday">M</div>
+          <div class="weekday">M</div>
+          <div class="weekday">J</div>
+          <div class="weekday">V</div>
+          <div class="weekday">S</div>
+          <div class="weekday">D</div>
+        </div>
+        <div class="calendar-days">`;
+
+      for (let i = firstDayOfWeek - 2; i >= 0; i--) {
+        html += `<div class="calendar-day other-month">${prevLastDate - i}</div>`;
+      }
+
+      for (let day = 1; day <= lastDate; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const hasRes = reservations.some(r => r.date_arrivee <= dateStr && r.date_depart > dateStr);
+        const isToday = new Date().toDateString() === new Date(year, month, day).toDateString();
+
+        let classes = 'calendar-day';
+        if (hasRes) classes += ' has-booking';
+        if (isToday) classes += ' today';
+
+        html += `<div class="${classes}">${day}</div>`;
+      }
+
+      for (let day = 1; day <= (6 - lastDayOfWeek + 2); day++) {
+        html += `<div class="calendar-day other-month">${day}</div>`;
+      }
+
+      html += '</div></div>';
+      return html;
+    }
+
+    function previousMonth() {
+      currentDate.setMonth(currentDate.getMonth() - 2);
+      renderCalendar();
+    }
+
+    function nextMonth() {
+      currentDate.setMonth(currentDate.getMonth() + 2);
+      renderCalendar();
+    }
+
+    function todayMonth() {
+      currentDate = new Date();
+      renderCalendar();
+    }
+  </script>
+</body>
+</html>
