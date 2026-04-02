@@ -419,7 +419,17 @@
   </header>
 
   <div class="container-main">
-    <h1 class="page-title">Créer une Réservation</h1>
+    <h1 class="page-title">Mes Réservations & Espace Client</h1>
+
+    <!-- MY RESERVATIONS SECTION -->
+    <div style="margin-bottom: 60px;">
+      <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--green); margin-bottom: 24px;">📋 Mes Réservations</h2>
+      <div id="myReservationsContainer" style="display: grid; gap: 20px;">
+        <p style="color: var(--muted); text-align: center; padding: 40px;">Chargement de vos réservations...</p>
+      </div>
+    </div>
+
+    <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--green); margin-bottom: 24px;">➕ Créer une Nouvelle Réservation</h2>
 
     <div class="content-grid">
       <!-- FORM SECTION -->
@@ -479,6 +489,14 @@
         </form>
       </div>
 
+      <!-- INVOICE SECTION -->
+      <div class="calendar-card" style="margin-top: 40px;">
+        <h3>💰 Votre Facture</h3>
+        <div id="invoiceContainer" style="padding: 20px;">
+          <p style="color: var(--muted); text-align: center;">Sélectionnez une chambre pour voir votre facture</p>
+        </div>
+      </div>
+
       <!-- CALENDAR SECTION -->
       <div class="calendar-card">
         <h3>Disponibilités</h3>
@@ -511,6 +529,7 @@
     // ===== INIT =====
     document.addEventListener('DOMContentLoaded', function() {
       loadUserData();
+      loadMyReservations();
       loadActivities();
       loadReservations();
       setupDateValidation();
@@ -544,6 +563,91 @@
 
     function redirectToLogin() {
       window.location.href = 'index.html';
+    }
+
+    // ===== MY RESERVATIONS =====
+    function loadMyReservations() {
+      if (!userData || !userData.email) return;
+      
+      const container = document.getElementById('myReservationsContainer');
+      
+      $.ajax({
+        url: 'api/get_my_reservations.php?email=' + encodeURIComponent(userData.email),
+        type: 'GET',
+        dataType: 'json',
+        success: function(resp) {
+          if (resp.success && resp.reservations && resp.reservations.length > 0) {
+            container.innerHTML = '';
+            resp.reservations.forEach(res => {
+              const statusDisplay = {
+                'en_attente': { icon: '⏳', label: 'En attente', color: '#ffa726' },
+                'validee': { icon: '✅', label: 'Validée', color: '#00e676' },
+                'rejetee': { icon: '❌', label: 'Rejetée', color: '#ef5350' }
+              }[res.status] || { icon: '❓', label: 'Inconnu', color: '#888' };
+              
+              const dates = new Date(res.date_arrivee).toLocaleDateString('fr-FR') + 
+                           ' → ' + new Date(res.date_depart).toLocaleDateString('fr-FR');
+              
+              const card = document.createElement('div');
+              card.style.cssText = `
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 24px;
+                background: var(--panel);
+                backdrop-filter: blur(10px);
+                border-left: 4px solid ${statusDisplay.color};
+              `;
+              
+              card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                  <div>
+                    <h4 style="color: var(--green); margin: 0 0 8px 0; font-size: 1.1rem;">Réservation #${res.id}</h4>
+                    <p style="color: var(--muted); margin: 0; font-size: 0.9rem;">${dates}</p>
+                  </div>
+                  <span style="background: ${statusDisplay.color}20; color: ${statusDisplay.color}; padding: 6px 12px; border-radius: 8px; font-weight: 600; font-size: 0.85rem;">
+                    ${statusDisplay.icon} ${statusDisplay.label}
+                  </span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+                  <div>
+                    <span style="color: var(--muted); font-size: 0.8rem;">Personnes</span>
+                    <p style="color: var(--green); margin: 4px 0 0 0; font-weight: 600;">${res.nb_personnes}</p>
+                  </div>
+                  <div>
+                    <span style="color: var(--muted); font-size: 0.8rem;">Chambre</span>
+                    <p style="color: var(--green); margin: 4px 0 0 0; font-weight: 600;">${res.room || 'À assigner'}</p>
+                  </div>
+                  <div>
+                    <span style="color: var(--muted); font-size: 0.8rem;">Acompte</span>
+                    <p style="color: var(--green); margin: 4px 0 0 0; font-weight: 600;">${res.deposit}€</p>
+                  </div>
+                  <div>
+                    <span style="color: var(--muted); font-size: 0.8rem;">Réduction</span>
+                    <p style="color: var(--green); margin: 4px 0 0 0; font-weight: 600;">${res.discount_percent || 0}%</p>
+                  </div>
+                </div>
+                ${res.status === 'validee' ? `
+                  <button onclick="viewReservationDetails(${res.id})" style="width: 100%; padding: 10px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 12px;">
+                    📄 Voir ma facture
+                  </button>
+                ` : ''}
+              `;
+              
+              container.appendChild(card);
+            });
+          } else {
+            container.innerHTML = '<p style="color: var(--muted); text-align: center; padding: 40px;">Aucune réservation trouvée. Créez-en une!</p>';
+          }
+        },
+        error: function() {
+          container.innerHTML = '<p style="color: #ef5350; text-align: center; padding: 40px;">Erreur lors du chargement de vos réservations</p>';
+        }
+      });
+    }
+
+    function viewReservationDetails(resId) {
+      // Link to invoice or show details popup
+      alert('Détails de la réservation #' + resId);
     }
 
     // ===== ACTIVITIES =====
@@ -630,6 +734,7 @@
     function displayAvailableRooms() {
       const arrivalVal = document.getElementById('date_arrivee').value;
       const departureVal = document.getElementById('date_depart').value;
+      const nbPersonnes = parseInt(document.getElementById('nb_personnes').value || 1);
 
       if (!arrivalVal || !departureVal) {
         document.getElementById('roomsAvailability').style.display = 'none';
@@ -649,7 +754,8 @@
         data: {
           activities: selectedActivities.length > 0 ? selectedActivities : [],
           date_arrivee: arrivalVal,
-          date_depart: departureVal
+          date_depart: departureVal,
+          nb_personnes: nbPersonnes
         },
         dataType: 'json',
         success: function(resp) {
@@ -657,7 +763,7 @@
           const roomsSection = document.getElementById('roomsAvailability');
 
           if (!resp.success || !resp.rooms || resp.rooms.length === 0) {
-            roomsContainer.innerHTML = '<p style="color: var(--muted);">Aucune chambre disponible pour ces dates et activites</p>';
+            roomsContainer.innerHTML = '<p style="color: var(--muted);">Aucune chambre disponible pour ' + nbPersonnes + ' personne' + (nbPersonnes > 1 ? 's' : '') + ' pour ces dates et activites</p>';
             roomsSection.style.display = 'block';
             return;
           }
@@ -774,7 +880,91 @@
       msg.className = 'msg-box msg-success';
       msg.textContent = 'Chambre selectionnee! Prix total: ' + totalPrice + '€. Continuez pour finaliser votre reservation.';
       msg.scrollIntoView({ behavior: 'smooth' });
+      
+      // Afficher la facture
+      displayInvoice(roomId, totalPrice);
     }
+
+    function displayInvoice(roomId, totalPrice) {
+      const container = document.getElementById('invoiceContainer');
+      
+      // Recuperer les donnees de la reservation
+      const nom = document.getElementById('nom').value;
+      const prenom = document.getElementById('prenom').value;
+      const email = document.getElementById('email').value;
+      const dateArrivee = document.getElementById('date_arrivee').value;
+      const dateDepart = document.getElementById('date_depart').value;
+      const nbPersonnes = document.getElementById('nb_personnes').value;
+      
+      // Recuperer les activites selectionnees
+      const selectedActivities = [];
+      document.querySelectorAll('[name="activity"]:checked').forEach(checkbox => {
+        selectedActivities.push(checkbox.nextElementSibling.textContent);
+      });
+      
+      const arrival = new Date(dateArrivee);
+      const departure = new Date(dateDepart);
+      const nights = Math.ceil((departure - arrival) / (1000 * 3600 * 24));
+      const deposit = 80;
+      const amountDue = totalPrice - deposit;
+      
+      const invoiceHtml = `
+        <div style="max-width: 600px; margin: 0 auto;">
+          <div style="background: linear-gradient(135deg, rgba(0,230,118,0.1), rgba(255,215,64,0.05)); border: 1px solid var(--border); padding: 20px; border-radius: 12px;">
+            <h4 style="text-align: center; color: var(--green); margin-bottom: 20px;">FACTURE DE RESERVATION</h4>
+            
+            <div style="border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 15px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem;">
+                <div>
+                  <div style="color: var(--muted); font-size: 0.85rem;">CLIENT</div>
+                  <div style="font-weight: 600;">${prenom} ${nom}</div>
+                  <div style="color: var(--muted); font-size: 0.85rem;">${email}</div>
+                </div>
+                <div>
+                  <div style="color: var(--muted); font-size: 0.85rem;">SEJOUR</div>
+                  <div style="font-weight: 600;">Arrivee: ${new Date(dateArrivee).toLocaleDateString('fr-FR')}</div>
+                  <div style="font-weight: 600;">Depart: ${new Date(dateDepart).toLocaleDateString('fr-FR')}</div>
+                  <div style="color: var(--muted); font-size: 0.85rem;">${nights} nuit${nights > 1 ? 's' : ''}</div>
+                </div>
+              </div>
+            </div>
+            
+            <div style="padding: 15px 0; border-bottom: 1px solid var(--border); margin-bottom: 15px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span>Chambre (${nights} nuits)</span>
+                <span style="font-weight: 600;">${totalPrice}€</span>
+              </div>
+              <div style="font-size: 0.9rem; color: var(--muted);">
+                Activites: ${selectedActivities.length > 0 ? selectedActivities.join(', ') : 'Aucune'}
+              </div>
+            </div>
+            
+            <div style="padding: 15px 0; margin-bottom: 15px; background: rgba(255,215,64,0.1); padding: 12px; border-radius: 8px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+                <span>Sous-total</span>
+                <span>${totalPrice}€</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--green);">
+                <span>Acompte (Depot)</span>
+                <span>-${deposit}€</span>
+              </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 2px solid var(--green);">
+              <span style="font-weight: 700; font-size: 1.1rem;">MONTANT DU</span>
+              <span style="color: var(--green); font-weight: 700; font-size: 1.3rem;">${amountDue}€</span>
+            </div>
+            
+            <div style="margin-top: 15px; padding: 12px; background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; font-size: 0.85rem; color: var(--muted); text-align: center;">
+              Le solde de ${amountDue}€ devra etre verse avant votre arrivee.
+            </div>
+          </div>
+        </div>
+      `;
+      
+      container.innerHTML = invoiceHtml;
+    }
+
     // ===== RESERVATION =====
     function handleReservation(e) {
       e.preventDefault();

@@ -62,8 +62,36 @@ $newReservation = [
 $reservations[] = $newReservation;
 writeJson('reservations.json', $reservations);
 
+// Envoyer un email de confirmation
+$emailSubject = 'FootCamp Dreams - Reservation recue!';
+$emailBody = "Bonjour $prenom $nom,
+
+Nous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.
+
+DETAILS DE VOTRE DEMANDE:
+- Arrivee: " . date('d/m/Y', $arrival) . "
+- Depart: " . date('d/m/Y', $departure) . "
+- Nombre de personnes: $nb_personnes
+- Depot: 80€
+
+Un administrateur examinera votre demande et vous enverra un email avec:
+- Votre numero de reservation
+- Vos identifiants de connexion
+- Les details complets de votre facture
+- Les instructions de paiement
+
+Ce processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!
+
+Cordialement,
+L'equipe FootCamp Dreams";
+
+$headers = "From: noreply@footcamp-dreams.com\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+@mail($email, $emailSubject, $emailBody, $headers);
+
 jsonResponse([
     'success' => true,
-    'message' => 'Réservation soumise avec succès! Un administrateur l\'examinera et vous enverra un email avec vos identifiants.',
+    'message' => 'Reservation soumise avec succes! Un email de confirmation a ete envoye a ' . $email . '. Un administrateur examinera votre demande et vous enverra un email avec vos identifiants.',
     'reservation_id' => $newReservation['id']
 ]);

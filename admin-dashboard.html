@@ -553,13 +553,13 @@
 
     <!-- RESERVATIONS MANAGEMENT -->
     <div class="room-list" style="margin-top: 40px;">
-      <div class="chart-title">Gestion des Réservations</div>
+      <div class="chart-title">📋 Gestion des Réservations</div>
       
-      <div style="margin-bottom: 20px; display: flex; gap: 10px;">
-        <button class="btn-filter" onclick="filterReservationsBy('all')" style="background: var(--gold); color: #1a1000;">Toutes</button>
-        <button class="btn-filter" onclick="filterReservationsBy('en_attente')" style="border-color: #ffa726; color: #ffa726;">En attente</button>
-        <button class="btn-filter" onclick="filterReservationsBy('validee')" style="border-color: var(--green); color: var(--green);">Validées</button>
-        <button class="btn-filter" onclick="filterReservationsBy('rejetée')" style="border-color: #ef5350; color: #ef5350;">Rejetées</button>
+      <div style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn-filter" onclick="filterReservationsBy('all')" style="background: var(--gold); color: #1a1000; font-weight: 600;">Toutes</button>
+        <button class="btn-filter" onclick="filterReservationsBy('en_attente')" style="border-color: #ffa726; color: #ffa726; font-weight: 600;">⏳ En attente</button>
+        <button class="btn-filter" onclick="filterReservationsBy('validee')" style="border-color: var(--green); color: var(--green); font-weight: 600;">✅ Validees</button>
+        <button class="btn-filter" onclick="filterReservationsBy('rejetee')" style="border-color: #ef5350; color: #ef5350; font-weight: 600;">❌ Rejetees</button>
       </div>
 
       <div id="reservationsList" style="display: grid; gap: 15px;"></div>
@@ -578,6 +578,11 @@
     $(document).ready(function() {
       checkAdminSession();
       loadData();
+      
+      // Auto-refresh du dashboard tous les 30 secondes
+      setInterval(function() {
+        loadData();
+      }, 30000);
     });
 
     function checkAdminSession() {
@@ -609,13 +614,25 @@
     }
 
     function loadRooms() {
-      // For now, using default rooms
-      allRooms = [
-        { id: 1, name: 'Salle A', capacity: 50 },
-        { id: 2, name: 'Salle B', capacity: 40 },
-        { id: 3, name: 'Salle C', capacity: 30 }
-      ];
-      updateDashboard();
+      // Charger les salles depuis rooms.json
+      $.ajax({
+        url: 'data/rooms.json',
+        method: 'GET',
+        dataType: 'json',
+        success: function(rooms) {
+          allRooms = rooms || [];
+          updateDashboard();
+        },
+        error: function() {
+          // Utiliser les salles par defaut si erreur
+          allRooms = [
+            { id: 1, name: 'Chambre A', capacity: 4, price_per_night: 120 },
+            { id: 2, name: 'Chambre B', capacity: 4, price_per_night: 110 },
+            { id: 3, name: 'Chambre C', capacity: 2, price_per_night: 80 }
+          ];
+          updateDashboard();
+        }
+      });
     }
 
     function updateDashboard() {
@@ -643,8 +660,8 @@
 
     function updateStatusCounts() {
       const pending = allReservations.filter(r => r.status === 'en_attente').length;
-      const approved = allReservations.filter(r => r.status === 'validée').length;
-      const rejected = allReservations.filter(r => r.status === 'rejetée').length;
+      const approved = allReservations.filter(r => r.status === 'validee').length;
+      const rejected = allReservations.filter(r => r.status === 'rejetee').length;
 
       document.getElementById('pendingCount').textContent = pending;
       document.getElementById('approvedCount').textContent = approved;
@@ -658,8 +675,8 @@
 
     function updateStatusChart() {
       const pending = allReservations.filter(r => r.status === 'en_attente').length;
-      const approved = allReservations.filter(r => r.status === 'validée').length;
-      const rejected = allReservations.filter(r => r.status === 'rejetée').length;
+      const approved = allReservations.filter(r => r.status === 'validee').length;
+      const rejected = allReservations.filter(r => r.status === 'rejetee').length;
 
       const ctx = document.getElementById('statusChart');
       
@@ -968,7 +985,7 @@
             if (resp.success) {
               const res = allReservations.find(r => r.id === id);
               if (res) {
-                res.status = 'rejetée';
+                res.status = 'rejetee';
               }
               displayReservations();
               updateDashboard();

@@ -14,7 +14,7 @@ foreach ($reservations as &$reservation) {
             ]);
         }
 
-        $reservation['status'] = 'rejetée';
+        $reservation['status'] = 'rejetee';
         writeJson('reservations.json', $reservations);
 
         jsonResponse([
