@@ -70,19 +70,51 @@ DETAILS DE VOTRE RESERVATION:
 - Nombre de personnes: {$reservation['nb_personnes']}
 - Depot: {$reservation['deposit']}€
 
+ACCES CLIENT:
+Connectez-vous a votre compte: https://footcamp-dreams.local/client-dashboard.html
+
+Une fois connecte, vous pourrez:
+- Consulter les details complets de votre reservation
+- Voir votre facture detaillee
+- Gerer votre sejour
+
 Veuillez conserver ces identifiants en un lieu sur.
 
 Cordialement,
 L'equipe FootCamp Dreams";
 
-                $headers = "From: noreply@footcamp-dreams.com\r\n";
-                $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-                
-                @mail($reservation['email'], $emailSubject, $emailBody, $headers);
+                // Envoyer l'email via SMTP
+                $mailSent = sendEmailViaSMTP($reservation['email'], $emailSubject, $emailBody);
+
+                // Enregistrer dans logs
+                logEmail([
+                    'timestamp' => date('Y-m-d H:i:s'),
+                    'to' => $reservation['email'],
+                    'type' => 'credentials',
+                    'reservation_id' => $reservation['id'],
+                    'subject' => $emailSubject,
+                    'body' => $emailBody,
+                    'sent' => $mailSent
+                ]);
+
+                $message = '✅ Réservation validée avec succès!';
+                if ($mailSent) {
+                    $message .= "\n📧 Email avec les identifiants envoyé à: " . $reservation['email'];
+                } else {
+                    $message .= "\n⚠️ Email non envoyé - Vérifiez la configuration SMTP";
+                }
 
                 jsonResponse([
                     'success' => true,
-                    'message' => 'Reservation validee. Email d\'identifiants envoye a ' . $reservation['email'] . '. Chambre assignee : ' . $room['name']
+                    'message' => $message,
+                    'room_name' => $room['name'],
+                    'room_id' => $room['id'],
+                    'credentials' => [
+                        'email' => $reservation['email'],
+                        'password' => $password
+                    ],
+                    'email_sent' => $mailSent,
+                    'reservation_id' => $reservation['id']
                 ]);
             }
         }

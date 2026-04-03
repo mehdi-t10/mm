@@ -1,61 +1,10 @@
 [
     {
-        "id": 1,
-        "nom": "Demo",
-        "prenom": "Lea",
-        "email": "demo@footcamp.test",
-        "password": "demo2026",
-        "role": "client"
-    },
-    {
         "id": 2,
         "nom": "Admin",
         "prenom": "Super",
         "email": "admin@footcamp.test",
         "password": "admin2026",
         "role": "admin"
-    },
-    {
-        "id": 3,
-        "nom": "MRABEUT",
-        "prenom": "Mehdi",
-        "email": "mrabeutm@gmail.com",
-        "password": "mehdi2026",
-        "role": "client"
-    },
-    {
-        "id": 4,
-        "nom": "ilo",
-        "prenom": "randariamanga",
-        "email": "ilo@footcamp.test",
-        "password": "ilo20265",
-        "telephone": "0550723455",
-        "role": "client"
-    },
-    {
-        "id": 5,
-        "nom": "iloniavo",
-        "prenom": "rand",
-        "email": "dfljkfhkljhf@gmail.com",
-        "password": "rand2026",
-        "role": "client"
-    },
-    {
-        "id": 8,
-        "nom": "sss",
-        "prenom": "ss",
-        "email": "ss@ss.ss",
-        "password": "ss2026",
-        "telephone": "0102030405",
-        "role": "client"
-    },
-    {
-        "id": 9,
-        "nom": "lkjk",
-        "prenom": "mkljlmk",
-        "email": "mrabetm@gmail.com",
-        "password": "mkljlmk2026",
-        "telephone": "0552495455",
-        "role": "client"
     }
 ]

@@ -594,6 +594,49 @@
 
       <div id="reservationsList" style="display: grid; gap: 15px;"></div>
     </div>
+
+    <!-- EMAIL CONFIGURATION -->
+    <div class="room-list" style="margin-top: 40px;">
+      <div class="chart-title">📧 Configuration des Emails SMTP</div>
+      <p style="color: var(--muted); font-size: 0.9rem; margin: 16px 0 0 0;">
+        Configurez vos paramètres d'envoi d'emails (Gmail recommandé)
+      </p>
+      
+      <div id="emailStatusAlert" style="margin-top: 16px;"></div>
+      
+      <form id="emailConfigForm" style="margin-top: 20px;">
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: var(--text);">Email SMTP (ex: votreemail@gmail.com)</label>
+          <input type="email" id="smtp_user" name="smtp_user" placeholder="votreemail@gmail.com" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: var(--text);">Mot de passe App (Gmail App Password)</label>
+          <input type="password" id="smtp_password" name="smtp_password" placeholder="16 caractères générés par Gmail" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
+          <small style="color: var(--muted); display: block; margin-top: 4px;">
+            Générez-le ici: <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color: var(--gold);">myaccount.google.com/apppasswords</a>
+          </small>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: var(--text);">Email d'expédition</label>
+          <input type="text" id="smtp_from_email" name="smtp_from_email" placeholder="noreply@footcamp-dreams.com" value="noreply@footcamp-dreams.com" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: var(--text);">Nom d'expédition</label>
+          <input type="text" id="smtp_from_name" name="smtp_from_name" placeholder="FootCamp Dreams" value="FootCamp Dreams" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
+        </div>
+
+        <button type="submit" class="btn btn-success" style="padding: 10px 20px; font-weight: 600;">💾 Sauvegarder Configuration</button>
+      </form>
+
+      <div style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); border-radius: 8px; padding: 16px; margin-top: 20px;">
+        <p style="margin: 0; color: var(--green); font-size: 0.9rem;">
+          ✅ <strong>Une fois configuré:</strong> L'email sera envoyé automatiquement quand vous validerez une réservation!
+        </p>
+      </div>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -1334,6 +1377,72 @@
     function redirectToLogin() {
       window.location.href = 'index.html';
     }
+
+    // Email Configuration Handler
+    function loadEmailConfig() {
+      $.ajax({
+        method: 'GET',
+        dataType: 'json',
+        url: 'api/admin_email_config.php'
+      }).done(function(resp) {
+        if (resp.success && resp.config) {
+          const config = resp.config;
+          document.getElementById('smtp_user').value = config.SMTP_USER || '';
+          document.getElementById('smtp_from_email').value = config.SMTP_FROM_EMAIL || '';
+          document.getElementById('smtp_from_name').value = config.SMTP_FROM_NAME || '';
+          
+          if (config.is_configured) {
+            const alert = document.getElementById('emailStatusAlert');
+            alert.innerHTML = '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;">✅ Configuration SMTP détectée - Les emails seront envoyés automatiquement!</div>';
+          }
+        }
+      });
+    }
+
+    document.getElementById('emailConfigForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const smtpUser = document.getElementById('smtp_user').value.trim();
+      const smtpPassword = document.getElementById('smtp_password').value.trim();
+      const smtpFromEmail = document.getElementById('smtp_from_email').value.trim();
+      const smtpFromName = document.getElementById('smtp_from_name').value.trim();
+
+      if (!smtpUser || !smtpPassword) {
+        alert('❌ Email et mot de passe requis');
+        return;
+      }
+
+      $.ajax({
+        method: 'POST',
+        dataType: 'json',
+        url: 'api/admin_email_config.php',
+        data: {
+          smtp_user: smtpUser,
+          smtp_password: smtpPassword,
+          smtp_from_email: smtpFromEmail,
+          smtp_from_name: smtpFromName
+        }
+      }).done(function(resp) {
+        if (resp.success) {
+          const alert = document.getElementById('emailStatusAlert');
+          alert.innerHTML = '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;">✅ Configuration sauvegardée! Les emails seront envoyés automatiquement lors de la validation.</div>';
+          
+          // Réinitialiser le champ mot de passe
+          document.getElementById('smtp_password').value = '';
+          
+          setTimeout(() => {
+            alert.innerHTML = '';
+          }, 5000);
+        } else {
+          alert('❌ ' + (resp.message || 'Erreur lors de la sauvegarde'));
+        }
+      }).fail(function() {
+        alert('❌ Erreur réseau');
+      });
+    });
+
+    // Charger la config au chargement
+    loadEmailConfig();
   </script>
 </body>
 </html>

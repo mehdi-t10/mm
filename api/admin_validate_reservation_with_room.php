@@ -127,11 +127,8 @@ Merci d'avoir choisi notre établissement.
 Cordialement,
 L'équipe FootCamp Dreams";
 
-$headers = "From: noreply@footcamp-dreams.com\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-
-// Tenter l'envoi (may fail si SMTP not configured)
-$mailSent = @mail($reservation['email'], $emailSubject, $emailBody, $headers);
+// Envoyer l'email via SMTP
+$mailSent = sendEmailViaSMTP($reservation['email'], $emailSubject, $emailBody);
 
 // Enregistrer dans logs
 logEmail([
@@ -144,9 +141,16 @@ logEmail([
     'sent' => $mailSent
 ]);
 
+$message = '✅ Réservation validée avec succès!';
+if ($mailSent) {
+    $message .= "\n📧 Email avec les identifiants envoyé à: " . $reservation['email'];
+} else {
+    $message .= "\n⚠️ Email non envoyé - Vérifiez la configuration SMTP";
+}
+
 jsonResponse([
     'success' => true,
-    'message' => 'Réservation validée avec succès',
+    'message' => $message,
     'room_name' => $room['name'],
     'room_id' => $room['id'],
     'credentials' => [
@@ -156,16 +160,4 @@ jsonResponse([
     'email_sent' => $mailSent,
     'reservation_id' => $reservationId
 ]);
-
-function logEmail($data) {
-    $logsFile = 'data/email_logs.json';
-    $logs = [];
-    
-    if (file_exists($logsFile)) {
-        $logs = json_decode(file_get_contents($logsFile), true) ?? [];
-    }
-    
-    $logs[] = $data;
-    file_put_contents($logsFile, json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-}
 ?>

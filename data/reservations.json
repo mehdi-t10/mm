@@ -1,24 +1,5 @@
 [
     {
-        "id": 1,
-        "nom": "MRABEUT",
-        "prenom": "Mehdi",
-        "email": "mrabeutm@gmail.com",
-        "telephone": "0749339015",
-        "date_arrivee": "2026-05-12",
-        "date_depart": "2026-02-20",
-        "nb_personnes": 2,
-        "activities": [
-            "Entrainement collectif",
-            "Match amical"
-        ],
-        "services": [],
-        "discount_percent": 0,
-        "deposit": 80,
-        "status": "validee",
-        "room": "Chambre A"
-    },
-    {
         "id": 2,
         "nom": "iloniavo",
         "prenom": "rand",
@@ -37,58 +18,6 @@
         "room": "Chambre A"
     },
     {
-        "id": 3,
-        "nom": "mehdi",
-        "prenom": "mrabeut",
-        "email": "mrabeutm@gmail.com",
-        "telephone": "0749339015",
-        "date_arrivee": "2026-04-19",
-        "date_depart": "2026-04-15",
-        "nb_personnes": 1,
-        "activities": [
-            "Match amical"
-        ],
-        "services": [],
-        "discount_percent": 0,
-        "deposit": 80,
-        "status": "validee",
-        "room": "Chambre A"
-    },
-    {
-        "id": 4,
-        "nom": "sss",
-        "prenom": "ss",
-        "email": "ss@ss.ss",
-        "telephone": "0102030405",
-        "date_arrivee": "2026-04-03",
-        "date_depart": "2026-04-17",
-        "nb_personnes": 2,
-        "activities": [
-            1
-        ],
-        "status": "validee",
-        "deposit": 80,
-        "room": "Chambre A",
-        "created_at": "2026-04-02 09:53:07"
-    },
-    {
-        "id": 5,
-        "nom": "lkjk",
-        "prenom": "mkljlmk",
-        "email": "mrabetm@gmail.com",
-        "telephone": "0552495455",
-        "date_arrivee": "2026-04-10",
-        "date_depart": "2026-04-25",
-        "nb_personnes": 2,
-        "activities": [
-            1
-        ],
-        "status": "validee",
-        "deposit": 80,
-        "room": "Chambre B",
-        "created_at": "2026-04-02 09:55:40"
-    },
-    {
         "id": 6,
         "nom": "leo",
         "prenom": "messi",
@@ -104,5 +33,22 @@
         "deposit": 80,
         "room": 3,
         "created_at": "2026-04-02 21:36:37"
+    },
+    {
+        "id": 7,
+        "nom": "cristiano",
+        "prenom": "ronaldo",
+        "email": "mrabeutm@gmail.com",
+        "telephone": "0749339017",
+        "date_arrivee": "2026-05-01",
+        "date_depart": "2026-05-09",
+        "nb_personnes": 5,
+        "activities": [
+            1
+        ],
+        "status": "validee",
+        "deposit": 80,
+        "room": 2,
+        "created_at": "2026-04-03 08:33:32"
     }
 ]
