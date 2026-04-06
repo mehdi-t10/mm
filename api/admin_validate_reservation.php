@@ -34,19 +34,20 @@ foreach ($reservations as &$reservation) {
 
                 if (!$alreadyExists) {
                     // Creation d'un nouveau compte client
-                    $password = generatePassword($reservation['prenom']);
+                    $plainPassword = generatePassword($reservation['prenom']);
                     $users[] = [
                         'id' => nextId($users),
                         'nom' => $reservation['nom'],
                         'prenom' => $reservation['prenom'],
                         'email' => $reservation['email'],
-                        'password' => $password,
+                        'password' => password_hash($plainPassword, PASSWORD_DEFAULT),
                         'telephone' => $reservation['telephone'],
-                        'type' => 'client'
+                        'role' => 'client'
                     ];
+                    $passwordToSend = $plainPassword;
                 } else {
-                    // Utiliser le password existant du client
-                    $password = $existingUser['password'];
+                    // Utiliser le password existant du client - ne pas envoyer
+                    $passwordToSend = null;
                 }
 
                 writeJson('reservations.json', $reservations);
@@ -60,8 +61,7 @@ foreach ($reservations as &$reservation) {
 Votre reservation a ete validee! Vous pouvez maintenant vous connecter a votre compte.
 
 INFORMATIONS DE CONNEXION:
-- Email: {$reservation['email']}
-- Mot de passe: $password
+- Email: {$reservation['email']}" . ($passwordToSend ? "\n- Mot de passe: $passwordToSend" : "\n(Vous avez deja un compte, utilisez votre mot de passe existant)") . "
 
 DETAILS DE VOTRE RESERVATION:
 - Chambre assignee: {$room['name']}
@@ -111,7 +111,7 @@ L'equipe FootCamp Dreams";
                     'room_id' => $room['id'],
                     'credentials' => [
                         'email' => $reservation['email'],
-                        'password' => $password
+                        'password' => $passwordToSend
                     ],
                     'email_sent' => $mailSent,
                     'reservation_id' => $reservation['id']

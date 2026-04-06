@@ -18,37 +18,39 @@
         "room": "Chambre A"
     },
     {
-        "id": 6,
-        "nom": "leo",
-        "prenom": "messi",
-        "email": "mrabeutm@gmail.com",
-        "telephone": "0550772457",
-        "date_arrivee": "2026-04-09",
-        "date_depart": "2026-04-16",
-        "nb_personnes": 2,
+        "id": 7,
+        "nom": "luis",
+        "prenom": "suarez",
+        "email": "moulay-mehdi.mrabeut@universite-paris-saclay.fr",
+        "telephone": "0749339012",
+        "date_arrivee": "2026-05-02",
+        "date_depart": "2026-05-10",
+        "nb_personnes": 25,
         "activities": [
             1
         ],
-        "status": "validee",
+        "selected_facilities": [],
+        "status": "rejetee",
         "deposit": 80,
-        "room": 3,
-        "created_at": "2026-04-02 21:36:37"
+        "room": null,
+        "created_at": "2026-04-05 22:29:18"
     },
     {
-        "id": 7,
-        "nom": "cristiano",
-        "prenom": "ronaldo",
+        "id": 8,
+        "nom": "lamine",
+        "prenom": "yamal",
         "email": "mrabeutm@gmail.com",
-        "telephone": "0749339017",
-        "date_arrivee": "2026-05-01",
-        "date_depart": "2026-05-09",
+        "telephone": "0749339015",
+        "date_arrivee": "2026-04-18",
+        "date_depart": "2026-05-10",
         "nb_personnes": 5,
         "activities": [
             1
         ],
+        "selected_facilities": [],
         "status": "validee",
         "deposit": 80,
         "room": 2,
-        "created_at": "2026-04-03 08:33:32"
+        "created_at": "2026-04-05 22:33:25"
     }
 ]

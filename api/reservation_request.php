@@ -12,6 +12,7 @@ $date_arrivee = $input['date_arrivee'] ?? '';
 $date_depart = $input['date_depart'] ?? '';
 $nb_personnes = $input['nb_personnes'] ?? 0;
 $activities = $input['activities'] ?? [];
+$selected_facilities = $input['selected_facilities'] ?? [];
 
 // Validation
 if (!$nom || !$prenom || !$email || !$telephone || !$date_arrivee || !$date_depart) {
@@ -53,6 +54,7 @@ $newReservation = [
     'date_depart' => $date_depart,
     'nb_personnes' => intval($nb_personnes),
     'activities' => is_array($activities) ? $activities : [],
+    'selected_facilities' => is_array($selected_facilities) ? $selected_facilities : [],
     'status' => 'en_attente',
     'deposit' => 80,
     'room' => null,
@@ -85,13 +87,21 @@ Ce processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!
 Cordialement,
 L'equipe FootCamp Dreams";
 
-$headers = "From: noreply@footcamp-dreams.com\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$mailSent = sendEmailViaSMTP($email, $emailSubject, $emailBody);
 
-@mail($email, $emailSubject, $emailBody, $headers);
+logEmail([
+    'timestamp' => date('Y-m-d H:i:s'),
+    'to' => $email,
+    'type' => 'reservation_confirmation',
+    'reservation_id' => $newReservation['id'],
+    'subject' => $emailSubject,
+    'body' => $emailBody,
+    'sent' => $mailSent
+]);
 
 jsonResponse([
     'success' => true,
     'message' => 'Reservation soumise avec succes! Un email de confirmation a ete envoye a ' . $email . '. Un administrateur examinera votre demande et vous enverra un email avec vos identifiants.',
-    'reservation_id' => $newReservation['id']
+    'reservation_id' => $newReservation['id'],
+    'email_sent' => $mailSent
 ]);

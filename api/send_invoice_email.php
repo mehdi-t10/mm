@@ -220,12 +220,7 @@ $invoiceHtml .= "
 $to = $reservation['email'];
 $subject = 'Facture de réservation FootCamp Dreams #' . str_pad($reservationId, 6, '0', STR_PAD_LEFT);
 
-$headers = "MIME-Version: 1.0\r\n";
-$headers .= "Content-type: text/html; charset=UTF-8\r\n";
-$headers .= "From: facturation@footcamp-dreams.com\r\n";
-$headers .= "Reply-To: contact@footcamp-dreams.com\r\n";
-
-$mailSent = @mail($to, $subject, $invoiceHtml, $headers);
+$mailSent = sendEmailViaSMTP($to, $subject, $invoiceHtml, 'text/html');
 
 // Enregistrer l'envoi dans logs
 logEmailSent([

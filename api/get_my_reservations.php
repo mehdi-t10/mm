@@ -3,12 +3,12 @@ require_once 'utils.php';
 
 header('Content-Type: application/json');
 
-$email = isset($_GET['email']) ? sanitize($_GET['email']) : null;
+$email = isset($_GET['email']) ? trim($_GET['email']) : null;
 
-if (!$email) {
+if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     jsonResponse([
         'success' => false,
-        'message' => 'Email requis'
+        'message' => 'Email requis ou invalide'
     ]);
 }
 

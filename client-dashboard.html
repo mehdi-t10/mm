@@ -607,13 +607,7 @@
       document.getElementById('profileName').textContent = (user.prenom || '') + ' ' + (user.nom || '');
       document.getElementById('profileEmail').textContent = user.email || '-';
       document.getElementById('profilePhone').textContent = user.telephone || '-';
-      
-      // Le mot de passe est stocké dans localStorage au format chiffré ou en plaintext
-      // Pour la démo, on le récupère depuis sessionStorage
-      const fullUser = JSON.parse(sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser'));
-      if (fullUser && fullUser.password) {
-        document.getElementById('profilePassword').textContent = fullUser.password;
-      }
+      document.getElementById('profilePassword').textContent = 'Mot de passe non affiché pour des raisons de sécurité';
     }
 
     function toggleCredentialsDisplay() {
@@ -731,51 +725,109 @@
     }
 
     function viewReservationDetails(resId) {
-      // Récupérer les détails de la réservation
+      $.ajax({
+        url: 'api/get_invoice.php',
+        method: 'GET',
+        data: { id: resId },
+        dataType: 'json',
+        success: function(resp) {
+          if (resp.success) {
+            showInvoiceModal(resp.invoice);
+          } else {
+            showMsg('reservationMsg', resp.message || 'Impossible de charger la facture', false);
+          }
+        },
+        error: function() {
+          showMsg('reservationMsg', 'Erreur lors du chargement de la facture', false);
+        }
+      });
+    }
+
+    function showInvoiceModal(invoice) {
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.8);
+        z-index: 2000;
+        overflow-y: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      `;
+
+      const invoiceHtml = `
+        <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border);">
+            <h2 style="margin: 0; color: var(--green);">📋 Facture de réservation #${invoice.id}</h2>
+            <button onclick="this.closest('[style*=position]').remove()" style="background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer;">✕</button>
+          </div>
+          <div style="padding: 20px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+              <div>
+                <div style="color: var(--muted); font-size: 0.85rem;">Client</div>
+                <div style="font-weight: 700; font-size: 1.1rem;">${invoice.client_name}</div>
+                <div style="color: var(--muted);">${invoice.client_email}</div>
+                <div style="color: var(--muted);">${invoice.client_phone || '-'} </div>
+              </div>
+              <div>
+                <div style="color: var(--muted); font-size: 0.85rem;">Séjour</div>
+                <div style="font-weight: 700; font-size: 1.1rem;">${invoice.room_name}</div>
+                <div style="color: var(--muted);">Arrivée: ${new Date(invoice.check_in).toLocaleDateString('fr-FR')}</div>
+                <div style="color: var(--muted);">Départ: ${new Date(invoice.check_out).toLocaleDateString('fr-FR')}</div>
+                <div style="color: var(--muted);">Nuits: ${invoice.nights}</div>
+              </div>
+            </div>
+            <div style="background: rgba(255,255,255,0.04); padding: 20px; border-radius: 12px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <strong>Hébergement</strong>
+                <span>${invoice.room_total.toFixed(2)}€</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <strong>Activités</strong>
+                <span>${invoice.activities_cost.toFixed(2)}€</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <strong>Acompte</strong>
+                <span>-${invoice.deposit_paid.toFixed(2)}€</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-weight: 700; padding-top: 12px; border-top: 1px solid var(--border);">
+                <strong>Total à payer</strong>
+                <span>${invoice.amount_due.toFixed(2)}€</span>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 12px; padding: 20px; border-top: 1px solid var(--border); background: rgba(0,230,118,0.05);">
+            <button onclick="downloadInvoice(${invoice.id})" style="flex: 1; padding: 12px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+              📥 Télécharger
+            </button>
+            <button onclick="sendInvoiceEmail(${invoice.id}); this.closest('[style*=position]').remove();" style="flex: 1; padding: 12px; background: rgba(0,230,118,0.15); border: 1px solid var(--green); color: var(--green); border-radius: 8px; font-weight: 600; cursor: pointer;">
+              📧 Envoyer par email
+            </button>
+          </div>
+        </div>
+      `;
+
+      modal.innerHTML = invoiceHtml;
+      document.body.appendChild(modal);
+    }
+
+    function sendInvoiceEmail(resId) {
       $.ajax({
         url: 'api/send_invoice_email.php',
         method: 'POST',
         data: { reservationId: resId },
+        dataType: 'json',
         success: function(resp) {
           if (resp.success) {
-            // Afficher une modale avec la facture
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-              position: fixed;
-              inset: 0;
-              background: rgba(0,0,0,0.8);
-              z-index: 2000;
-              overflow-y: auto;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              padding: 20px;
-            `;
-            
-            modal.innerHTML = `
-              <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; max-width: 850px; width: 100%; max-height: 90vh; overflow-y: auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border);">
-                  <h2 style="margin: 0; color: var(--green);">📋 Votre Facture</h2>
-                  <button onclick="this.closest('[style*=position]').remove()" style="background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer;">✕</button>
-                </div>
-                
-                <div style="padding: 20px;">
-                  ${resp.html}
-                </div>
-                
-                <div style="display: flex; gap: 12px; padding: 20px; border-top: 1px solid var(--border); background: rgba(0,230,118,0.05);">
-                  <button onclick="downloadInvoice(${resId})" style="flex: 1; padding: 12px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                    📥 Télécharger
-                  </button>
-                  <button onclick="sendInvoiceEmail(${resId}); this.closest('[style*=position]').remove();" style="flex: 1; padding: 12px; background: rgba(0,230,118,0.15); border: 1px solid var(--green); color: var(--green); border-radius: 8px; font-weight: 600; cursor: pointer;">
-                    📧 Envoyer par email
-                  </button>
-                </div>
-              </div>
-            `;
-            
-            document.body.appendChild(modal);
+            showMsg('reservationMsg', '📧 Facture envoyée à votre email.', true);
+          } else {
+            showMsg('reservationMsg', resp.message || 'Erreur lors de l’envoi du mail.', false);
           }
+        },
+        error: function() {
+          showMsg('reservationMsg', 'Erreur lors de l’envoi du mail.', false);
         }
       });
     }

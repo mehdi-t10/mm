@@ -60,94 +60,136 @@ function logEmail($data) {
     file_put_contents($logsFile, json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }
 
-function sendEmailViaSMTP($to, $subject, $body) {
+function sendEmailViaSMTP($to, $subject, $body, $contentType = 'text/plain') {
     require_once __DIR__ . '/../config.php';
-    
-    // Vérifier la configuration
+
     if (SMTP_NOT_CONFIGURED) {
         return false;
     }
-    
-    try {
-        // Créer une connexion SMTP TLS
-        $socket = @stream_socket_client(
-            "tcp://" . SMTP_HOST . ":" . SMTP_PORT,
-            $errno,
-            $errstr,
-            30,
-            STREAM_CLIENT_CONNECT
-        );
-        
-        if (!$socket) {
-            return false;
-        }
-        
-        // Lire le message de bienvenue
-        stream_get_line($socket, 512);
-        
-        // Envoyer EHLO
-        fputs($socket, "EHLO localhost\r\n");
-        stream_get_line($socket, 512);
-        
-        // Activer TLS si configuré
-        if (SMTP_SECURE === 'tls') {
-            fputs($socket, "STARTTLS\r\n");
-            stream_get_line($socket, 512);
-            
-            if (defined('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT')) {
-                stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
-            } else {
-                stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
-            }
-            
-            fputs($socket, "EHLO localhost\r\n");
-            stream_get_line($socket, 512);
-        }
-        
-        // Authentification
-        fputs($socket, "AUTH LOGIN\r\n");
-        stream_get_line($socket, 512);
-        fputs($socket, base64_encode(SMTP_USER) . "\r\n");
-        stream_get_line($socket, 512);
-        fputs($socket, base64_encode(SMTP_PASSWORD) . "\r\n");
-        $authResponse = stream_get_line($socket, 512);
-        
-        if (strpos($authResponse, '235') === false) {
-            fclose($socket);
-            return false; // Authentification échouée
-        }
-        
-        // Préparer l'email
-        fputs($socket, "MAIL FROM:<" . SMTP_FROM_EMAIL . ">\r\n");
-        stream_get_line($socket, 512);
-        
-        fputs($socket, "RCPT TO:<{$to}>\r\n");
-        stream_get_line($socket, 512);
-        
-        fputs($socket, "DATA\r\n");
-        stream_get_line($socket, 512);
-        
-        // Construire les headers
-        $headers = "From: " . SMTP_FROM_NAME . " <" . SMTP_FROM_EMAIL . ">\r\n";
-        $headers .= "To: {$to}\r\n";
-        $headers .= "Subject: {$subject}\r\n";
-        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $headers .= "X-Mailer: FootCamp Dreams\r\n";
-        $headers .= "\r\n";
-        
-        $message = $headers . $body;
-        
-        // Envoyer le message
-        fputs($socket, $message . "\r\n.\r\n");
-        $response = stream_get_line($socket, 512);
-        
-        // Terminer la connexion
-        fputs($socket, "QUIT\r\n");
-        fclose($socket);
-        
-        return strpos($response, '250') !== false;
-        
-    } catch (Exception $e) {
+
+    $socket = @stream_socket_client(
+        'tcp://' . SMTP_HOST . ':' . SMTP_PORT,
+        $errno,
+        $errstr,
+        30,
+        STREAM_CLIENT_CONNECT
+    );
+
+    if (!$socket) {
         return false;
     }
+
+    stream_set_timeout($socket, 30);
+
+    $readResponse = function () use ($socket) {
+        $response = '';
+        while (!feof($socket)) {
+            $line = fgets($socket, 515);
+            if ($line === false) {
+                break;
+            }
+            $response .= $line;
+            if (preg_match('/^[0-9]{3} /', $line)) {
+                break;
+            }
+        }
+        return trim($response);
+    };
+
+    $writeCommand = function ($command) use ($socket) {
+        fwrite($socket, $command . "\r\n");
+    };
+
+    $response = $readResponse();
+    if (strpos($response, '220') !== 0) {
+        fclose($socket);
+        return false;
+    }
+
+    $writeCommand('EHLO localhost');
+    $response = $readResponse();
+    if (strpos($response, '250') !== 0) {
+        fclose($socket);
+        return false;
+    }
+
+    if (SMTP_SECURE === 'tls') {
+        $writeCommand('STARTTLS');
+        $response = $readResponse();
+        if (strpos($response, '220') !== 0) {
+            fclose($socket);
+            return false;
+        }
+
+        if (!stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+            fclose($socket);
+            return false;
+        }
+
+        $writeCommand('EHLO localhost');
+        $response = $readResponse();
+        if (strpos($response, '250') !== 0) {
+            fclose($socket);
+            return false;
+        }
+    }
+
+    $writeCommand('AUTH LOGIN');
+    $response = $readResponse();
+    if (strpos($response, '334') !== 0) {
+        fclose($socket);
+        return false;
+    }
+
+    $writeCommand(base64_encode(SMTP_USER));
+    $response = $readResponse();
+    if (strpos($response, '334') !== 0) {
+        fclose($socket);
+        return false;
+    }
+
+    $writeCommand(base64_encode(SMTP_PASSWORD));
+    $response = $readResponse();
+    if (strpos($response, '235') !== 0) {
+        fclose($socket);
+        return false;
+    }
+
+    $writeCommand('MAIL FROM:<' . SMTP_FROM_EMAIL . '>');
+    $response = $readResponse();
+    if (strpos($response, '250') !== 0) {
+        fclose($socket);
+        return false;
+    }
+
+    $writeCommand('RCPT TO:<' . $to . '>');
+    $response = $readResponse();
+    if (strpos($response, '250') !== 0 && strpos($response, '251') !== 0) {
+        fclose($socket);
+        return false;
+    }
+
+    $writeCommand('DATA');
+    $response = $readResponse();
+    if (strpos($response, '354') !== 0) {
+        fclose($socket);
+        return false;
+    }
+
+    $headers = "From: " . SMTP_FROM_NAME . " <" . SMTP_FROM_EMAIL . ">\r\n";
+    $headers .= "To: " . $to . "\r\n";
+    $headers .= "Subject: " . $subject . "\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: " . $contentType . "; charset=UTF-8\r\n";
+    $headers .= "X-Mailer: FootCamp Dreams\r\n";
+    $headers .= "\r\n";
+
+    $message = $headers . $body . "\r\n.";
+    $writeCommand($message);
+
+    $response = $readResponse();
+    $writeCommand('QUIT');
+    fclose($socket);
+
+    return strpos($response, '250') === 0;
 }
