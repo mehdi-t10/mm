@@ -52,5 +52,23 @@
         "deposit": 80,
         "room": 2,
         "created_at": "2026-04-05 22:33:25"
+    },
+    {
+        "id": 9,
+        "nom": "ilo",
+        "prenom": "ilo",
+        "email": "ilo@test.com",
+        "telephone": "0102030405",
+        "date_arrivee": "2026-04-02",
+        "date_depart": "2026-04-03",
+        "nb_personnes": 2,
+        "activities": [
+            1
+        ],
+        "selected_facilities": [],
+        "status": "en_attente",
+        "deposit": 80,
+        "room": null,
+        "created_at": "2026-04-06 17:15:11"
     }
 ]

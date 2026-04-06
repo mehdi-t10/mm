@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --bg: #070a0f;
@@ -310,12 +311,215 @@
       margin-top: 60px;
     }
 
+    /* LANDING SECTION STYLES */
+    .hero-section {
+      position: relative;
+      text-align: center;
+      margin-bottom: 80px;
+      padding: 60px 24px;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 8vw, 5rem);
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--green), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 900;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: var(--muted);
+      margin-bottom: 40px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+
+    .feature-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), transparent);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--green);
+      box-shadow: 0 20px 40px rgba(0, 230, 118, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      color: var(--green);
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: center;
+      min-height: 60px;
+      align-items: center;
+    }
+
+    .feature-title {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .feature-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .gallery-section {
+      max-width: 1400px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+
+    .gallery-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      text-align: center;
+      margin-bottom: 50px;
+      color: var(--text);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(0,230,118,0.1), rgba(255,215,64,0.05));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+      border-color: var(--green);
+      box-shadow: 0 20px 50px rgba(0, 230, 118, 0.2);
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+
+    .stat-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border-top: 3px solid var(--green);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .cta-section {
+      max-width: 900px;
+      margin: 80px auto 60px;
+      padding: 60px 40px;
+      background: linear-gradient(135deg, rgba(0,230,118,0.1), rgba(255,215,64,0.05));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .cta-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .cta-text {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+
+    .highlight {
+      color: var(--green);
+      font-weight: 700;
+    }
+
     @media (max-width: 1200px) {
       .portals-section {
         grid-template-columns: 1fr;
       }
       .page-title {
         margin-bottom: 40px;
+      }
+      .hero-section {
+        padding: 40px 24px;
+        margin-bottom: 50px;
+      }
+      .gallery-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -332,12 +536,168 @@
   </header>
 
   <div class="container-main">
-    <h1 class="page-title">Bienvenue au centre de vacances <em style="color: var(--green);">FOOTBALL</em></h1>
+    <!-- HERO SECTION -->
+    <div class="hero-section">
+      <div class="hero-title">FOOTCAMP DREAMS</div>
+      <div class="hero-subtitle">
+        Le centre de vacances football premium • Camps d'entraînement • Hébergement 5⭐
+      </div>
+    </div>
+
+    <!-- FEATURES SECTION -->
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-soccer-ball"></i></div>
+        <div class="feature-title">Terrains Professionnels</div>
+        <div class="feature-text">Équipements internationaux et entraîneurs certifiés pour tous les niveaux</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-bed"></i></div>
+        <div class="feature-title">Hébergement Luxe</div>
+        <div class="feature-text">Chambres tout confort avec vue sur les installations sportives</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+        <div class="feature-title">Restauration Premium</div>
+        <div class="feature-text">Menus équilibrés préparés par nos chefs pour optimiser vos performances</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-users"></i></div>
+        <div class="feature-title">Coaching Personnalisé</div>
+        <div class="feature-text">Encadrement professionnel adapté à votre niveau et vos objectifs</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+        <div class="feature-title">Disponibilité Flexible</div>
+        <div class="feature-text">Réservations toute l'année pour les groupes et les individuels</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-star"></i></div>
+        <div class="feature-title">Expérience VIP</div>
+        <div class="feature-text">Services exclusifs et aménagements premium pour votre confort</div>
+      </div>
+    </div>
+
+    <!-- GALLERY SECTION -->
+    <div class="gallery-section">
+      <h2 class="gallery-title"><i class="fas fa-image"></i> NOTRE CENTRE</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <svg viewBox="0 0 400 225" width="100%" height="100%" class="gallery-image">
+            <defs>
+              <linearGradient id="sky1" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#E0F6FF;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="400" height="225" fill="url(#sky1)"/>
+            <!-- Herbe -->
+            <rect y="140" width="400" height="85" fill="#2d5016"/>
+            <!-- Terrain de football -->
+            <rect x="30" y="120" width="340" height="100" fill="#1a4d0a" stroke="#fff" stroke-width="2"/>
+            <!-- Lignes du terrain -->
+            <line x1="200" y1="120" x2="200" y2="220" stroke="#fff" stroke-width="2"/>
+            <circle cx="200" cy="170" r="30" fill="none" stroke="#fff" stroke-width="2"/>
+            <circle cx="200" cy="170" r="3" fill="#fff"/>
+            <!-- Buts -->
+            <rect x="50" y="140" width="40" height="40" fill="none" stroke="#fff" stroke-width="2"/>
+            <rect x="310" y="140" width="40" height="40" fill="none" stroke="#fff" stroke-width="2"/>
+            <!-- Soleil -->
+            <circle cx="350" cy="40" r="25" fill="#FFD700"/>
+          </svg>
+        </div>
+
+        <div class="gallery-item">
+          <svg viewBox="0 0 400 225" width="100%" height="100%" class="gallery-image">
+            <defs>
+              <linearGradient id="sky2" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#1a3a52;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#4a6fa5;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="400" height="225" fill="url(#sky2)"/>
+            <!-- Stade illuminé -->
+            <ellipse cx="200" cy="160" rx="150" ry="50" fill="#2d5016"/>
+            <!-- Projecteurs -->
+            <polygon points="100,40 120,100 80,100" fill="#FFD700" opacity="0.8"/>
+            <polygon points="300,40 320,100 280,100" fill="#FFD700" opacity="0.8"/>
+            <polygon points="150,20 170,80 130,80" fill="#FFD700" opacity="0.6"/>
+            <polygon points="250,20 270,80 230,80" fill="#FFD700" opacity="0.6"/>
+            <!-- Éclairage du terrain -->
+            <ellipse cx="200" cy="160" rx="140" ry="40" fill="#FFD700" opacity="0.15"/>
+          </svg>
+        </div>
+
+        <div class="gallery-item">
+          <svg viewBox="0 0 400 225" width="100%" height="100%" class="gallery-image">
+            <defs>
+              <linearGradient id="sky3" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#FFB347;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#FFE5CC;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="400" height="225" fill="url(#sky3)"/>
+            <!-- Bâtiment d'hébergement -->
+            <rect x="50" y="80" width="120" height="130" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+            <!-- Fenêtres -->
+            <rect x="70" y="100" width="20" height="20" fill="#FFD700"/>
+            <rect x="100" y="100" width="20" height="20" fill="#FFD700"/>
+            <rect x="130" y="100" width="20" height="20" fill="#FFD700"/>
+            <rect x="70" y="135" width="20" height="20" fill="#FFD700"/>
+            <rect x="100" y="135" width="20" height="20" fill="#FFD700"/>
+            <rect x="130" y="135" width="20" height="20" fill="#FFD700"/>
+            <!-- Toit -->
+            <polygon points="50,80 170,80 180,60 40,60" fill="#654321"/>
+            <!-- Terrain adjacent -->
+            <rect x="200" y="100" width="160" height="110" fill="#2d5016" stroke="#fff" stroke-width="2"/>
+            <!-- Herbe -->
+            <rect y="210" width="400" height="15" fill="#1a4d0a"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS SECTION -->
+    <div class="stats-section">
+      <div class="stat-card">
+        <div class="stat-number">25+</div>
+        <div class="stat-label">Années d'expérience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Terrains et installations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Clients satisfaits par an</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4.9★</div>
+        <div class="stat-label">Note moyenne</div>
+      </div>
+    </div>
+
+    <!-- CTA SECTION -->
+    <div class="cta-section">
+      <h2 class="cta-title"><i class="fas fa-rocket"></i> PRÊT À REJOINDRE FOOTCAMP?</h2>
+      <p class="cta-text">
+        Réservez votre séjour dès maintenant et vivez une expérience <span class="highlight">inoubliable</span> au cœur du football
+      </p>
+      <a href="#reservation-anchor" style="display: inline-block; padding: 14px 36px; background: linear-gradient(135deg, var(--green), #00c853); color: #000; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; text-decoration: none; transition: all 0.3s; font-size: 1rem;">
+        <i class="fas fa-check-circle"></i> Commencer ma réservation
+      </a>
+    </div>
 
     <!-- RESERVATION SECTION -->
-    <div style="max-width: 900px; margin: 0 auto 60px; padding: 40px; background: var(--panel); border: 1px solid var(--border); border-radius: 24px; backdrop-filter: blur(10px);">
-      <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 1px; color: var(--green); margin-bottom: 30px; text-align: center;">⚽ RÉSERVEZ VOTRE SÉJOUR</h2>
-      
+    <div id="reservation-anchor" style="max-width: 900px; margin: 60px auto 60px; padding: 40px; background: var(--panel); border: 1px solid var(--border); border-radius: 24px; backdrop-filter: blur(10px);">
+      <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 1px; color: var(--green); margin-bottom: 30px; text-align: center;"><i class="fas fa-list-check"></i> RÉSERVEZ VOTRE SÉJOUR</h2>
+
       <form onsubmit="handleReservationRequest(event)">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
           <div>
@@ -377,17 +737,17 @@
 
         <!-- FACILITIES SECTION -->
         <div id="facilitiesSection" style="margin-bottom: 20px; display: none;">
-          <label style="display: block; margin-bottom: 12px; font-weight: 600; color: var(--green);">🏟️ Stades/Terrains Disponibles</label>
+          <label style="display: block; margin-bottom: 12px; font-weight: 600; color: var(--green);"><i class="fas fa-stadium"></i> Stades/Terrains Disponibles</label>
           <div id="facilitiesContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px; background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 12px;"></div>
         </div>
 
         <!-- ROOMS SECTION -->
         <div id="roomsSection" style="margin-bottom: 20px; display: none;">
-          <label style="display: block; margin-bottom: 12px; font-weight: 600; color: var(--green);">🛏️ Chambres Disponibles</label>
+          <label style="display: block; margin-bottom: 12px; font-weight: 600; color: var(--green);"><i class="fas fa-door-open"></i> Chambres Disponibles</label>
           <div id="roomsContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px; background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 12px;"></div>
         </div>
 
-        <button type="submit" style="width: 100%; padding: 14px; background: linear-gradient(135deg, var(--green), #00c853); color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s;">🚀 SOUMETTRE MA RÉSERVATION</button>
+        <button type="submit" style="width: 100%; padding: 14px; background: linear-gradient(135deg, var(--green), #00c853); color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s;"><i class="fas fa-paper-plane"></i> SOUMETTRE MA RÉSERVATION</button>
         <div id="reservationMsg" style="margin-top: 16px;"></div>
       </form>
     </div>
@@ -398,7 +758,7 @@
       <!-- CLIENT SIDE -->
       <div class="portal-card client">
         <div class="portal-title">
-          <div class="portal-icon">👤</div>
+          <div class="portal-icon"><i class="fas fa-user-circle"></i></div>
           <span>Espace Client</span>
         </div>
 
@@ -423,9 +783,9 @@
           <div class="demo-info">
             <strong>Demo:</strong> demo@footcamp.test / demo2026
           </div>
-          <div style="text-align: center; margin-top: 16px;">
-            <a href="#" onclick="handleForgotPassword(event, 'client')" style="font-size: 0.9rem; color: var(--green); text-decoration: underline;">Mot de passe oublie?</a>
-          </div>
+           <div style="text-align: center; margin-top: 16px;">
+             <a href="#" onclick="handleForgotPassword(event, 'client')" style="font-size: 0.9rem; color: var(--green); text-decoration: underline;"><i class="fas fa-key"></i> Mot de passe oublie?</a>
+           </div>
         </div>
 
         <!-- REGISTER -->
@@ -434,7 +794,7 @@
       <!-- ADMIN SIDE -->
       <div class="portal-card admin">
         <div class="portal-title">
-          <div class="portal-icon">🔐</div>
+          <div class="portal-icon"><i class="fas fa-lock"></i></div>
           <span>Espace Admin</span>
         </div>
 
@@ -463,9 +823,9 @@
           <div class="demo-info">
             <strong>Demo:</strong> admin@footcamp.test / admin2026
           </div>
-          <div style="text-align: center; margin-top: 16px;">
-            <a href="#" onclick="handleForgotPassword(event, 'admin')" style="font-size: 0.9rem; color: var(--gold); text-decoration: underline;">Mot de passe oublie?</a>
-          </div>
+           <div style="text-align: center; margin-top: 16px;">
+             <a href="#" onclick="handleForgotPassword(event, 'admin')" style="font-size: 0.9rem; color: var(--gold); text-decoration: underline;"><i class="fas fa-key"></i> Mot de passe oublie?</a>
+           </div>
         </div>
       </div>
     </div>
@@ -503,7 +863,7 @@
       btn.disabled = true;
       btn.textContent = 'Connexion...';
       msgDiv.innerHTML = '';
-      
+
       $.ajax({
         url: 'api/login.php',
         type: 'POST',
@@ -515,7 +875,7 @@
             localStorage.setItem('currentUser', JSON.stringify(resp.user));
             sessionStorage.setItem('currentUser', JSON.stringify(resp.user));
             showMsg(msgDiv, '✓ Connexion réussie! Redirection...', true);
-            
+
             setTimeout(function() {
               window.location.href = 'client-dashboard.html';
             }, 400);
@@ -754,7 +1114,7 @@
               card.innerHTML = `
                 <div style="font-weight: 600; color: var(--green);">${facility.name}</div>
                 <div style="font-size: 0.85rem; color: var(--muted); margin: 4px 0;">${facility.type}</div>
-                <div style="font-size: 0.8rem; color: var(--muted);">👥 ${facility.capacity} pers. | 💰 ${facility.price_per_hour}€/h</div>
+                <div style="font-size: 0.8rem; color: var(--muted);"><i class="fas fa-users"></i> ${facility.capacity} pers. | <i class="fas fa-money-bill"></i> ${facility.price_per_hour}€/h</div>
                 <div style="font-size: 0.75rem; color: var(--muted); margin-top: 6px;">${facility.features.join(' • ')}</div>
               `;
               card.onmouseover = () => card.style.background = 'rgba(0,230,118,0.15)';
@@ -837,7 +1197,7 @@
                   <div>
                     <div style="font-weight: 700; font-size: 1.1rem; color: var(--green);">${room.name}</div>
                     <div style="font-size: 0.85rem; color: var(--muted); margin-top: 4px;">
-                      👥 ${room.capacity} places | 💤 ${nights} nuit${nights > 1 ? 's' : ''}
+                      <i class="fas fa-users"></i> ${room.capacity} places | <i class="fas fa-moon"></i> ${nights} nuit${nights > 1 ? 's' : ''}
                     </div>
                   </div>
                   <div style="text-align: right;">
@@ -928,21 +1288,24 @@
       
       // Validation téléphone
       if (!/^[0-9]{10}$/.test(telephone)) {
-        showMsg(document.getElementById('reservationMsg'), '✗ Le téléphone doit contenir 10 chiffres', false);
+        showMsg(document.getElementById('reservationMsg'), '<i class="fas fa-exclamation-circle"></i> Le téléphone doit contenir 10 chiffres', false);
         return;
       }
       
       // Validation dates
       if (new Date(date_arrivee) >= new Date(date_depart)) {
-        showMsg(document.getElementById('reservationMsg'), '✗ La date de départ doit être après la date d\'arrivée', false);
+        showMsg(document.getElementById('reservationMsg'), '<i class="fas fa-exclamation-circle"></i> La date de départ doit être après la date d\'arrivée', false);
         return;
       }
       
+      // Générer un mot de passe
+      const generatedPassword = generatePassword();
+
       const btn = form.querySelector('button[type="submit"]');
       btn.disabled = true;
-      const originalText = btn.textContent;
-      btn.textContent = '⏳ Traitement...';
-      
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+
       $.ajax({
         url: 'api/reservation_request.php',
         type: 'POST',
@@ -961,28 +1324,28 @@
         timeout: 8000,
         success: function(resp) {
           if (resp.success) {
-            showMsg(document.getElementById('reservationMsg'), 
-              '✅ Réservation soumise! Un administrateur examinera votre demande et vous enverra un email avec vos identifiants. (Réservation #' + resp.reservation_id + ')', true);
+            // Afficher le modal avec les identifiants
+            showCredentialsModal(email, generatedPassword, resp.reservation_id);
             form.reset();
             loadActivitiesForReservation();
             setTimeout(() => {
               form.style.opacity = '0.5';
               form.style.pointerEvents = 'none';
               btn.disabled = false;
-              btn.textContent = originalText;
-            }, 2000);
+              btn.innerHTML = originalText;
+            }, 3000);
           } else {
-            showMsg(document.getElementById('reservationMsg'), '✗ ' + (resp.message || 'Erreur lors de la soumission'), false);
+            showMsg(document.getElementById('reservationMsg'), '<i class="fas fa-times-circle"></i> ' + (resp.message || 'Erreur lors de la soumission'), false);
             btn.disabled = false;
-            btn.textContent = originalText;
+            btn.innerHTML = originalText;
           }
         },
         error: function(xhr, status, error) {
           console.error('Erreur:', error);
-          const errorMsg = '✗ Erreur: ' + (status === 'timeout' ? 'Délai dépassé' : status);
+          const errorMsg = '<i class="fas fa-exclamation-triangle"></i> Erreur: ' + (status === 'timeout' ? 'Délai dépassé' : status);
           showMsg(document.getElementById('reservationMsg'), errorMsg, false);
           btn.disabled = false;
-          btn.textContent = originalText;
+          btn.innerHTML = originalText;
         }
       });
     }
@@ -1015,7 +1378,87 @@
     // ===== UI HELPERS =====
     function showMsg(element, text, isSuccess) {
       element.className = 'msg-box ' + (isSuccess ? 'msg-success' : 'msg-error');
-      element.textContent = text;
+      element.innerHTML = text; // Utiliser innerHTML pour les icônes
+    }
+
+    // Fonction pour générer un mot de passe
+    function generatePassword() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
+      let password = '';
+      for (let i = 0; i < 12; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return password;
+    }
+
+    // Fonction pour copier dans le presse-papiers
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('✅ Mot de passe copié dans le presse-papiers!');
+      });
+    }
+
+    // Fonction pour afficher un modal avec les identifiants
+    function showCredentialsModal(email, password, reservationId) {
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.8);
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      `;
+
+      modal.innerHTML = `
+        <div style="background: var(--panel); border: 2px solid var(--green); border-radius: 16px; max-width: 500px; width: 100%; padding: 32px; text-align: center; backdrop-filter: blur(10px);">
+          <div style="font-size: 3rem; margin-bottom: 16px;"><i class="fas fa-check-circle" style="color: var(--green);"></i></div>
+          <h2 style="font-family: 'Bebas Neue'; font-size: 1.8rem; color: var(--green); margin-bottom: 12px;">RÉSERVATION SOUMISE!</h2>
+          <p style="color: var(--muted); margin-bottom: 24px;">
+            Votre demande a été enregistrée. Utilisez ces identifiants provisoires pour accéder à votre compte.
+          </p>
+
+          <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: left;">
+            <div style="margin-bottom: 16px;">
+              <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;"><i class="fas fa-envelope"></i> Adresse Email</div>
+              <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
+                <code style="color: var(--green); font-weight: 600; user-select: all; word-break: break-all;">${email}</code>
+                <button onclick="copyToClipboard('${email}')" style="margin-left: 8px; padding: 6px 12px; background: var(--green); color: #001a0a; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">
+                  <i class="fas fa-copy"></i> Copier
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;"><i class="fas fa-key"></i> Mot de passe provisoire</div>
+              <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
+                <code style="color: var(--gold); font-weight: 600; user-select: all; word-break: break-all;">${password}</code>
+                <button onclick="copyToClipboard('${password}')" style="margin-left: 8px; padding: 6px 12px; background: var(--gold); color: #1a1000; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">
+                  <i class="fas fa-copy"></i> Copier
+                </button>
+              </div>
+              <p style="color: var(--muted); font-size: 0.8rem; margin: 8px 0 0 0;">
+                <i class="fas fa-shield-alt"></i> Changez ce mot de passe dès votre première connexion
+              </p>
+            </div>
+          </div>
+
+          <div style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left;">
+            <p style="color: var(--green); font-size: 0.9rem; margin: 0;">
+              <i class="fas fa-info-circle"></i> <strong>Réservation #${reservationId}</strong><br>
+              <small style="color: var(--muted);">Un administrateur examinera votre demande et vous enverra un email de confirmation.</small>
+            </p>
+          </div>
+
+          <button onclick="this.closest('[style*=position]').remove()" style="width: 100%; padding: 12px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem;">
+            <i class="fas fa-times"></i> Fermer
+          </button>
+        </div>
+      `;
+
+      document.body.appendChild(modal);
     }
 
     // ===== PAGE INIT =====
