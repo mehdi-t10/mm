@@ -1,743 +1,1029 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tableau de bord admin - FootCamp Dreams</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root {
-      --bg: #070a0f;
-      --green: #00e676;
-      --gold: #ffd740;
-      --text: #f0f4f8;
-      --muted: #8a9bb0;
-      --panel: rgba(255,255,255,0.04);
-      --border: rgba(255,255,255,0.07);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .bg-orbs {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.1;
-    }
-
-    .orb-1 {
-      width: 500px;
-      height: 500px;
-      background: linear-gradient(135deg, var(--gold), var(--green));
-      top: -100px;
-      right: -100px;
-      animation: drift 8s ease-in-out infinite;
-    }
-
-    .orb-2 {
-      width: 400px;
-      height: 400px;
-      background: linear-gradient(135deg, var(--green), var(--gold));
-      bottom: -50px;
-      left: -50px;
-      animation: drift 12s ease-in-out infinite reverse;
-    }
-
-    @keyframes drift {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(30px, -30px); }
-    }
-
-    .container-home {
-      position: relative;
-      z-index: 1;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 30px 20px;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 0;
-      margin-bottom: 40px;
-    }
-
-    .header-left h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, var(--gold), var(--green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin: 0;
-    }
-
-    .header-left p {
-      color: var(--muted);
-      margin-top: 4px;
-      font-size: 0.9rem;
-    }
-
-    .logout-btn {
-      background: linear-gradient(135deg, var(--gold), #f9a825);
-      color: #1a1000;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .logout-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(255,215,64,0.3);
-    }
-
-    /* KPI CARDS */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-
-    .kpi-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s;
-    }
-
-    .kpi-card:hover {
-      border-color: var(--gold);
-      background: rgba(255,215,64,0.05);
-      transform: translateY(-4px);
-    }
-
-    .kpi-icon {
-      font-size: 2rem;
-      margin-bottom: 12px;
-    }
-
-    .kpi-label {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .kpi-value {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--gold), var(--green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .kpi-subtext {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 8px;
-    }
-
-    /* CHARTS */
-    .charts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-
-    .chart-container {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      backdrop-filter: blur(10px);
-    }
-
-    .chart-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem;
-      letter-spacing: 0.5px;
-      margin-bottom: 20px;
-      color: var(--text);
-    }
-
-    .chart-wrapper {
-      position: relative;
-      height: 300px;
-      margin-bottom: 20px;
-    }
-
-    /* STATUS CARDS */
-    .status-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-bottom: 40px;
-    }
-
-    .status-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      backdrop-filter: blur(10px);
-      text-align: center;
-    }
-
-    .status-count {
-      font-size: 2rem;
-      font-weight: 700;
-      margin: 8px 0;
-    }
-
-    .status-pending .status-count {
-      color: #ffa726;
-    }
-
-    .status-approved .status-count {
-      color: var(--green);
-    }
-
-    .status-rejected .status-count {
-      color: #ef5350;
-    }
-
-    .status-label {
-      color: var(--muted);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* ROOM OCCUPANCY */
-    .room-list {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      backdrop-filter: blur(10px);
-    }
-
-    .room-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      transition: all 0.3s;
-    }
-
-    .room-item:last-child {
-      border-bottom: none;
-    }
-
-    .room-item:hover {
-      background: rgba(255,255,255,0.02);
-      border-radius: 8px;
-    }
-
-    .room-name {
-      font-weight: 600;
-    }
-
-    .room-stats {
-      display: flex;
-      gap: 20px;
-      font-size: 0.9rem;
-    }
-
-    .occupancy-bar {
-      width: 150px;
-      height: 8px;
-      background: var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      margin: 8px 0;
-    }
-
-    .occupancy-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--green), var(--gold));
-      transition: width 0.3s;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .kpi-grid {
-        grid-template-columns: 1fr;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tableau de bord admin - FootCamp Dreams</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --bg: #070a0f;
+        --green: #00e676;
+        --gold: #ffd740;
+        --text: #f0f4f8;
+        --muted: #8a9bb0;
+        --panel: rgba(255, 255, 255, 0.04);
+        --border: rgba(255, 255, 255, 0.07);
       }
 
-      .charts-grid {
-        grid-template-columns: 1fr;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .bg-orbs {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.1;
+      }
+
+      .orb-1 {
+        width: 500px;
+        height: 500px;
+        background: linear-gradient(135deg, var(--gold), var(--green));
+        top: -100px;
+        right: -100px;
+        animation: drift 8s ease-in-out infinite;
+      }
+
+      .orb-2 {
+        width: 400px;
+        height: 400px;
+        background: linear-gradient(135deg, var(--green), var(--gold));
+        bottom: -50px;
+        left: -50px;
+        animation: drift 12s ease-in-out infinite reverse;
+      }
+
+      @keyframes drift {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(30px, -30px);
+        }
+      }
+
+      .container-home {
+        position: relative;
+        z-index: 1;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px 20px;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        margin-bottom: 40px;
       }
 
       .header-left h1 {
-        font-size: 1.5rem;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2rem;
+        letter-spacing: 1px;
+        background: linear-gradient(135deg, var(--gold), var(--green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0;
+      }
+
+      .header-left p {
+        color: var(--muted);
+        margin-top: 4px;
+        font-size: 0.9rem;
+      }
+
+      .logout-btn {
+        background: linear-gradient(135deg, var(--gold), #f9a825);
+        color: #1a1000;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .logout-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(255, 215, 64, 0.3);
+      }
+
+      /* KPI CARDS */
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      .kpi-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s;
+      }
+
+      .kpi-card:hover {
+        border-color: var(--gold);
+        background: rgba(255, 215, 64, 0.05);
+        transform: translateY(-4px);
+      }
+
+      .kpi-icon {
+        font-size: 2rem;
+        margin-bottom: 12px;
+      }
+
+      .kpi-label {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
 
       .kpi-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--gold), var(--green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .kpi-subtext {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin-top: 8px;
+      }
+
+      /* CHARTS */
+      .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      .chart-container {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px;
+        backdrop-filter: blur(10px);
+      }
+
+      .chart-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: 0.5px;
+        margin-bottom: 20px;
+        color: var(--text);
+      }
+
+      .chart-wrapper {
+        position: relative;
+        height: 300px;
+        margin-bottom: 20px;
+      }
+
+      /* STATUS CARDS */
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 40px;
+      }
+
+      .status-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        backdrop-filter: blur(10px);
+        text-align: center;
+      }
+
+      .status-count {
         font-size: 2rem;
+        font-weight: 700;
+        margin: 8px 0;
       }
-    }
 
-    .msg-box {
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-weight: 500;
-      display: none;
-    }
+      .status-pending .status-count {
+        color: #ffa726;
+      }
 
-    .msg-box.show {
-      display: block;
-    }
+      .status-approved .status-count {
+        color: var(--green);
+      }
 
-    .msg-success {
-      background: rgba(0,230,118,0.1);
-      border: 1px solid rgba(0,230,118,0.3);
-      color: var(--green);
-    }
+      .status-rejected .status-count {
+        color: #ef5350;
+      }
 
-    .msg-error {
-      background: rgba(239,83,80,0.1);
-      border: 1px solid rgba(239,83,80,0.3);
-      color: #ef5350;
-    }
+      .status-label {
+        color: var(--muted);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
 
-    /* FILTER BUTTONS */
-    .btn-filter {
-      background: transparent;
-      border: 2px solid var(--border);
-      color: var(--text);
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 0.9rem;
-    }
+      /* ROOM OCCUPANCY */
+      .room-list {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px;
+        backdrop-filter: blur(10px);
+      }
 
-    .btn-filter:hover {
-      transform: translateY(-2px);
-    }
+      .room-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+        transition: all 0.3s;
+      }
 
-    /* RESERVATION CARD */
-    .reservation-card {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      transition: all 0.3s;
-    }
+      .room-item:last-child {
+        border-bottom: none;
+      }
 
-    .reservation-card:hover {
-      border-color: var(--gold);
-      background: rgba(255,215,64,0.05);
-    }
+      .room-item:hover {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 8px;
+      }
 
-    .res-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
+      .room-name {
+        font-weight: 600;
+      }
 
-    .res-card-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 12px;
-      margin-bottom: 12px;
-      font-size: 0.9rem;
-    }
+      .room-stats {
+        display: flex;
+        gap: 20px;
+        font-size: 0.9rem;
+      }
 
-    .res-info-item {
-      color: var(--muted);
-    }
+      .occupancy-bar {
+        width: 150px;
+        height: 8px;
+        background: var(--border);
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 8px 0;
+      }
 
-    .res-info-label {
-      font-weight: 600;
-      color: var(--text);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 3px;
-    }
+      .occupancy-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--green), var(--gold));
+        transition: width 0.3s;
+      }
 
-    .res-card-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .kpi-grid {
+          grid-template-columns: 1fr;
+        }
 
-    .action-btn {
-      padding: 8px 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.85rem;
-      transition: all 0.2s;
-    }
+        .charts-grid {
+          grid-template-columns: 1fr;
+        }
 
-    .action-btn:hover {
-      transform: translateY(-2px);
-    }
+        .header-left h1 {
+          font-size: 1.5rem;
+        }
 
-    .action-btn.validate {
-      border-color: var(--green);
-      color: var(--green);
-    }
+        .kpi-value {
+          font-size: 2rem;
+        }
+      }
 
-    .action-btn.validate:hover {
-      background: rgba(0,230,118,0.1);
-    }
+      .msg-box {
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        display: none;
+      }
 
-    .action-btn.reject {
-      border-color: #ef5350;
-      color: #ef5350;
-    }
+      .msg-box.show {
+        display: block;
+      }
 
-    .action-btn.reject:hover {
-      background: rgba(239,83,80,0.1);
-    }
+      .msg-success {
+        background: rgba(0, 230, 118, 0.1);
+        border: 1px solid rgba(0, 230, 118, 0.3);
+        color: var(--green);
+      }
 
-    .status-badge {
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
+      .msg-error {
+        background: rgba(239, 83, 80, 0.1);
+        border: 1px solid rgba(239, 83, 80, 0.3);
+        color: #ef5350;
+      }
 
-    .status-badge.pending {
-      background: rgba(255,167,38,0.15);
-      color: #ffa726;
-    }
+      /* FILTER BUTTONS */
+      .btn-filter {
+        background: transparent;
+        border: 2px solid var(--border);
+        color: var(--text);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+      }
 
-    .status-badge.approved {
-      background: rgba(0,230,118,0.15);
-      color: var(--green);
-    }
+      .btn-filter:hover {
+        transform: translateY(-2px);
+      }
 
-    .status-badge.rejected {
-      background: rgba(239,83,80,0.15);
-      color: #ef5350;
-    }
+      /* RESERVATION CARD */
+      .reservation-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        transition: all 0.3s;
+      }
 
-    /* Room Selection Modal Styles */
-    .room-selection-item {
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: rgba(255,255,255,0.03);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+      .reservation-card:hover {
+        border-color: var(--gold);
+        background: rgba(255, 215, 64, 0.05);
+      }
 
-    .room-selection-item:hover {
-      background: rgba(0,230,118,0.1);
-      border-color: var(--green);
-      transform: translateX(4px);
-    }
+      .res-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        font-weight: 600;
+      }
 
-    .room-selection-item:active {
-      transform: translateX(2px);
-    }
-  </style>
-</head>
-<body>
-  <div class="bg-orbs">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-  </div>
+      .res-card-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+      }
 
-  <div class="container-home">
-    <header>
-      <div class="header-left">
-        <h1>⚽ TABLEAU DE BORD ADMIN</h1>
-        <p>Gestion complète des réservations et analyser les données</p>
-      </div>
-      <div style="display: flex; gap: 12px;">
-        <button class="logout-btn" onclick="location.href='email-logs.html'" style="background: rgba(0,230,118,0.15); color: var(--green);">📧 Historique Emails</button>
-        <button class="logout-btn" onclick="logout()">🚪 Déconnexion</button>
-      </div>
-    </header>
+      .res-info-item {
+        color: var(--muted);
+      }
 
-    <div id="message" class="msg-box"></div>
+      .res-info-label {
+        font-weight: 600;
+        color: var(--text);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 3px;
+      }
 
-    <!-- KPI CARDS -->
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-icon">📅</div>
-        <div class="kpi-label">Total Réservations</div>
-        <div class="kpi-value" id="totalReservations">0</div>
-        <div class="kpi-subtext">Toutes les réservations enregistrées</div>
-      </div>
+      .res-card-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
 
-      <div class="kpi-card">
-        <div class="kpi-icon">💰</div>
-        <div class="kpi-label">Chiffre d'Affaires</div>
-        <div class="kpi-value" id="totalRevenue">0€</div>
-        <div class="kpi-subtext">Dépôts collectés</div>
-      </div>
+      .action-btn {
+        padding: 8px 14px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+      }
 
-      <div class="kpi-card">
-        <div class="kpi-icon">🏠</div>
-        <div class="kpi-label">Taux d'Occupation</div>
-        <div class="kpi-value" id="occupancyRate">0%</div>
-        <div class="kpi-subtext">Salles réservées</div>
-      </div>
+      .action-btn:hover {
+        transform: translateY(-2px);
+      }
 
-      <div class="kpi-card">
-        <div class="kpi-icon">👥</div>
-        <div class="kpi-label">Participants</div>
-        <div class="kpi-value" id="totalParticipants">0</div>
-        <div class="kpi-subtext">Nombre total de personnes</div>
-      </div>
+      .action-btn.validate {
+        border-color: var(--green);
+        color: var(--green);
+      }
+
+      .action-btn.validate:hover {
+        background: rgba(0, 230, 118, 0.1);
+      }
+
+      .action-btn.reject {
+        border-color: #ef5350;
+        color: #ef5350;
+      }
+
+      .action-btn.reject:hover {
+        background: rgba(239, 83, 80, 0.1);
+      }
+
+      .status-badge {
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .status-badge.pending {
+        background: rgba(255, 167, 38, 0.15);
+        color: #ffa726;
+      }
+
+      .status-badge.approved {
+        background: rgba(0, 230, 118, 0.15);
+        color: var(--green);
+      }
+
+      .status-badge.rejected {
+        background: rgba(239, 83, 80, 0.15);
+        color: #ef5350;
+      }
+
+      /* Room Selection Modal Styles */
+      .room-selection-item {
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .room-selection-item:hover {
+        background: rgba(0, 230, 118, 0.1);
+        border-color: var(--green);
+        transform: translateX(4px);
+      }
+
+      .room-selection-item:active {
+        transform: translateX(2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
     </div>
 
-    <!-- STATUS OVERVIEW -->
-    <div class="status-grid">
-      <div class="status-card status-pending">
-        <div class="status-label">⏳ EN ATTENTE</div>
-        <div class="status-count" id="pendingCount">0</div>
-      </div>
+    <div class="container-home">
+      <header>
+        <div class="header-left">
+          <h1>⚽ TABLEAU DE BORD ADMIN</h1>
+          <p>Gestion complète des réservations et analyser les données</p>
+        </div>
+        <div style="display: flex; gap: 12px">
+          <button
+            class="logout-btn"
+            onclick="location.href = 'email-logs.html'"
+            style="background: rgba(0, 230, 118, 0.15); color: var(--green)"
+          >
+            📧 Historique Emails
+          </button>
+          <button class="logout-btn" onclick="logout()">🚪 Déconnexion</button>
+        </div>
+      </header>
 
-      <div class="status-card status-approved">
-        <div class="status-label">✅ VALIDÉES</div>
-        <div class="status-count" id="approvedCount">0</div>
-      </div>
+      <div id="message" class="msg-box"></div>
 
-      <div class="status-card status-rejected">
-        <div class="status-label">❌ REJETÉES</div>
-        <div class="status-count" id="rejectedCount">0</div>
-      </div>
-    </div>
+      <!-- KPI CARDS -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon">📅</div>
+          <div class="kpi-label">Total Réservations</div>
+          <div class="kpi-value" id="totalReservations">0</div>
+          <div class="kpi-subtext">Toutes les réservations enregistrées</div>
+        </div>
 
-    <!-- CHARTS -->
-    <div class="charts-grid">
-      <div class="chart-container">
-        <div class="chart-title">Statut des Réservations</div>
-        <div class="chart-wrapper">
-          <canvas id="statusChart"></canvas>
+        <div class="kpi-card">
+          <div class="kpi-icon">💰</div>
+          <div class="kpi-label">Chiffre d'Affaires</div>
+          <div class="kpi-value" id="totalRevenue">0€</div>
+          <div class="kpi-subtext">Dépôts collectés</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon">🏠</div>
+          <div class="kpi-label">Taux d'Occupation</div>
+          <div class="kpi-value" id="occupancyRate">0%</div>
+          <div class="kpi-subtext">Salles réservées</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon">👥</div>
+          <div class="kpi-label">Participants</div>
+          <div class="kpi-value" id="totalParticipants">0</div>
+          <div class="kpi-subtext">Nombre total de personnes</div>
         </div>
       </div>
 
-      <div class="chart-container">
-        <div class="chart-title">Revenus par Mois</div>
-        <div class="chart-wrapper">
-          <canvas id="revenueChart"></canvas>
+      <!-- STATUS OVERVIEW -->
+      <div class="status-grid">
+        <div class="status-card status-pending">
+          <div class="status-label">⏳ EN ATTENTE</div>
+          <div class="status-count" id="pendingCount">0</div>
+        </div>
+
+        <div class="status-card status-approved">
+          <div class="status-label">✅ VALIDÉES</div>
+          <div class="status-count" id="approvedCount">0</div>
+        </div>
+
+        <div class="status-card status-rejected">
+          <div class="status-label">❌ REJETÉES</div>
+          <div class="status-count" id="rejectedCount">0</div>
         </div>
       </div>
-    </div>
 
-    <!-- ROOMS OCCUPANCY -->
-    <div class="room-list">
-      <div class="chart-title">🛏️ Disponibilité des Chambres</div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;" id="roomsAvailabilityContainer"></div>
-    </div>
+      <!-- CHARTS -->
+      <div class="charts-grid">
+        <div class="chart-container">
+          <div class="chart-title">Statut des Réservations</div>
+          <div class="chart-wrapper">
+            <canvas id="statusChart"></canvas>
+          </div>
+        </div>
 
-    <!-- CLIENTS MANAGEMENT -->
-    <div class="room-list" style="margin-top: 40px;">
-      <div class="chart-title">👥 Gestion des Clients</div>
-      
-      <div id="clientsList" style="display: grid; gap: 15px;"></div>
-    </div>
-
-    <!-- RESERVATIONS MANAGEMENT -->
-    <div class="room-list" style="margin-top: 40px;">
-      <div class="chart-title">📋 Gestion des Réservations</div>
-      
-      <div style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
-        <button class="btn-filter" onclick="filterReservationsBy('all')" style="background: var(--gold); color: #1a1000; font-weight: 600;">Toutes</button>
-        <button class="btn-filter" onclick="filterReservationsBy('en_attente')" style="border-color: #ffa726; color: #ffa726; font-weight: 600;">⏳ En attente</button>
-        <button class="btn-filter" onclick="filterReservationsBy('validee')" style="border-color: var(--green); color: var(--green); font-weight: 600;">✅ Validees</button>
-        <button class="btn-filter" onclick="filterReservationsBy('rejetee')" style="border-color: #ef5350; color: #ef5350; font-weight: 600;">❌ Rejetees</button>
+        <div class="chart-container">
+          <div class="chart-title">Revenus par Mois</div>
+          <div class="chart-wrapper">
+            <canvas id="revenueChart"></canvas>
+          </div>
+        </div>
       </div>
 
-      <div id="reservationsList" style="display: grid; gap: 15px;"></div>
-    </div>
+      <!-- ROOMS OCCUPANCY -->
+      <div class="room-list">
+        <div class="chart-title">🛏️ Disponibilité des Chambres</div>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+          "
+          id="roomsAvailabilityContainer"
+        ></div>
+      </div>
 
-    <!-- EMAIL CONFIGURATION -->
-    <div class="room-list" style="margin-top: 40px;">
-      <div class="chart-title">📧 Configuration des Emails SMTP</div>
-      <p style="color: var(--muted); font-size: 0.9rem; margin: 16px 0 0 0;">
-        Configurez vos paramètres d'envoi d'emails (Gmail recommandé)
-      </p>
-      
-      <div id="emailStatusAlert" style="margin-top: 16px;"></div>
-      
-      <form id="emailConfigForm" style="margin-top: 20px;">
-        <div style="margin-bottom: 16px;">
-          <label style="display: block; margin-bottom: 4px; color: var(--text);">Email SMTP (ex: votreemail@gmail.com)</label>
-          <input type="email" id="smtp_user" name="smtp_user" placeholder="votreemail@gmail.com" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
+      <!-- ROOM MANAGEMENT VIEW -->
+      <div class="room-list" style="margin-top: 40px">
+        <div class="chart-title">🛏️ Gestion des Chambres</div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: end;
+          "
+        >
+          <div>
+            <label
+              style="
+                display: block;
+                color: var(--muted);
+                font-size: 0.85rem;
+                margin-bottom: 8px;
+                font-weight: 600;
+              "
+              >Date Arrivée</label
+            >
+            <input
+              type="date"
+              id="roomDateStart"
+              style="
+                width: 100%;
+                padding: 10px;
+                background: var(--panel);
+                border: 1px solid var(--border);
+                color: var(--text);
+                border-radius: 6px;
+              "
+            />
+          </div>
+          <div>
+            <label
+              style="
+                display: block;
+                color: var(--muted);
+                font-size: 0.85rem;
+                margin-bottom: 8px;
+                font-weight: 600;
+              "
+              >Date Départ</label
+            >
+            <input
+              type="date"
+              id="roomDateEnd"
+              style="
+                width: 100%;
+                padding: 10px;
+                background: var(--panel);
+                border: 1px solid var(--border);
+                color: var(--text);
+                border-radius: 6px;
+              "
+            />
+          </div>
+          <div>
+            <button
+              onclick="loadRoomsList()"
+              style="
+                background: var(--green);
+                color: #000;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 600;
+              "
+            >
+              🔍 Afficher les chambres
+            </button>
+          </div>
         </div>
 
-        <div style="margin-bottom: 16px;">
-          <label style="display: block; margin-bottom: 4px; color: var(--text);">Mot de passe App (Gmail App Password)</label>
-          <input type="password" id="smtp_password" name="smtp_password" placeholder="16 caractères générés par Gmail" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
-          <small style="color: var(--muted); display: block; margin-top: 4px;">
-            Générez-le ici: <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color: var(--gold);">myaccount.google.com/apppasswords</a>
-          </small>
+        <div
+          id="roomsContainer"
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+          "
+        ></div>
+
+        <div
+          id="roomsPagination"
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 20px;
+          "
+        ></div>
+      </div>
+
+      <!-- CLIENTS MANAGEMENT -->
+      <div class="room-list" style="margin-top: 40px">
+        <div class="chart-title">👥 Gestion des Clients</div>
+
+        <div id="clientsList" style="display: grid; gap: 15px"></div>
+      </div>
+
+      <!-- RESERVATIONS MANAGEMENT -->
+      <div class="room-list" style="margin-top: 40px">
+        <div class="chart-title">📋 Gestion des Réservations</div>
+
+        <div
+          style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap"
+        >
+          <button
+            class="btn-filter"
+            onclick="filterReservationsBy('all')"
+            style="background: var(--gold); color: #1a1000; font-weight: 600"
+          >
+            Toutes
+          </button>
+          <button
+            class="btn-filter"
+            onclick="filterReservationsBy('en_attente')"
+            style="border-color: #ffa726; color: #ffa726; font-weight: 600"
+          >
+            ⏳ En attente
+          </button>
+          <button
+            class="btn-filter"
+            onclick="filterReservationsBy('validee')"
+            style="
+              border-color: var(--green);
+              color: var(--green);
+              font-weight: 600;
+            "
+          >
+            ✅ Validees
+          </button>
+          <button
+            class="btn-filter"
+            onclick="filterReservationsBy('rejetee')"
+            style="border-color: #ef5350; color: #ef5350; font-weight: 600"
+          >
+            ❌ Rejetees
+          </button>
         </div>
 
-        <div style="margin-bottom: 16px;">
-          <label style="display: block; margin-bottom: 4px; color: var(--text);">Email d'expédition</label>
-          <input type="text" id="smtp_from_email" name="smtp_from_email" placeholder="noreply@footcamp-dreams.com" value="noreply@footcamp-dreams.com" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
-        </div>
+        <div id="reservationsList" style="display: grid; gap: 15px"></div>
+      </div>
 
-        <div style="margin-bottom: 16px;">
-          <label style="display: block; margin-bottom: 4px; color: var(--text);">Nom d'expédition</label>
-          <input type="text" id="smtp_from_name" name="smtp_from_name" placeholder="FootCamp Dreams" value="FootCamp Dreams" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
-        </div>
-
-        <button type="submit" class="btn btn-success" style="padding: 10px 20px; font-weight: 600;">💾 Sauvegarder Configuration</button>
-      </form>
-
-      <div style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); border-radius: 8px; padding: 16px; margin-top: 20px;">
-        <p style="margin: 0; color: var(--green); font-size: 0.9rem;">
-          ✅ <strong>Une fois configuré:</strong> L'email sera envoyé automatiquement quand vous validerez une réservation!
+      <!-- EMAIL CONFIGURATION -->
+      <div class="room-list" style="margin-top: 40px">
+        <div class="chart-title">📧 Configuration des Emails SMTP</div>
+        <p style="color: var(--muted); font-size: 0.9rem; margin: 16px 0 0 0">
+          Configurez vos paramètres d'envoi d'emails (Gmail recommandé)
         </p>
+
+        <div id="emailStatusAlert" style="margin-top: 16px"></div>
+
+        <form id="emailConfigForm" style="margin-top: 20px">
+          <div style="margin-bottom: 16px">
+            <label
+              style="display: block; margin-bottom: 4px; color: var(--text)"
+              >Email SMTP (ex: votreemail@gmail.com)</label
+            >
+            <input
+              type="email"
+              id="smtp_user"
+              name="smtp_user"
+              placeholder="votreemail@gmail.com"
+              style="
+                width: 100%;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                color: var(--text);
+              "
+            />
+          </div>
+
+          <div style="margin-bottom: 16px">
+            <label
+              style="display: block; margin-bottom: 4px; color: var(--text)"
+              >Mot de passe App (Gmail App Password)</label
+            >
+            <input
+              type="password"
+              id="smtp_password"
+              name="smtp_password"
+              placeholder="16 caractères générés par Gmail"
+              style="
+                width: 100%;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                color: var(--text);
+              "
+            />
+            <small style="color: var(--muted); display: block; margin-top: 4px">
+              Générez-le ici:
+              <a
+                href="https://myaccount.google.com/apppasswords"
+                target="_blank"
+                style="color: var(--gold)"
+                >myaccount.google.com/apppasswords</a
+              >
+            </small>
+          </div>
+
+          <div style="margin-bottom: 16px">
+            <label
+              style="display: block; margin-bottom: 4px; color: var(--text)"
+              >Email d'expédition</label
+            >
+            <input
+              type="text"
+              id="smtp_from_email"
+              name="smtp_from_email"
+              placeholder="noreply@footcamp-dreams.com"
+              value="noreply@footcamp-dreams.com"
+              style="
+                width: 100%;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                color: var(--text);
+              "
+            />
+          </div>
+
+          <div style="margin-bottom: 16px">
+            <label
+              style="display: block; margin-bottom: 4px; color: var(--text)"
+              >Nom d'expédition</label
+            >
+            <input
+              type="text"
+              id="smtp_from_name"
+              name="smtp_from_name"
+              placeholder="FootCamp Dreams"
+              value="FootCamp Dreams"
+              style="
+                width: 100%;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                color: var(--text);
+              "
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-success"
+            style="padding: 10px 20px; font-weight: 600"
+          >
+            💾 Sauvegarder Configuration
+          </button>
+        </form>
+
+        <div
+          style="
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid var(--green);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+          "
+        >
+          <p style="margin: 0; color: var(--green); font-size: 0.9rem">
+            ✅ <strong>Une fois configuré:</strong> L'email sera envoyé
+            automatiquement quand vous validerez une réservation!
+          </p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script>
-    let allReservations = [];
-    let allRooms = [];
-    let currentReservationFilter = 'all';
-    let statusChart = null;
-    let revenueChart = null;
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+      let allReservations = [];
+      let allRooms = [];
+      let currentReservationFilter = "all";
+      let statusChart = null;
+      let revenueChart = null;
 
-    // Initialize
-    $(document).ready(function() {
-      checkAdminSession();
-      loadData();
-      
-      // Auto-refresh du dashboard tous les 30 secondes
-      setInterval(function() {
+      // Initialize
+      $(document).ready(function () {
+        checkAdminSession();
+        initializeDefaultDates();
         loadData();
-      }, 30000);
-    });
 
-    function checkAdminSession() {
-      const admin = JSON.parse(sessionStorage.getItem('currentAdmin')) || 
-                    JSON.parse(localStorage.getItem('currentAdmin'));
-      
-      if (!admin) {
-        redirectToLogin();
+        // Auto-refresh du dashboard tous les 30 secondes
+        setInterval(function () {
+          loadData();
+        }, 30000);
+      });
+
+      function initializeDefaultDates() {
+        const today = new Date();
+        const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+
+        const formatDate = function (date) {
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const day = String(date.getDate()).padStart(2, "0");
+          return year + "-" + month + "-" + day;
+        };
+
+        const roomDateStartElem = document.getElementById("roomDateStart");
+        const roomDateEndElem = document.getElementById("roomDateEnd");
+        if (roomDateStartElem) roomDateStartElem.value = formatDate(today);
+        if (roomDateEndElem) roomDateEndElem.value = formatDate(tomorrow);
       }
-    }
 
-    function loadData() {
-      $.ajax({
-        url: 'api/admin_list_reservations.php',
-        method: 'GET',
-        success: function(response) {
-          if (response.success) {
-            allReservations = (response.reservations || []).sort((a, b) => 
-              new Date(b.date_arrivee) - new Date(a.date_arrivee)
-            );
-            loadRooms();
-            loadClients();
+      function checkAdminSession() {
+        const admin =
+          JSON.parse(sessionStorage.getItem("currentAdmin")) ||
+          JSON.parse(localStorage.getItem("currentAdmin"));
+
+        if (!admin) {
+          redirectToLogin();
+        }
+      }
+
+      function loadData() {
+        $.ajax({
+          url: "api/admin_list_reservations.php",
+          method: "GET",
+          success: function (response) {
+            if (response.success) {
+              allReservations = (response.reservations || []).sort(
+                (a, b) => new Date(b.date_arrivee) - new Date(a.date_arrivee),
+              );
+              loadRooms();
+              loadClients();
+              updateDashboard();
+            }
+          },
+          error: function () {
+            showMsg("message", "Erreur lors du chargement des données", false);
+          },
+        });
+      }
+
+      function loadRooms() {
+        // Charger les salles depuis rooms.json
+        $.ajax({
+          url: "data/rooms.json",
+          method: "GET",
+          dataType: "json",
+          success: function (data) {
+            allRooms = data.types && data.types.length > 0 ? data.types : [];
             updateDashboard();
-          }
-        },
-        error: function() {
-          showMsg('message', 'Erreur lors du chargement des données', false);
-        }
-      });
-    }
-
-    function loadRooms() {
-      // Charger les salles depuis rooms.json
-      $.ajax({
-        url: 'data/rooms.json',
-        method: 'GET',
-        dataType: 'json',
-        success: function(rooms) {
-          allRooms = rooms || [];
-          updateDashboard();
-        },
-        error: function() {
-          // Utiliser les salles par defaut si erreur
-          allRooms = [
-            { id: 1, name: 'Chambre A', capacity: 4, price_per_night: 120 },
-            { id: 2, name: 'Chambre B', capacity: 4, price_per_night: 110 },
-            { id: 3, name: 'Chambre C', capacity: 2, price_per_night: 80 }
-          ];
-          updateDashboard();
-        }
-      });
-    }
-
-    function loadClients() {
-      $.ajax({
-        url: 'data/users.json',
-        method: 'GET',
-        dataType: 'json',
-        success: function(users) {
-          // Filtrer seulement les clients (role = 'client')
-          const clients = users.filter(u => u.role === 'client');
-          displayClients(clients);
-        },
-        error: function() {
-          document.getElementById('clientsList').innerHTML = '<p style="color: var(--muted);">Erreur chargement clients</p>';
-        }
-      });
-    }
-
-    function displayClients(clients) {
-      const container = document.getElementById('clientsList');
-      
-      if (!clients || clients.length === 0) {
-        container.innerHTML = '<p style="color: var(--muted); text-align: center;">Aucun client</p>';
-        return;
+          },
+          error: function () {
+            // Utiliser les salles par defaut si erreur
+            allRooms = [
+              {
+                id: 1,
+                name: "Chambre Simple",
+                type: "simple",
+                capacity: 1,
+                total: 100,
+                price_per_night: 60,
+                description: "Chambre confortable pour 1 personne",
+              },
+              {
+                id: 2,
+                name: "Chambre Double",
+                type: "double",
+                capacity: 2,
+                total: 50,
+                price_per_night: 100,
+                description: "Chambre spacieuse pour 2 personnes",
+              },
+              {
+                id: 3,
+                name: "Chambre Triple",
+                type: "triple",
+                capacity: 3,
+                total: 50,
+                price_per_night: 140,
+                description: "Chambre parfaite pour 3 personnes",
+              },
+            ];
+            updateDashboard();
+          },
+        });
       }
-      
-      container.innerHTML = '';
-      clients.forEach(client => {
-        const card = document.createElement('div');
-        card.className = 'reservation-card';
-        card.style.cssText = `
+
+      function loadClients() {
+        $.ajax({
+          url: "data/users.json",
+          method: "GET",
+          dataType: "json",
+          success: function (users) {
+            // Filtrer seulement les clients (role = 'client')
+            const clients = users.filter((u) => u.role === "client");
+            displayClients(clients);
+          },
+          error: function () {
+            document.getElementById("clientsList").innerHTML =
+              '<p style="color: var(--muted);">Erreur chargement clients</p>';
+          },
+        });
+      }
+
+      function displayClients(clients) {
+        const container = document.getElementById("clientsList");
+
+        if (!clients || clients.length === 0) {
+          container.innerHTML =
+            '<p style="color: var(--muted); text-align: center;">Aucun client</p>';
+          return;
+        }
+
+        container.innerHTML = "";
+        clients.forEach((client) => {
+          const card = document.createElement("div");
+          card.className = "reservation-card";
+          card.style.cssText = `
           border: 1px solid var(--border);
           border-left: 4px solid var(--gold);
           padding: 16px;
@@ -747,349 +1033,705 @@
           justify-content: space-between;
           align-items: center;
         `;
-        
-        const clientReservations = allReservations.filter(r => r.email === client.email).length;
-        
-        card.innerHTML = `
+
+          const clientReservations = allReservations.filter(
+            (r) => r.email === client.email,
+          ).length;
+
+          card.innerHTML = `
           <div style="flex: 1;">
             <h4 style="color: var(--text); margin: 0 0 8px 0;">${client.prenom} ${client.nom}</h4>
             <p style="color: var(--muted); margin: 4px 0; font-size: 0.9rem;">📧 ${client.email}</p>
-            <p style="color: var(--muted); margin: 4px 0; font-size: 0.9rem;">📱 ${client.telephone || 'N/A'}</p>
+            <p style="color: var(--muted); margin: 4px 0; font-size: 0.9rem;">📱 ${client.telephone || "N/A"}</p>
             <p style="color: var(--gold); margin: 8px 0 0 0; font-size: 0.85rem;">📋 ${clientReservations} réservation(s)</p>
           </div>
-          <button onclick="deleteClient(${client.id}, '${client.prenom} ${client.nom}')" 
+          <button onclick="deleteClient(${client.id}, '${client.prenom} ${client.nom}')"
                   style="background: #ef5350; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s;">
             🗑️ Supprimer
           </button>
         `;
-        
-        container.appendChild(card);
-      });
-    }
 
-    function deleteClient(clientId, clientName) {
-      if (!confirm('Êtes-vous sûr de vouloir supprimer le client ' + clientName + ' et toutes ses réservations?')) {
-        return;
-      }
-      
-      const currentAdmin = localStorage.getItem('currentAdmin') || sessionStorage.getItem('currentAdmin');
-      
-      $.ajax({
-        url: 'api/admin_delete_client.php',
-        method: 'POST',
-        data: {
-          clientId: clientId,
-          currentAdmin: currentAdmin
-        },
-        success: function(resp) {
-          if (resp.success) {
-            showMsg('message', '✓ Client supprimé!', true);
-            loadData();
-          } else {
-            showMsg('message', '✗ ' + (resp.message || 'Erreur'), false);
-          }
-        },
-        error: function() {
-          showMsg('message', '✗ Erreur serveur', false);
-        }
-      });
-    }
-
-    function updateDashboard() {
-      updateKPIs();
-      updateStatusCounts();
-      updateCharts();
-      updateRoomOccupancy();
-      displayReservations();
-    }
-
-    function updateKPIs() {
-      const total = allReservations.length;
-      const totalRevenue = allReservations.reduce((sum, r) => sum + (r.deposit || 0), 0);
-      const totalParticipants = allReservations.reduce((sum, r) => sum + (r.nb_personnes || 0), 0);
-
-      // Calculate occupancy rate
-      const occupiedRooms = new Set(allReservations.map(r => r.room)).size;
-      const occupancyRate = allRooms.length > 0 ? Math.round((occupiedRooms / allRooms.length) * 100) : 0;
-
-      document.getElementById('totalReservations').textContent = total;
-      document.getElementById('totalRevenue').textContent = totalRevenue + '€';
-      document.getElementById('occupancyRate').textContent = occupancyRate + '%';
-      document.getElementById('totalParticipants').textContent = totalParticipants;
-    }
-
-    function updateStatusCounts() {
-      const pending = allReservations.filter(r => r.status === 'en_attente').length;
-      const approved = allReservations.filter(r => r.status === 'validee').length;
-      const rejected = allReservations.filter(r => r.status === 'rejetee').length;
-
-      document.getElementById('pendingCount').textContent = pending;
-      document.getElementById('approvedCount').textContent = approved;
-      document.getElementById('rejectedCount').textContent = rejected;
-    }
-
-    function updateCharts() {
-      updateStatusChart();
-      updateRevenueChart();
-    }
-
-    function updateStatusChart() {
-      const pending = allReservations.filter(r => r.status === 'en_attente').length;
-      const approved = allReservations.filter(r => r.status === 'validee').length;
-      const rejected = allReservations.filter(r => r.status === 'rejetee').length;
-
-      const ctx = document.getElementById('statusChart');
-      
-      if (statusChart) {
-        statusChart.destroy();
+          container.appendChild(card);
+        });
       }
 
-      statusChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ['En Attente', 'Validées', 'Rejetées'],
-          datasets: [{
-            data: [pending, approved, rejected],
-            backgroundColor: ['#ffa726', '#00e676', '#ef5350'],
-            borderColor: '#070a0f',
-            borderWidth: 2
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                color: '#f0f4f8',
-                font: { family: "'DM Sans', sans-serif" },
-                padding: 15
-              }
-            }
-          }
+      function deleteClient(clientId, clientName) {
+        if (
+          !confirm(
+            "Êtes-vous sûr de vouloir supprimer le client " +
+              clientName +
+              " et toutes ses réservations?",
+          )
+        ) {
+          return;
         }
-      });
-    }
 
-    function updateRevenueChart() {
-      // Group revenue by month
-      const monthlyRevenue = {};
-      const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
-      
-      allReservations.forEach(r => {
-        if (r.date_arrivee) {
-          const date = new Date(r.date_arrivee);
-          const month = months[date.getMonth()];
-          monthlyRevenue[month] = (monthlyRevenue[month] || 0) + (r.deposit || 0);
-        }
-      });
+        const currentAdmin =
+          localStorage.getItem("currentAdmin") ||
+          sessionStorage.getItem("currentAdmin");
 
-      const labels = Object.keys(monthlyRevenue);
-      const data = Object.values(monthlyRevenue);
-
-      const ctx = document.getElementById('revenueChart');
-      
-      if (revenueChart) {
-        revenueChart.destroy();
-      }
-
-      revenueChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Revenus (€)',
-            data: data,
-            borderColor: '#ffd740',
-            backgroundColor: 'rgba(255,215,64,0.1)',
-            borderWidth: 3,
-            fill: true,
-            tension: 0.4,
-            pointBackgroundColor: '#ffd740',
-            pointBorderColor: '#070a0f',
-            pointBorderWidth: 2,
-            pointRadius: 5,
-            pointHoverRadius: 7
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              labels: {
-                color: '#f0f4f8',
-                font: { family: "'DM Sans', sans-serif" }
-              }
+        $.ajax({
+          url: "api/admin_delete_client.php",
+          method: "POST",
+          data: {
+            clientId: clientId,
+            currentAdmin: currentAdmin,
+          },
+          success: function (resp) {
+            if (resp.success) {
+              showMsg("message", "✓ Client supprimé!", true);
+              loadData();
+            } else {
+              showMsg("message", "✗ " + (resp.message || "Erreur"), false);
             }
           },
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: {
-                color: 'rgba(255,255,255,0.05)',
-                drawBorder: false
-              },
-              ticks: {
-                color: '#8a9bb0',
-                callback: function(value) {
-                  return value + '€';
-                }
-              }
-            },
-            x: {
-              grid: {
-                display: false,
-                drawBorder: false
-              },
-              ticks: {
-                color: '#8a9bb0'
-              }
-            }
-          }
+          error: function () {
+            showMsg("message", "✗ Erreur serveur", false);
+          },
+        });
+      }
+
+      function updateDashboard() {
+        updateKPIs();
+        updateStatusCounts();
+        updateCharts();
+        updateRoomOccupancy();
+        displayReservations();
+      }
+
+      function updateKPIs() {
+        const total = allReservations.length;
+        const totalRevenue = allReservations.reduce(
+          (sum, r) => sum + (r.deposit || 0),
+          0,
+        );
+        const totalParticipants = allReservations.reduce(
+          (sum, r) => sum + (r.nb_personnes || 0),
+          0,
+        );
+
+        // Calculate occupancy rate
+        const occupiedRooms = new Set(allReservations.map((r) => r.room)).size;
+        const occupancyRate =
+          allRooms.length > 0
+            ? Math.round((occupiedRooms / allRooms.length) * 100)
+            : 0;
+
+        document.getElementById("totalReservations").textContent = total;
+        document.getElementById("totalRevenue").textContent =
+          totalRevenue + "€";
+        document.getElementById("occupancyRate").textContent =
+          occupancyRate + "%";
+        document.getElementById("totalParticipants").textContent =
+          totalParticipants;
+      }
+
+      function updateStatusCounts() {
+        const pending = allReservations.filter(
+          (r) => r.status === "en_attente",
+        ).length;
+        const approved = allReservations.filter(
+          (r) => r.status === "validee",
+        ).length;
+        const rejected = allReservations.filter(
+          (r) => r.status === "rejetee",
+        ).length;
+
+        document.getElementById("pendingCount").textContent = pending;
+        document.getElementById("approvedCount").textContent = approved;
+        document.getElementById("rejectedCount").textContent = rejected;
+      }
+
+      function updateCharts() {
+        updateStatusChart();
+        updateRevenueChart();
+      }
+
+      function updateStatusChart() {
+        const pending = allReservations.filter(
+          (r) => r.status === "en_attente",
+        ).length;
+        const approved = allReservations.filter(
+          (r) => r.status === "validee",
+        ).length;
+        const rejected = allReservations.filter(
+          (r) => r.status === "rejetee",
+        ).length;
+
+        const ctx = document.getElementById("statusChart");
+
+        if (statusChart) {
+          statusChart.destroy();
         }
-      });
-    }
 
-    function updateRoomOccupancy() {
-      const roomsContainer = document.getElementById('roomsAvailabilityContainer');
-      if (!roomsContainer) return;
-      
-      roomsContainer.innerHTML = '';
+        statusChart = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["En Attente", "Validées", "Rejetées"],
+            datasets: [
+              {
+                data: [pending, approved, rejected],
+                backgroundColor: ["#ffa726", "#00e676", "#ef5350"],
+                borderColor: "#070a0f",
+                borderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  color: "#f0f4f8",
+                  font: { family: "'DM Sans', sans-serif" },
+                  padding: 15,
+                },
+              },
+            },
+          },
+        });
+      }
 
-      allRooms.forEach(room => {
-        const reservationsInRoom = allReservations.filter(r => r.room === room.id && r.status === 'validee').length;
-        const availableSpaces = Math.max(0, room.capacity - room.occupied);
-        const occupancyPercent = Math.round((room.occupied / room.capacity) * 100);
-        const pricePerNight = room.price_per_night || 100;
+      function updateRevenueChart() {
+        // Group revenue by month
+        const monthlyRevenue = {};
+        const months = [
+          "Jan",
+          "Fév",
+          "Mar",
+          "Avr",
+          "Mai",
+          "Jun",
+          "Juil",
+          "Aoû",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Déc",
+        ];
 
-        const roomCard = document.createElement('div');
-        roomCard.style.cssText = `
+        allReservations.forEach((r) => {
+          if (r.date_arrivee) {
+            const date = new Date(r.date_arrivee);
+            const month = months[date.getMonth()];
+            monthlyRevenue[month] =
+              (monthlyRevenue[month] || 0) + (r.deposit || 0);
+          }
+        });
+
+        const labels = Object.keys(monthlyRevenue);
+        const data = Object.values(monthlyRevenue);
+
+        const ctx = document.getElementById("revenueChart");
+
+        if (revenueChart) {
+          revenueChart.destroy();
+        }
+
+        revenueChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Revenus (€)",
+                data: data,
+                borderColor: "#ffd740",
+                backgroundColor: "rgba(255,215,64,0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#ffd740",
+                pointBorderColor: "#070a0f",
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: {
+                  color: "#f0f4f8",
+                  font: { family: "'DM Sans', sans-serif" },
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: "rgba(255,255,255,0.05)",
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: "#8a9bb0",
+                  callback: function (value) {
+                    return value + "€";
+                  },
+                },
+              },
+              x: {
+                grid: {
+                  display: false,
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: "#8a9bb0",
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function updateRoomOccupancy() {
+        const roomsContainer = document.getElementById(
+          "roomsAvailabilityContainer",
+        );
+        if (!roomsContainer) return;
+
+        roomsContainer.innerHTML = "";
+
+        allRooms.forEach((room) => {
+          // Compter les réservations validées pour ce type de chambre
+          const reservationsOfType = allReservations.filter((r) => {
+            if (r.status === "validee") {
+              if (r.room_type === room.type) return true;
+              // Mapper ancien format aux nouveaux types
+              if (room.type === "simple" && r.room === "Chambre C") return true;
+              if (
+                room.type === "double" &&
+                (r.room === "Chambre B" || r.room === "Chambre A")
+              )
+                return true;
+            }
+            return false;
+          }).length;
+
+          const occupiedRooms = reservationsOfType;
+          const availableRooms = Math.max(0, room.total - occupiedRooms);
+          const occupancyPercent =
+            room.total > 0 ? Math.round((occupiedRooms / room.total) * 100) : 0;
+          const pricePerNight = room.price_per_night || 100;
+
+          const roomCard = document.createElement("div");
+          roomCard.style.cssText = `
           padding: 20px;
           border: 1px solid var(--border);
           border-radius: 16px;
           background: var(--panel);
           backdrop-filter: blur(10px);
-          border-left: 4px solid ${availableSpaces > 0 ? 'var(--green)' : '#ef5350'};
+          border-left: 4px solid ${availableRooms > 0 ? "var(--green)" : "#ef5350"};
         `;
 
-        roomCard.innerHTML = `
+          roomCard.innerHTML = `
           <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
             <div>
-              <h3 style="color: var(--text); margin: 0 0 8px 0; font-size: 1.1rem;">${room.name || 'Chambre ' + room.id}</h3>
-              <p style="color: var(--muted); margin: 4px 0; font-size: 0.9rem;">💰 ${pricePerNight}€ par nuit</p>
+              <h3 style="color: var(--text); margin: 0 0 8px 0; font-size: 1.1rem;">${room.name}</h3>
+              <p style="color: var(--muted); margin: 4px 0; font-size: 0.85rem;">${room.description}</p>
+              <p style="color: var(--text); margin: 4px 0; font-size: 0.9rem; margin-top: 8px;">💰 ${pricePerNight}€ par nuit</p>
             </div>
             <div style="text-align: right;">
               <div style="font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 8px;">Statut</div>
-              <div style="padding: 6px 12px; background: ${availableSpaces > 0 ? 'var(--green)20' : '#ef535020'}; color: ${availableSpaces > 0 ? 'var(--green)' : '#ef5350'}; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
-                ${availableSpaces > 0 ? '✅ Libres' : '❌ Complet'}
+              <div style="padding: 6px 12px; background: ${availableRooms > 0 ? "var(--green)20" : "#ef535020"}; color: ${availableRooms > 0 ? "var(--green)" : "#ef5350"}; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
+                ${availableRooms > 0 ? " Disponibles" : " Complet"}
               </div>
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
             <div style="padding: 12px; background: rgba(0,230,118,0.1); border-radius: 8px; border: 1px solid rgba(0,230,118,0.2);">
-              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">CAPACITÉ</div>
-              <div style="font-size: 1.3rem; color: var(--green); font-weight: 700;">${room.capacity}</div>
-              <div style="font-size: 0.75rem; color: var(--muted);">places</div>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">TOTAL</div>
+              <div style="font-size: 1.3rem; color: var(--green); font-weight: 700;">${room.total}</div>
+              <div style="font-size: 0.75rem; color: var(--muted);">chambres</div>
             </div>
             <div style="padding: 12px; background: rgba(255,215,64,0.1); border-radius: 8px; border: 1px solid rgba(255,215,64,0.2);">
-              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">OCCUPÉES</div>
-              <div style="font-size: 1.3rem; color: #ffd740; font-weight: 700;">${room.occupied}</div>
-              <div style="font-size: 0.75rem; color: var(--muted);">places</div>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">RÉSERVÉES</div>
+              <div style="font-size: 1.3rem; color: #ffd740; font-weight: 700;">${occupiedRooms}</div>
+              <div style="font-size: 0.75rem; color: var(--muted);">chambres</div>
             </div>
           </div>
 
           <div style="margin-bottom: 12px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
               <div style="font-size: 0.85rem; font-weight: 600; color: var(--text);">Occupation</div>
-              <div style="font-size: 0.85rem; font-weight: 600; color: ${occupancyPercent > 80 ? '#ff6b6b' : 'var(--green)'};">${occupancyPercent}%</div>
+              <div style="font-size: 0.85rem; font-weight: 600; color: ${occupancyPercent > 80 ? "#ff6b6b" : "var(--green)"};">${occupancyPercent}%</div>
             </div>
             <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
-              <div style="width: ${occupancyPercent}%; height: 100%; background: ${occupancyPercent > 80 ? '#ff6b6b' : 'var(--green)'}; transition: width 0.3s;"></div>
+              <div style="width: ${occupancyPercent}%; height: 100%; background: ${occupancyPercent > 80 ? "#ff6b6b" : "var(--green)"}; transition: width 0.3s;"></div>
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
             <div style="padding: 10px; background: rgba(0,230,118,0.15); border-radius: 8px; text-align: center;">
               <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">DISPONIBLES</div>
-              <div style="font-size: 1.2rem; color: var(--green); font-weight: 700;">${availableSpaces}</div>
+              <div style="font-size: 1.2rem; color: var(--green); font-weight: 700;">${availableRooms}</div>
             </div>
             <div style="padding: 10px; background: rgba(255,107,107,0.15); border-radius: 8px; text-align: center;">
-              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">RÉSERVÉES</div>
-              <div style="font-size: 1.2rem; color: #ff6b6b; font-weight: 700;">${reservationsInRoom}</div>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 4px;">CAPACITÉ/PERS</div>
+              <div style="font-size: 1.2rem; color: #ffc107; font-weight: 700;">${room.capacity}</div>
             </div>
           </div>
         `;
 
-        roomsContainer.appendChild(roomCard);
-      });
-    }
-
-    function showMsg(elementId, text, isSuccess) {
-      const elem = document.getElementById(elementId);
-      elem.className = 'msg-box show ' + (isSuccess ? 'msg-success' : 'msg-error');
-      elem.textContent = (isSuccess ? '✓ ' : '✗ ') + text;
-      
-      setTimeout(() => {
-        elem.classList.remove('show');
-      }, 5000);
-    }
-
-    function logout() {
-      sessionStorage.removeItem('currentAdmin');
-      localStorage.removeItem('currentAdmin');
-      window.location.href = 'index.html';
-    }
-
-    // ===== RESERVATIONS MANAGEMENT =====
-    function displayReservations() {
-      const container = document.getElementById('reservationsList');
-      
-      const filtered = currentReservationFilter === 'all' 
-        ? allReservations 
-        : allReservations.filter(r => r.status === currentReservationFilter);
-
-      if (!filtered.length) {
-        container.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 40px;">Aucune réservation</div>';
-        return;
+          roomsContainer.appendChild(roomCard);
+        });
       }
 
-      container.innerHTML = filtered.map(res => {
-        const arrival = new Date(res.date_arrivee).toLocaleDateString('fr-FR');
-        const departure = new Date(res.date_depart).toLocaleDateString('fr-FR');
-        const nights = Math.floor((new Date(res.date_depart) - new Date(res.date_arrivee)) / (1000 * 3600 * 24));
-        
-        let statusClass = res.status === 'en_attente' ? 'pending' : 
-                         res.status === 'validee' ? 'approved' : 'rejected';
-        let statusText = res.status === 'en_attente' ? '⏳ EN ATTENTE' :
-                        res.status === 'validee' ? '✅ VALIDÉE' : '❌ REJETÉE';
+      function showMsg(elementId, text, isSuccess) {
+        const elem = document.getElementById(elementId);
+        elem.className =
+          "msg-box show " + (isSuccess ? "msg-success" : "msg-error");
+        elem.textContent = (isSuccess ? "✓ " : "✗ ") + text;
 
-        // Afficher les chambres disponibles si pas de chambre assignée
-        let roomsHtml = '';
-        if (!res.room && res.status === 'en_attente' && allRooms.length > 0) {
-          roomsHtml = `
+        setTimeout(() => {
+          elem.classList.remove("show");
+        }, 5000);
+      }
+
+      // Variables pour la gestion des chambres
+      let roomsStatus = {}; // { roomNumber: { occupied: true/false } }
+      let currentPage = 1;
+      const ROOMS_PER_PAGE = 50;
+
+      function loadRoomsList() {
+        const dateStart = document.getElementById("roomDateStart").value;
+        const dateEnd = document.getElementById("roomDateEnd").value;
+
+        if (!dateStart || !dateEnd) {
+          showMsg("message", "✗ Veuillez sélectionner les deux dates", false);
+          return;
+        }
+
+        currentPage = 1;
+        document.getElementById("roomsContainer").innerHTML =
+          '<div style="text-align: center; padding: 20px;">⏳ Chargement...</div>';
+
+        $.ajax({
+          url: "api/get_room_calendar.php",
+          method: "GET",
+          data: {
+            room_type: "",
+            date_start: dateStart,
+            date_end: dateEnd,
+          },
+          dataType: "json",
+          success: function (resp) {
+            if (resp.success) {
+              allRooms = resp.rooms.sort((a, b) => a.number - b.number);
+              displayRoomsList();
+              displayRoomsPagination();
+            } else {
+              showMsg("message", "✗ " + resp.message, false);
+            }
+          },
+          error: function () {
+            showMsg("message", "✗ Erreur lors du chargement", false);
+          },
+        });
+      }
+
+      function displayRoomsList() {
+        const container = document.getElementById("roomsContainer");
+        container.innerHTML = "";
+
+        const start = (currentPage - 1) * ROOMS_PER_PAGE;
+        const end = start + ROOMS_PER_PAGE;
+        const roomsToShow = allRooms.slice(start, end);
+
+        roomsToShow.forEach((room) => {
+          const isOccupied =
+            room.days &&
+            Object.values(room.days).some((day) => day.occupied === true);
+
+          const roomDiv = document.createElement("div");
+          roomDiv.style.cssText = `
+            padding: 15px 10px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: ${isOccupied ? "not-allowed" : "pointer"};
+            background: ${isOccupied ? "#ef535050" : "var(--green)"}20;
+            border: 2px solid ${isOccupied ? "#ef5350" : "var(--green)"};
+            transition: all 0.2s;
+            user-select: none;
+          `;
+
+          roomDiv.onmouseover = function () {
+            if (!isOccupied) {
+              this.style.background = "var(--green)40";
+              this.style.transform = "scale(1.05)";
+            }
+          };
+
+          roomDiv.onmouseout = function () {
+            this.style.background = `${isOccupied ? "#ef535050" : "var(--green)"}20`;
+            this.style.transform = "scale(1)";
+          };
+
+          roomDiv.innerHTML = `
+            <div style="font-weight: 700; font-size: 1.2em; color: var(--text);">
+              ${room.number}
+            </div>
+          `;
+
+          if (!isOccupied) {
+            roomDiv.onclick = function () {
+              selectRoomForReservation(room.number);
+            };
+          }
+
+          container.appendChild(roomDiv);
+        });
+      }
+
+      function displayRoomsPagination() {
+        const container = document.getElementById("roomsPagination");
+        container.innerHTML = "";
+
+        const totalPages = Math.ceil(allRooms.length / ROOMS_PER_PAGE);
+
+        // Bouton Précédent
+        const prevBtn = document.createElement("button");
+        prevBtn.textContent = "← Précédent";
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.style.cssText = `
+          padding: 8px 12px;
+          border: 1px solid var(--border);
+          background: ${currentPage === 1 ? "var(--muted)" : "var(--panel)"};
+          color: var(--text);
+          border-radius: 6px;
+          cursor: ${currentPage === 1 ? "not-allowed" : "pointer"};
+          opacity: ${currentPage === 1 ? "0.5" : "1"};
+        `;
+        if (currentPage > 1) {
+          prevBtn.onclick = () => goToRoomsPage(currentPage - 1);
+        }
+        container.appendChild(prevBtn);
+
+        // Boutons de pages
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          btn.style.cssText = `
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            background: ${currentPage === i ? "var(--green)" : "var(--panel)"};
+            color: ${currentPage === i ? "#000" : "var(--text)"};
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: ${currentPage === i ? "700" : "400"};
+          `;
+          btn.onclick = () => goToRoomsPage(i);
+          container.appendChild(btn);
+        }
+
+        // Bouton Suivant
+        const nextBtn = document.createElement("button");
+        nextBtn.textContent = "Suivant →";
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.style.cssText = `
+          padding: 8px 12px;
+          border: 1px solid var(--border);
+          background: ${currentPage === totalPages ? "var(--muted)" : "var(--panel)"};
+          color: var(--text);
+          border-radius: 6px;
+          cursor: ${currentPage === totalPages ? "not-allowed" : "pointer"};
+          opacity: ${currentPage === totalPages ? "0.5" : "1"};
+        `;
+        if (currentPage < totalPages) {
+          nextBtn.onclick = () => goToRoomsPage(currentPage + 1);
+        }
+        container.appendChild(nextBtn);
+      }
+
+      function goToRoomsPage(page) {
+        currentPage = page;
+        displayRoomsList();
+        displayRoomsPagination();
+      }
+
+      function selectRoomForReservation(roomNumber) {
+        // Montrer un modal pour sélectionner la réservation à assigner
+        const pending = allReservations.filter(
+          (r) => r.status === "en_attente",
+        );
+
+        if (pending.length === 0) {
+          showMsg("message", "✗ Aucune réservation en attente", false);
+          return;
+        }
+
+        let html = '<div style="max-width: 500px; margin: 0 auto;">';
+        html +=
+          '<h3 style="color: var(--text); margin-bottom: 15px;">Assigner Chambre ' +
+          roomNumber +
+          "</h3>";
+        html +=
+          '<p style="color: var(--muted); margin-bottom: 15px;">Sélectionnez une réservation en attente:</p>';
+        html +=
+          '<div style="max-height: 400px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; padding: 0;">';
+
+        pending.forEach((res) => {
+          const start = new Date(res.date_arrivee).toLocaleDateString("fr-FR");
+          const end = new Date(res.date_depart).toLocaleDateString("fr-FR");
+          html +=
+            '<div onclick="assignRoomToReservation(' +
+            res.id +
+            ", " +
+            roomNumber +
+            ')" style="padding: 12px; border-bottom: 1px solid var(--border); cursor: pointer; background: var(--panel); transition: background 0.2s;" onmouseover="this.style.background=\'rgba(0,230,118,0.1)\'" onmouseout="this.style.background=\'var(--panel)\'">';
+          html +=
+            '<div style="font-weight: 600; color: var(--text);">Res #' +
+            res.id +
+            " - " +
+            res.prenom +
+            " " +
+            res.nom +
+            "</div>";
+          html +=
+            '<div style="font-size: 0.85rem; color: var(--muted);">' +
+            start +
+            " → " +
+            end +
+            "</div>";
+          html +=
+            '<div style="font-size: 0.85rem; color: var(--text);">' +
+            res.nb_personnes +
+            " pers. | " +
+            (res.room_type || "À assigner") +
+            "</div>";
+          html += "</div>";
+        });
+
+        html += "</div>";
+        html += "</div>";
+
+        // Afficher dans un modal/popup
+        const modal = document.createElement("div");
+        modal.style.cssText =
+          "position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 9999;";
+        modal.innerHTML =
+          '<div style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; max-height: 90vh; overflow-y: auto;">' +
+          html +
+          "</div>";
+        modal.onclick = function (e) {
+          if (e.target === modal) modal.remove();
+        };
+        document.body.appendChild(modal);
+      }
+
+      function assignRoomToReservation(resId, roomNumber) {
+        $.ajax({
+          url: "api/assign_room_number.php",
+          method: "POST",
+          data: {
+            reservation_id: resId,
+            room_number: roomNumber,
+          },
+          dataType: "json",
+          success: function (resp) {
+            if (resp.success) {
+              showMsg("message", "✅ " + resp.message, true);
+              // Retirer le modal
+              const modals = document.querySelectorAll("div[role='dialog']");
+              modals.forEach((m) => m.remove());
+              // Recharger les données
+              loadData();
+            } else {
+              showMsg("message", "✗ " + resp.message, false);
+            }
+          },
+          error: function () {
+            showMsg("message", "✗ Erreur serveur", false);
+          },
+        });
+      }
+
+      function logout() {
+        sessionStorage.removeItem("currentAdmin");
+        localStorage.removeItem("currentAdmin");
+        window.location.href = "index.html";
+      }
+
+      // ===== RESERVATIONS MANAGEMENT =====
+      function displayReservations() {
+        const container = document.getElementById("reservationsList");
+
+        const filtered =
+          currentReservationFilter === "all"
+            ? allReservations
+            : allReservations.filter(
+                (r) => r.status === currentReservationFilter,
+              );
+
+        if (!filtered.length) {
+          container.innerHTML =
+            '<div style="text-align: center; color: var(--muted); padding: 40px;">Aucune réservation</div>';
+          return;
+        }
+
+        container.innerHTML = filtered
+          .map((res) => {
+            const arrival = new Date(res.date_arrivee).toLocaleDateString(
+              "fr-FR",
+            );
+            const departure = new Date(res.date_depart).toLocaleDateString(
+              "fr-FR",
+            );
+            const nights = Math.floor(
+              (new Date(res.date_depart) - new Date(res.date_arrivee)) /
+                (1000 * 3600 * 24),
+            );
+
+            let statusClass =
+              res.status === "en_attente"
+                ? "pending"
+                : res.status === "validee"
+                  ? "approved"
+                  : "rejected";
+            let statusText =
+              res.status === "en_attente"
+                ? "⏳ EN ATTENTE"
+                : res.status === "validee"
+                  ? "✅ VALIDÉE"
+                  : "❌ REJETÉE";
+
+            // Afficher les chambres disponibles si pas de chambre assignée
+            let roomsHtml = "";
+            if (
+              !res.room &&
+              res.status === "en_attente" &&
+              allRooms.length > 0
+            ) {
+              roomsHtml = `
             <div style="margin-top: 12px; padding: 12px; background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px;">
               <div style="font-weight: 600; margin-bottom: 8px; color: var(--green);">🏠 Chambres disponibles:</div>
               <div style="display: grid; gap: 8px;">
-                ${allRooms.map(room => {
-                  const available = room.capacity - room.occupied;
-                  return `
+                ${allRooms
+                  .map((room) => {
+                    const available = room.capacity - room.occupied;
+                    return `
                     <div style="padding: 8px; background: rgba(255,255,255,0.05); border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
                       <span>${room.name}</span>
-                      <span style="color: ${available > 0 ? 'var(--green)' : '#ef5350'}; font-weight: 600;">
+                      <span style="color: ${available > 0 ? "var(--green)" : "#ef5350"}; font-weight: 600;">
                         ${available}/${room.capacity}
                       </span>
                     </div>
                   `;
-                }).join('')}
+                  })
+                  .join("")}
               </div>
             </div>
           `;
-        }
+            }
 
-        return `
+            return `
           <div class="reservation-card">
             <div class="res-card-header">
               <div>
@@ -1129,55 +1771,61 @@
               </div>
               <div class="res-info-item">
                 <span class="res-info-label">Chambre</span>
-                ${res.room || '🔲 Non assignée'}
+                ${res.room || "🔲 Non assignée"}
               </div>
             </div>
 
             ${roomsHtml}
 
             <div class="res-card-actions">
-              ${res.status === 'en_attente' ? `
+              ${
+                res.status === "en_attente"
+                  ? `
                 <button class="action-btn validate" onclick="validateRes(${res.id})">✓ Valider</button>
                 <button class="action-btn reject" onclick="rejectRes(${res.id})">✗ Rejeter</button>
-              ` : ''}
+              `
+                  : ""
+              }
               <button class="action-btn" onclick="openDepositModal(${res.id}, '${res.nom}', '${res.prenom}', ${res.deposit})">💰 Modifier dépôt</button>
             </div>
           </div>
         `;
-      }).join('');
-    }
-
-    function filterReservationsBy(status) {
-      currentReservationFilter = status;
-      displayReservations();
-    }
-
-    let currentValidatingReservationId = null;
-
-    function validateRes(id) {
-      const res = allReservations.find(r => r.id === id);
-      if (!res) {
-        showMsg('message', '✗ Réservation introuvable', false);
-        return;
-      }
-      
-      // Ouvrir modale de sélection de chambre
-      openRoomSelectionModal(id, res.nom, res.prenom);
-    }
-
-    function openRoomSelectionModal(id, nom, prenom) {
-      currentValidatingReservationId = id;
-      
-      const availableRooms = allRooms.filter(r => r.occupied < r.capacity);
-      
-      if (availableRooms.length === 0) {
-        showMsg('message', '✗ Aucune chambre disponible', false);
-        return;
+          })
+          .join("");
       }
 
-      let roomsHtml = availableRooms.map(room => {
-        const available = room.capacity - room.occupied;
-        return `
+      function filterReservationsBy(status) {
+        currentReservationFilter = status;
+        displayReservations();
+      }
+
+      let currentValidatingReservationId = null;
+
+      function validateRes(id) {
+        const res = allReservations.find((r) => r.id === id);
+        if (!res) {
+          showMsg("message", "✗ Réservation introuvable", false);
+          return;
+        }
+
+        // Ouvrir modale de sélection de chambre
+        openRoomSelectionModal(id, res.nom, res.prenom);
+      }
+
+      function openRoomSelectionModal(id, nom, prenom) {
+        currentValidatingReservationId = id;
+
+        const availableRooms = allRooms.filter((r) => r.occupied < r.capacity);
+
+        if (availableRooms.length === 0) {
+          showMsg("message", "✗ Aucune chambre disponible", false);
+          return;
+        }
+
+        let roomsHtml = availableRooms
+          .map((room) => {
+            const available = room.capacity - room.occupied;
+            return `
           <div class="room-selection-item" onclick="selectRoomForValidation(${room.id})">
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
               <div>
@@ -1193,16 +1841,17 @@
             </div>
           </div>
         `;
-      }).join('');
+          })
+          .join("");
 
-      const modalHtml = `
+        const modalHtml = `
         <div id="roomSelectionModal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
           <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 30px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
               <h2 style="margin: 0; color: var(--green);">🏠 Sélectionner une chambre</h2>
               <button onclick="closeRoomSelectionModal()" style="background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer;">✕</button>
             </div>
-            
+
             <div style="background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; padding: 12px; margin-bottom: 20px;">
               <strong>Validation pour:</strong> ${nom} ${prenom}
             </div>
@@ -1217,50 +1866,56 @@
           </div>
         </div>
       `;
-      
-      document.body.insertAdjacentHTML('beforeend', modalHtml);
-    }
 
-    function selectRoomForValidation(roomId) {
-      if (!currentValidatingReservationId) return;
-      
-      closeRoomSelectionModal();
-      
-      // Appeler l'API pour valider avec la chambre sélectionnée
-      $.ajax({
-        url: 'api/admin_validate_reservation_with_room.php',
-        method: 'POST',
-        data: { 
-          id: currentValidatingReservationId,
-          room_id: roomId
-        },
-        success: function(resp) {
-          if (resp.success) {
-            const res = allReservations.find(r => r.id === currentValidatingReservationId);
-            if (res) {
-              res.status = 'validee';
-              res.room = resp.room_name;
+        document.body.insertAdjacentHTML("beforeend", modalHtml);
+      }
+
+      function selectRoomForValidation(roomId) {
+        if (!currentValidatingReservationId) return;
+
+        closeRoomSelectionModal();
+
+        // Appeler l'API pour valider avec la chambre sélectionnée
+        $.ajax({
+          url: "api/admin_validate_reservation_with_room.php",
+          method: "POST",
+          data: {
+            id: currentValidatingReservationId,
+            room_id: roomId,
+          },
+          success: function (resp) {
+            if (resp.success) {
+              const res = allReservations.find(
+                (r) => r.id === currentValidatingReservationId,
+              );
+              if (res) {
+                res.status = "validee";
+                res.room = resp.room_name;
+              }
+
+              // Afficher les identifiants dans une modale
+              showCredentialsModal(
+                resp.credentials,
+                resp.reservation_id,
+                resp.email_sent,
+              );
+
+              // Rafraîchir le dashboard
+              displayReservations();
+              updateDashboard();
+            } else {
+              showMsg("message", "✗ " + (resp.message || "Erreur"), false);
             }
-            
-            // Afficher les identifiants dans une modale
-            showCredentialsModal(resp.credentials, resp.reservation_id, resp.email_sent);
-            
-            // Rafraîchir le dashboard
-            displayReservations();
-            updateDashboard();
-          } else {
-            showMsg('message', '✗ ' + (resp.message || 'Erreur'), false);
-          }
-        },
-        error: function() {
-          showMsg('message', '✗ Erreur lors de la validation', false);
-        }
-      });
-    }
+          },
+          error: function () {
+            showMsg("message", "✗ Erreur lors de la validation", false);
+          },
+        });
+      }
 
-    function showCredentialsModal(credentials, reservationId, emailSent) {
-      const modal = document.createElement('div');
-      modal.style.cssText = `
+      function showCredentialsModal(credentials, reservationId, emailSent) {
+        const modal = document.createElement("div");
+        modal.style.cssText = `
         position: fixed;
         inset: 0;
         background: rgba(0,0,0,0.9);
@@ -1270,14 +1925,14 @@
         z-index: 3000;
         padding: 20px;
       `;
-      
-      const credentialHtml = `
+
+        const credentialHtml = `
         <div style="background: var(--panel); border: 2px solid var(--green); border-radius: 12px; padding: 40px; max-width: 550px; width: 100%; max-height: 80vh; overflow-y: auto;">
           <div style="text-align: center; margin-bottom: 30px;">
             <h2 style="margin: 0 0 10px 0; color: var(--green); font-size: 1.5rem;">✅ Réservation Validée!</h2>
             <p style="margin: 0; color: var(--muted);">Identifiants d'accès client</p>
           </div>
-          
+
           <div style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); border-radius: 8px; padding: 20px; margin-bottom: 24px;">
             <div style="display: grid; gap: 16px;">
               <div>
@@ -1289,7 +1944,7 @@
                   </button>
                 </div>
               </div>
-              
+
               <div>
                 <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;">🔐 MOT DE PASSE</div>
                 <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
@@ -1301,15 +1956,15 @@
               </div>
             </div>
           </div>
-          
+
           <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 16px; margin-bottom: 24px;">
             <div style="font-size: 0.9rem; color: var(--muted);">
-              <p style="margin: 0 0 8px 0;"><strong>📋 Numéro de réservation:</strong> #${String(reservationId).padStart(6, '0')}</p>
-              <p style="margin: 0 0 8px 0;"><strong>📧 Email envoyé:</strong> ${emailSent ? '✅ Oui' : '⚠️ Configuration SMTP non disponible'}</p>
+              <p style="margin: 0 0 8px 0;"><strong>📋 Numéro de réservation:</strong> #${String(reservationId).padStart(6, "0")}</p>
+              <p style="margin: 0 0 8px 0;"><strong>📧 Email envoyé:</strong> ${emailSent ? "✅ Oui" : "⚠️ Configuration SMTP non disponible"}</p>
               <p style="margin: 0;"><strong>💡 Info:</strong> Si l'email n'a pas été reçu, les identifiants sont affichés ci-dessus. Le client peut se connecter directement.</p>
             </div>
           </div>
-          
+
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <button onclick="location.href='email-logs.html'" style="padding: 12px; background: rgba(0,230,118,0.15); border: 1px solid var(--green); color: var(--green); border-radius: 8px; font-weight: 600; cursor: pointer;">
               📧 Voir logs email
@@ -1320,129 +1975,149 @@
           </div>
         </div>
       `;
-      
-      modal.innerHTML = credentialHtml;
-      document.body.appendChild(modal);
-      
-      showMsg('message', '✅ Réservation validée! Les identifiants sont affichés.', true);
-    }
 
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        showMsg('message', '📋 Copié dans le presse-papiers!', true);
-      });
-    }
+        modal.innerHTML = credentialHtml;
+        document.body.appendChild(modal);
 
-    function closeRoomSelectionModal() {
-      const modal = document.getElementById('roomSelectionModal');
-      if (modal) {
-        modal.remove();
+        showMsg(
+          "message",
+          "✅ Réservation validée! Les identifiants sont affichés.",
+          true,
+        );
       }
-    }
 
-    function rejectRes(id) {
-      if (confirm('Êtes-vous sûr de vouloir rejeter cette réservation?')) {
-        $.ajax({
-          url: 'api/admin_reject_reservation.php',
-          method: 'POST',
-          data: { id: id },
-          success: function(resp) {
-            if (resp.success) {
-              const res = allReservations.find(r => r.id === id);
-              if (res) {
-                res.status = 'rejetee';
+      function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+          showMsg("message", "📋 Copié dans le presse-papiers!", true);
+        });
+      }
+
+      function closeRoomSelectionModal() {
+        const modal = document.getElementById("roomSelectionModal");
+        if (modal) {
+          modal.remove();
+        }
+      }
+
+      function rejectRes(id) {
+        if (confirm("Êtes-vous sûr de vouloir rejeter cette réservation?")) {
+          $.ajax({
+            url: "api/admin_reject_reservation.php",
+            method: "POST",
+            data: { id: id },
+            success: function (resp) {
+              if (resp.success) {
+                const res = allReservations.find((r) => r.id === id);
+                if (res) {
+                  res.status = "rejetee";
+                }
+                displayReservations();
+                updateDashboard();
+                showMsg("message", "✓ Réservation rejetée!", true);
+              } else {
+                showMsg("message", "✗ " + (resp.message || "Erreur"), false);
               }
-              displayReservations();
-              updateDashboard();
-              showMsg('message', '✓ Réservation rejetée!', true);
-            } else {
-              showMsg('message', '✗ ' + (resp.message || 'Erreur'), false);
+            },
+            error: function () {
+              showMsg("message", "✗ Erreur lors du rejet", false);
+            },
+          });
+        }
+      }
+
+      // Deposit Modal Functions
+      let currentDepositReservationId = null;
+
+      function openDepositModal(id, nom, prenom, currentDeposit) {
+        currentDepositReservationId = id;
+        alert(
+          `Modifier le dépôt pour ${nom} ${prenom}\nMontant actuel: ${currentDeposit}€\n\nFonctionnalité à implémenter`,
+        );
+      }
+
+      function redirectToLogin() {
+        window.location.href = "index.html";
+      }
+
+      // Email Configuration Handler
+      function loadEmailConfig() {
+        $.ajax({
+          method: "GET",
+          dataType: "json",
+          url: "api/admin_email_config.php",
+        }).done(function (resp) {
+          if (resp.success && resp.config) {
+            const config = resp.config;
+            document.getElementById("smtp_user").value = config.SMTP_USER || "";
+            document.getElementById("smtp_from_email").value =
+              config.SMTP_FROM_EMAIL || "";
+            document.getElementById("smtp_from_name").value =
+              config.SMTP_FROM_NAME || "";
+
+            if (config.is_configured) {
+              const alert = document.getElementById("emailStatusAlert");
+              alert.innerHTML =
+                '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;">✅ Configuration SMTP détectée - Les emails seront envoyés automatiquement!</div>';
             }
-          },
-          error: function() {
-            showMsg('message', '✗ Erreur lors du rejet', false);
           }
         });
       }
-    }
 
-    // Deposit Modal Functions
-    let currentDepositReservationId = null;
+      document
+        .getElementById("emailConfigForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
 
-    function openDepositModal(id, nom, prenom, currentDeposit) {
-      currentDepositReservationId = id;
-      alert(`Modifier le dépôt pour ${nom} ${prenom}\nMontant actuel: ${currentDeposit}€\n\nFonctionnalité à implémenter`);
-    }
+          const smtpUser = document.getElementById("smtp_user").value.trim();
+          const smtpPassword = document
+            .getElementById("smtp_password")
+            .value.trim();
+          const smtpFromEmail = document
+            .getElementById("smtp_from_email")
+            .value.trim();
+          const smtpFromName = document
+            .getElementById("smtp_from_name")
+            .value.trim();
 
-    function redirectToLogin() {
-      window.location.href = 'index.html';
-    }
-
-    // Email Configuration Handler
-    function loadEmailConfig() {
-      $.ajax({
-        method: 'GET',
-        dataType: 'json',
-        url: 'api/admin_email_config.php'
-      }).done(function(resp) {
-        if (resp.success && resp.config) {
-          const config = resp.config;
-          document.getElementById('smtp_user').value = config.SMTP_USER || '';
-          document.getElementById('smtp_from_email').value = config.SMTP_FROM_EMAIL || '';
-          document.getElementById('smtp_from_name').value = config.SMTP_FROM_NAME || '';
-          
-          if (config.is_configured) {
-            const alert = document.getElementById('emailStatusAlert');
-            alert.innerHTML = '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;">✅ Configuration SMTP détectée - Les emails seront envoyés automatiquement!</div>';
+          if (!smtpUser || !smtpPassword) {
+            alert("❌ Email et mot de passe requis");
+            return;
           }
-        }
-      });
-    }
 
-    document.getElementById('emailConfigForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const smtpUser = document.getElementById('smtp_user').value.trim();
-      const smtpPassword = document.getElementById('smtp_password').value.trim();
-      const smtpFromEmail = document.getElementById('smtp_from_email').value.trim();
-      const smtpFromName = document.getElementById('smtp_from_name').value.trim();
+          $.ajax({
+            method: "POST",
+            dataType: "json",
+            url: "api/admin_email_config.php",
+            data: {
+              smtp_user: smtpUser,
+              smtp_password: smtpPassword,
+              smtp_from_email: smtpFromEmail,
+              smtp_from_name: smtpFromName,
+            },
+          })
+            .done(function (resp) {
+              if (resp.success) {
+                const alert = document.getElementById("emailStatusAlert");
+                alert.innerHTML =
+                  '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;">✅ Configuration sauvegardée! Les emails seront envoyés automatiquement lors de la validation.</div>';
 
-      if (!smtpUser || !smtpPassword) {
-        alert('❌ Email et mot de passe requis');
-        return;
-      }
+                // Réinitialiser le champ mot de passe
+                document.getElementById("smtp_password").value = "";
 
-      $.ajax({
-        method: 'POST',
-        dataType: 'json',
-        url: 'api/admin_email_config.php',
-        data: {
-          smtp_user: smtpUser,
-          smtp_password: smtpPassword,
-          smtp_from_email: smtpFromEmail,
-          smtp_from_name: smtpFromName
-        }
-      }).done(function(resp) {
-        if (resp.success) {
-          const alert = document.getElementById('emailStatusAlert');
-          alert.innerHTML = '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;">✅ Configuration sauvegardée! Les emails seront envoyés automatiquement lors de la validation.</div>';
-          
-          // Réinitialiser le champ mot de passe
-          document.getElementById('smtp_password').value = '';
-          
-          setTimeout(() => {
-            alert.innerHTML = '';
-          }, 5000);
-        } else {
-          alert('❌ ' + (resp.message || 'Erreur lors de la sauvegarde'));
-        }
-      }).fail(function() {
-        alert('❌ Erreur réseau');
-      });
-    });
+                setTimeout(() => {
+                  alert.innerHTML = "";
+                }, 5000);
+              } else {
+                alert("❌ " + (resp.message || "Erreur lors de la sauvegarde"));
+              }
+            })
+            .fail(function () {
+              alert("❌ Erreur réseau");
+            });
+        });
 
-    // Charger la config au chargement
-    loadEmailConfig();
-  </script>
-</body>
+      // Charger la config au chargement
+      loadEmailConfig();
+    </script>
+  </body>
 </html>

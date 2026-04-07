@@ -58,6 +58,8 @@ $newReservation = [
     'status' => 'en_attente',
     'deposit' => 80,
     'room' => null,
+    'room_type' => $input['room_type'] ?? null,
+    'room_id' => $input['room_id'] ?? null,
     'created_at' => date('Y-m-d H:i:s')
 ];
 

@@ -15,7 +15,7 @@ if (!$date_arrivee || !$date_depart) {
 
 // Charger activites et chambres
 $allActivities = readJson('activities.json');
-$rooms = readJson('rooms.json');
+$roomTypes = readJson('rooms.json');
 $reservations = readJson('reservations.json');
 
 // Obtenir les IDs des chambres disponibles pour les activites selectionnees
@@ -28,8 +28,8 @@ if (!empty($activities)) {
     }
     $availableFacilities = array_unique($availableFacilities);
 } else {
-    // Si aucune activite selectionnee, toutes les chambres sont disponibles
-    $availableFacilities = array_map(function($r) { return $r['id']; }, $rooms);
+    // Si aucune activite selectionnee, tous les types de chambres sont disponibles
+    $availableFacilities = array_map(function($r) { return $r['id']; }, $roomTypes);
 }
 
 // Calculer le nombre de nuits
@@ -37,34 +37,60 @@ $arrival = strtotime($date_arrivee);
 $departure = strtotime($date_depart);
 $nights = ($departure - $arrival) / (24 * 3600);
 
+// Obtenir toutes les chambres et les réservations
+$allRoomData = readJson('rooms.json');
+$roomTypes = $allRoomData['types'];
+$allRooms = $allRoomData['rooms'];
+
 // Filtrer les chambres et ajouter les informations de tarif
 $result = [];
-foreach ($rooms as $room) {
-    if (in_array($room['id'], $availableFacilities)) {
-        // Verifier si la chambre a assez de capacite pour le nombre de personnes
-        if ($room['capacity'] < $nb_personnes) {
-            continue; // Sauter cette chambre
+foreach ($roomTypes as $roomType) {
+    if (in_array($roomType['id'], $availableFacilities)) {
+        // Vérifier si la chambre a assez de capacite pour le nombre de personnes
+        if ($roomType['capacity'] < $nb_personnes) {
+            continue; // Sauter ce type de chambre
         }
         
-        // Verifier si la chambre est disponible pour les dates
-        $isAvailable = true;
-        foreach ($reservations as $res) {
-            if ($res['room'] === $room['id'] && $res['status'] === 'validee') {
-                $resStart = strtotime($res['date_arrivee']);
-                $resEnd = strtotime($res['date_depart']);
-                
-                // Verifier chevauchement
-                if (!($departure <= $resStart || $arrival >= $resEnd)) {
-                    $isAvailable = false;
-                    break;
+        // Compter les réservations validees et autres chambres disponibles pour ce type
+        $reservedCount = 0;
+        $availableRoomNumbers = [];
+        
+        // Récupérer tous les numéros de chambres disponibles du type
+        $typeRooms = array_filter($allRooms, function($r) use ($roomType) {
+            return $r['type'] === $roomType['type'];
+        });
+        
+        foreach ($typeRooms as $room) {
+            $isAvailable = true;
+            
+            // Vérifier si cette chambre a une réservation chevauchante
+            foreach ($reservations as $res) {
+                if ($res['status'] === 'validee' && isset($res['room_number']) && $res['room_number'] == $room['number']) {
+                    $resStart = strtotime($res['date_arrivee']);
+                    $resEnd = strtotime($res['date_depart']);
+                    
+                    // Vérifier chevauchement
+                    if (!($departure <= $resStart || $arrival >= $resEnd)) {
+                        $isAvailable = false;
+                        $reservedCount++;
+                        break;
+                    }
                 }
+            }
+            
+            if ($isAvailable) {
+                $availableRoomNumbers[] = $room['number'];
             }
         }
         
-        if ($isAvailable) {
-            $roomData = $room;
-            $roomData['total_price'] = $room['price_per_night'] * $nights;
+        // Vérifier si au moins 1 chambre de ce type est disponible
+        if (count($availableRoomNumbers) > 0) {
+            $roomData = $roomType;
+            $roomData['total_price'] = $roomType['price_per_night'] * $nights;
             $roomData['nights'] = $nights;
+            $roomData['reserved_count'] = $reservedCount;
+            $roomData['available_count'] = count($availableRoomNumbers);
+            $roomData['available_numbers'] = $availableRoomNumbers;
             $result[] = $roomData;
         }
     }

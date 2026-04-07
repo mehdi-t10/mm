@@ -8,14 +8,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $reservationId = isset($_POST['id']) ? intval($_POST['id']) : 0;
-$roomId = isset($_POST['room_id']) ? intval($_POST['room_id']) : 0;
+$roomType = isset($_POST['room_type']) ? $_POST['room_type'] : null;
 
-if ($reservationId <= 0 || $roomId <= 0) {
+if ($reservationId <= 0) {
     jsonResponse(['success' => false, 'message' => 'Paramètres invalides']);
 }
 
 $reservations = readJson('reservations.json');
-$rooms = readJson('rooms.json');
+$roomTypes = readJson('rooms.json');
 $users = readJson('users.json');
 
 // Trouver la réservation
@@ -37,30 +37,46 @@ if ($reservation['status'] !== 'en_attente') {
     jsonResponse(['success' => false, 'message' => 'Cette réservation a déjà été traitée']);
 }
 
-// Trouver et valider la chambre
-$room = null;
-$roomIndex = -1;
-foreach ($rooms as $idx => $r) {
-    if ($r['id'] === $roomId) {
-        $room = $r;
-        $roomIndex = $idx;
+// Déterminer le room_type à utiliser
+if (!$roomType) {
+    // Utiliser celui de la réservation si disponible
+    if (isset($reservation['room_type']) && $reservation['room_type']) {
+        $roomType = $reservation['room_type'];
+    } else {
+        jsonResponse(['success' => false, 'message' => 'Type de chambre requis']);
+    }
+}
+
+// Trouver et valider le type de chambre
+$roomTypeInfo = null;
+foreach ($roomTypes as $rt) {
+    if ($rt['type'] === $roomType) {
+        $roomTypeInfo = $rt;
         break;
     }
 }
 
-if (!$room) {
-    jsonResponse(['success' => false, 'message' => 'Chambre introuvable']);
+if (!$roomTypeInfo) {
+    jsonResponse(['success' => false, 'message' => 'Type de chambre introuvable']);
+}
+
+// Compter les réservations validées pour ce type
+$reservedCount = 0;
+foreach ($reservations as $res) {
+    if ($res['status'] === 'validee' && isset($res['room_type']) && $res['room_type'] === $roomType) {
+        $reservedCount++;
+    }
 }
 
 // Vérifier la disponibilité
-if ($room['occupied'] >= $room['capacity']) {
-    jsonResponse(['success' => false, 'message' => 'Chambre pleine']);
+if ($reservedCount >= $roomTypeInfo['total']) {
+    jsonResponse(['success' => false, 'message' => 'Aucune chambre ' . $roomType . ' disponible']);
 }
 
 // Mettre à jour les données
-$rooms[$roomIndex]['occupied'] += 1;
 $reservation['status'] = 'validee';
-$reservation['room'] = $room['id'];
+$reservation['room_type'] = $roomType;
+$reservation['room'] = $roomTypeInfo['name']; // Stocker le nom pour compatibilité
 $reservations[$reservationIndex] = $reservation;
 
 // Créer/mettre à jour compte utilisateur
@@ -76,23 +92,23 @@ foreach ($users as $user) {
 
 if (!$alreadyExists) {
     // Créer nouveau compte
-    $password = generatePassword($reservation['prenom']);
+    $plainPassword = generatePassword($reservation['prenom']);
     $users[] = [
         'id' => nextId($users),
         'nom' => $reservation['nom'],
         'prenom' => $reservation['prenom'],
         'email' => $reservation['email'],
-        'password' => $password,
+        'password' => password_hash($plainPassword, PASSWORD_DEFAULT),
         'telephone' => $reservation['telephone'],
-        'type' => 'client'
+        'role' => 'client'
     ];
+    $passwordToSend = $plainPassword;
 } else {
-    $password = $existingUser['password'];
+    $passwordToSend = null;
 }
 
 // Sauvegarder tous les changements
 writeJson('reservations.json', $reservations);
-writeJson('rooms.json', $rooms);
 writeJson('users.json', $users);
 
 // Préparer l'email avec les identifiants
@@ -102,12 +118,11 @@ $emailBody = "Bonjour {$reservation['prenom']} {$reservation['nom']},
 Félicitations! Votre réservation a été validée avec succès!
 
 ========== INFORMATIONS DE CONNEXION ==========
-Email: {$reservation['email']}
-Mot de passe: $password
+Email: {$reservation['email']}" . ($passwordToSend ? "\nMot de passe: $passwordToSend" : "\n(Vous avez un compte existant)") . "
 
 ========== DÉTAILS DE VOTRE RÉSERVATION ==========
 Numéro de réservation: #{$reservationId}
-Chambre: {$room['name']}
+Type de chambre: " . ucfirst($roomType) . "
 Arrivée: " . date('d/m/Y', strtotime($reservation['date_arrivee'])) . "
 Départ: " . date('d/m/Y', strtotime($reservation['date_depart'])) . "
 Nombre de personnes: {$reservation['nb_personnes']}
