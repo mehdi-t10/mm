@@ -34,5 +34,14 @@
         "subject": "FootCamp Dreams - Reservation recue!",
         "body": "Bonjour ilo ilo,\r\n\r\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\r\n\r\nDETAILS DE VOTRE DEMANDE:\r\n- Arrivee: 02\/04\/2026\r\n- Depart: 03\/04\/2026\r\n- Nombre de personnes: 2\r\n- Depot: 80€\r\n\r\nUn administrateur examinera votre demande et vous enverra un email avec:\r\n- Votre numero de reservation\r\n- Vos identifiants de connexion\r\n- Les details complets de votre facture\r\n- Les instructions de paiement\r\n\r\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\r\n\r\nCordialement,\r\nL'equipe FootCamp Dreams",
         "sent": false
+    },
+    {
+        "timestamp": "2026-04-07 07:42:55",
+        "to": "ilo@test.com",
+        "type": "credentials",
+        "reservation_id": 9,
+        "subject": "FootCamp Dreams - Votre réservation validée! Accès client",
+        "body": "Bonjour ilo ilo,\n\nFélicitations! Votre réservation a été validée avec succès!\n\n========== INFORMATIONS DE CONNEXION ==========\nEmail: ilo@test.com\nMot de passe: ilo2026\n\n========== DÉTAILS DE VOTRE RÉSERVATION ==========\nNuméro de réservation: #9\nChambre: Chambre B\nArrivée: 02\/04\/2026\nDépart: 03\/04\/2026\nNombre de personnes: 2\nAcompte versé: 80€\n\n========== ACCÈS CLIENT ==========\nConnectez-vous à votre compte: https:\/\/footcamp-dreams.local\/client-dashboard.html\n\nUne fois connecté, vous pourrez:\n- Consulter les détails complets de votre réservation\n- Voir votre facture détaillée\n- Gérer votre séjour\n\nBienvenue chez FootCamp Dreams!\nMerci d'avoir choisi notre établissement.\n\nCordialement,\nL'équipe FootCamp Dreams",
+        "sent": false
     }
 ]

@@ -10,7 +10,7 @@
         "id": 2,
         "name": "Chambre B",
         "capacity": 4,
-        "occupied": 1,
+        "occupied": 2,
         "price_per_night": 110
     },
     {

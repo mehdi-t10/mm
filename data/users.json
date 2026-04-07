@@ -48,5 +48,14 @@
         "password": "$2y$12$q\/xMon0xxCdpUCB.j4TTHeWUyF3d2qc4DkfUNCnIrL1El8ts2YD7K",
         "telephone": "0749339015",
         "role": "client"
+    },
+    {
+        "id": 7,
+        "nom": "ilo",
+        "prenom": "ilo",
+        "email": "ilo@test.com",
+        "password": "$2y$12$UpMjb2p4jbWzF5BLQQqoFubz2VGiQIdsG0SAOcKVaoD4Im9jjl0nG",
+        "telephone": "0102030405",
+        "type": "client"
     }
 ]
