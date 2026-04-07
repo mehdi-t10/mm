@@ -58,15 +58,27 @@ foreach ($rooms as $room) {
         $is_occupied = false;
         $reservation_id = null;
         foreach ($reservations as $res) {
-            if ($res['status'] === 'validee' && isset($res['room_number']) && $res['room_number'] == $room['number']) {
-                $res_start = strtotime($res['date_arrivee']);
-                $res_end = strtotime($res['date_depart']);
+            if ($res['status'] === 'validee') {
+                // Vérifier les deux formats: room_number (ancien) et room_numbers array (nouveau)
+                $reserved_room_numbers = [];
                 
-                // Vérifier si le jour est dans la période de réservation
-                if ($date >= $res_start && $date < $res_end) {
-                    $is_occupied = true;
-                    $reservation_id = $res['id'];
-                    break;
+                if (isset($res['room_numbers']) && is_array($res['room_numbers'])) {
+                    $reserved_room_numbers = $res['room_numbers'];
+                } elseif (isset($res['room_number'])) {
+                    $reserved_room_numbers = [$res['room_number']];
+                }
+                
+                // Vérifier si cette chambre est dans la réservation
+                if (in_array($room['number'], $reserved_room_numbers)) {
+                    $res_start = strtotime($res['date_arrivee']);
+                    $res_end = strtotime($res['date_depart']);
+                    
+                    // Vérifier si le jour est dans la période de réservation
+                    if ($date >= $res_start && $date < $res_end) {
+                        $is_occupied = true;
+                        $reservation_id = $res['id'];
+                        break;
+                    }
                 }
             }
         }

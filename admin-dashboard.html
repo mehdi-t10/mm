@@ -955,6 +955,8 @@
           dataType: "json",
           success: function (data) {
             allRooms = data.types && data.types.length > 0 ? data.types : [];
+            // Sauvegarder les données complètes des chambres pour uso in updateRoomOccupancy
+            localStorage.setItem("roomsData", JSON.stringify(data));
             updateDashboard();
           },
           error: function () {
@@ -1110,11 +1112,25 @@
           0,
         );
 
-        // Calculate occupancy rate
-        const occupiedRooms = new Set(allReservations.map((r) => r.room)).size;
+        // Calculate occupancy rate - compter toutes les chambres individuelles occupées
+        const occupiedRoomNumbers = new Set();
+
+        allReservations.forEach((r) => {
+          // Nouveau format: room_numbers array
+          if (r.room_numbers && Array.isArray(r.room_numbers)) {
+            r.room_numbers.forEach((rn) => occupiedRoomNumbers.add(rn));
+          }
+          // Ancien format: room field
+          if (r.room) {
+            occupiedRoomNumbers.add(r.room);
+          }
+        });
+
+        // Total de chambres = 200 (1-100 simple, 101-150 double, 151-200 triple)
+        const totalRoomsCount = 200;
         const occupancyRate =
-          allRooms.length > 0
-            ? Math.round((occupiedRooms / allRooms.length) * 100)
+          totalRoomsCount > 0
+            ? Math.round((occupiedRoomNumbers.size / totalRoomsCount) * 100)
             : 0;
 
         document.getElementById("totalReservations").textContent = total;
@@ -1298,23 +1314,47 @@
 
         roomsContainer.innerHTML = "";
 
+        // Charger les données des chambres pour mapper les numéros aux types
+        const roomsData = JSON.parse(localStorage.getItem("roomsData") || "{}");
+        const roomTypesMap = {}; // { roomNumber: type }
+
+        if (roomsData.rooms && Array.isArray(roomsData.rooms)) {
+          roomsData.rooms.forEach((r) => {
+            roomTypesMap[r.number] = r.type;
+          });
+        }
+
         allRooms.forEach((room) => {
-          // Compter les réservations validées pour ce type de chambre
-          const reservationsOfType = allReservations.filter((r) => {
-            if (r.status === "validee") {
-              if (r.room_type === room.type) return true;
+          // Compter les chambres occupées de ce type
+          let occupiedRooms = 0;
+
+          allReservations.forEach((res) => {
+            if (res.status === "validee") {
+              // Nouveau format: room_numbers array
+              if (res.room_numbers && Array.isArray(res.room_numbers)) {
+                res.room_numbers.forEach((roomNum) => {
+                  const roomType = roomTypesMap[roomNum] || null;
+                  if (roomType === room.type) {
+                    occupiedRooms++;
+                  }
+                });
+              }
+              // Ancien format: room_type field
+              if (res.room_type === room.type) {
+                occupiedRooms++;
+              }
               // Mapper ancien format aux nouveaux types
-              if (room.type === "simple" && r.room === "Chambre C") return true;
+              if (room.type === "simple" && res.room === "Chambre C")
+                occupiedRooms++;
               if (
                 room.type === "double" &&
-                (r.room === "Chambre B" || r.room === "Chambre A")
+                (res.room === "Chambre B" || res.room === "Chambre A")
               )
-                return true;
+                occupiedRooms++;
             }
-            return false;
-          }).length;
+          });
 
-          const occupiedRooms = reservationsOfType;
+          occupiedRooms = Math.min(occupiedRooms, room.total); // Capped at total
           const availableRooms = Math.max(0, room.total - occupiedRooms);
           const occupancyPercent =
             room.total > 0 ? Math.round((occupiedRooms / room.total) * 100) : 0;
@@ -1406,6 +1446,16 @@
 
         if (!dateStart || !dateEnd) {
           showMsg("message", "✗ Veuillez sélectionner les deux dates", false);
+          return;
+        }
+
+        // Validation: date d'arrivée doit être avant date de départ
+        if (new Date(dateStart) >= new Date(dateEnd)) {
+          showMsg(
+            "message",
+            "✗ La date de départ doit être après la date d'arrivée",
+            false,
+          );
           return;
         }
 
@@ -1514,22 +1564,16 @@
         }
         container.appendChild(prevBtn);
 
-        // Boutons de pages
-        for (let i = 1; i <= totalPages; i++) {
-          const btn = document.createElement("button");
-          btn.textContent = i;
-          btn.style.cssText = `
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            background: ${currentPage === i ? "var(--green)" : "var(--panel)"};
-            color: ${currentPage === i ? "#000" : "var(--text)"};
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: ${currentPage === i ? "700" : "400"};
-          `;
-          btn.onclick = () => goToRoomsPage(i);
-          container.appendChild(btn);
-        }
+        // Affichage de la page actuelle
+        const pageInfo = document.createElement("span");
+        pageInfo.textContent = `Page ${currentPage} sur ${totalPages}`;
+        pageInfo.style.cssText = `
+          padding: 8px 12px;
+          color: var(--text);
+          display: flex;
+          align-items: center;
+        `;
+        container.appendChild(pageInfo);
 
         // Bouton Suivant
         const nextBtn = document.createElement("button");
@@ -1702,35 +1746,6 @@
                   ? "✅ VALIDÉE"
                   : "❌ REJETÉE";
 
-            // Afficher les chambres disponibles si pas de chambre assignée
-            let roomsHtml = "";
-            if (
-              !res.room &&
-              res.status === "en_attente" &&
-              allRooms.length > 0
-            ) {
-              roomsHtml = `
-            <div style="margin-top: 12px; padding: 12px; background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px;">
-              <div style="font-weight: 600; margin-bottom: 8px; color: var(--green);">🏠 Chambres disponibles:</div>
-              <div style="display: grid; gap: 8px;">
-                ${allRooms
-                  .map((room) => {
-                    const available = room.capacity - room.occupied;
-                    return `
-                    <div style="padding: 8px; background: rgba(255,255,255,0.05); border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
-                      <span>${room.name}</span>
-                      <span style="color: ${available > 0 ? "var(--green)" : "#ef5350"}; font-weight: 600;">
-                        ${available}/${room.capacity}
-                      </span>
-                    </div>
-                  `;
-                  })
-                  .join("")}
-              </div>
-            </div>
-          `;
-            }
-
             return `
           <div class="reservation-card">
             <div class="res-card-header">
@@ -1770,12 +1785,14 @@
                 <strong>${res.deposit}€</strong>
               </div>
               <div class="res-info-item">
-                <span class="res-info-label">Chambre</span>
-                ${res.room || "🔲 Non assignée"}
+                <span class="res-info-label">Chambres</span>
+                ${
+                  res.room_numbers && res.room_numbers.length > 0
+                    ? res.room_numbers.map((n) => "Chb " + n).join(", ")
+                    : "🔲 Non assignées"
+                }
               </div>
             </div>
-
-            ${roomsHtml}
 
             <div class="res-card-actions">
               ${
@@ -1808,8 +1825,58 @@
           return;
         }
 
-        // Ouvrir modale de sélection de chambre
-        openRoomSelectionModal(id, res.nom, res.prenom);
+        // Vérifier que la réservation a les chambres sélectionnées
+        if (
+          !res.selected_rooms ||
+          Object.values(res.selected_rooms).every((q) => q === 0)
+        ) {
+          showMsg(
+            "message",
+            "✗ Aucune chambre sélectionnée pour cette réservation",
+            false,
+          );
+          return;
+        }
+
+        // Appeler l'API pour attribuer automatiquement les chambres
+        $.ajax({
+          url: "api/auto_assign_rooms.php",
+          method: "POST",
+          data: {
+            reservation_id: id,
+          },
+          dataType: "json",
+          success: function (resp) {
+            if (resp.success) {
+              showMsg(
+                "message",
+                "✅ " +
+                  resp.message +
+                  " (Chambres: " +
+                  resp.assigned_rooms.join(", ") +
+                  ")",
+                true,
+              );
+
+              // Mettre à jour la réservation en mémoire
+              const res = allReservations.find((r) => r.id === id);
+              if (res) {
+                res.status = "validee";
+                res.room_numbers = resp.assigned_rooms;
+                res.room_number = resp.assigned_rooms[0];
+              }
+
+              // Rafraîchir le dashboard
+              displayReservations();
+              updateDashboard();
+            } else {
+              showMsg("message", "✗ " + resp.message, false);
+            }
+          },
+          error: function () {
+            showMsg("message", "✗ Erreur lors de la validation", false);
+          },
+        });
       }
 
       function openRoomSelectionModal(id, nom, prenom) {

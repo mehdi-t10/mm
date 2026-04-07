@@ -13,6 +13,7 @@ $date_depart = $input['date_depart'] ?? '';
 $nb_personnes = $input['nb_personnes'] ?? 0;
 $activities = $input['activities'] ?? [];
 $selected_facilities = $input['selected_facilities'] ?? [];
+$selected_rooms = $input['selected_rooms'] ?? [];
 
 // Validation
 if (!$nom || !$prenom || !$email || !$telephone || !$date_arrivee || !$date_depart) {
@@ -55,6 +56,7 @@ $newReservation = [
     'nb_personnes' => intval($nb_personnes),
     'activities' => is_array($activities) ? $activities : [],
     'selected_facilities' => is_array($selected_facilities) ? $selected_facilities : [],
+    'selected_rooms' => is_array($selected_rooms) ? $selected_rooms : [],
     'status' => 'en_attente',
     'deposit' => 80,
     'room' => null,

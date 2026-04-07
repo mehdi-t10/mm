@@ -43,5 +43,23 @@
         "subject": "FootCamp Dreams - Votre réservation validée! Accès client",
         "body": "Bonjour ilo ilo,\n\nFélicitations! Votre réservation a été validée avec succès!\n\n========== INFORMATIONS DE CONNEXION ==========\nEmail: ilo@test.com\nMot de passe: ilo2026\n\n========== DÉTAILS DE VOTRE RÉSERVATION ==========\nNuméro de réservation: #9\nChambre: Chambre B\nArrivée: 02\/04\/2026\nDépart: 03\/04\/2026\nNombre de personnes: 2\nAcompte versé: 80€\n\n========== ACCÈS CLIENT ==========\nConnectez-vous à votre compte: https:\/\/footcamp-dreams.local\/client-dashboard.html\n\nUne fois connecté, vous pourrez:\n- Consulter les détails complets de votre réservation\n- Voir votre facture détaillée\n- Gérer votre séjour\n\nBienvenue chez FootCamp Dreams!\nMerci d'avoir choisi notre établissement.\n\nCordialement,\nL'équipe FootCamp Dreams",
         "sent": false
+    },
+    {
+        "timestamp": "2026-04-07 08:55:35",
+        "to": "phil@test.com",
+        "type": "reservation_confirmation",
+        "reservation_id": 10,
+        "subject": "FootCamp Dreams - Reservation recue!",
+        "body": "Bonjour Foden Phil,\n\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\n\nDETAILS DE VOTRE DEMANDE:\n- Arrivee: 09\/04\/2026\n- Depart: 16\/04\/2026\n- Nombre de personnes: 10\n- Depot: 80€\n\nUn administrateur examinera votre demande et vous enverra un email avec:\n- Votre numero de reservation\n- Vos identifiants de connexion\n- Les details complets de votre facture\n- Les instructions de paiement\n\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\n\nCordialement,\nL'equipe FootCamp Dreams",
+        "sent": false
+    },
+    {
+        "timestamp": "2026-04-07 09:08:31",
+        "to": "aaa@aaa.com",
+        "type": "reservation_confirmation",
+        "reservation_id": 11,
+        "subject": "FootCamp Dreams - Reservation recue!",
+        "body": "Bonjour aaa Aaa,\n\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\n\nDETAILS DE VOTRE DEMANDE:\n- Arrivee: 07\/04\/2026\n- Depart: 10\/04\/2026\n- Nombre de personnes: 15\n- Depot: 80€\n\nUn administrateur examinera votre demande et vous enverra un email avec:\n- Votre numero de reservation\n- Vos identifiants de connexion\n- Les details complets de votre facture\n- Les instructions de paiement\n\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\n\nCordialement,\nL'equipe FootCamp Dreams",
+        "sent": false
     }
 ]

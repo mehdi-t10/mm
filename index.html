@@ -1041,7 +1041,7 @@
               <input
                 type="date"
                 min="2026-04-02"
-                onchange="loadRoomsForReservation()"
+                onchange="validateReservationDates(this)"
                 required
                 style="
                   width: 100%;
@@ -1051,6 +1051,7 @@
                   border-radius: 8px;
                   color: var(--text);
                   font-family: &quot;DM Sans&quot;, sans-serif;
+                  transition: border-color 0.3s;
                 "
               />
             </div>
@@ -1062,7 +1063,7 @@
               <input
                 type="date"
                 min="2026-04-03"
-                onchange="loadRoomsForReservation()"
+                onchange="validateReservationDates(this)"
                 required
                 style="
                   width: 100%;
@@ -1072,6 +1073,7 @@
                   border-radius: 8px;
                   color: var(--text);
                   font-family: &quot;DM Sans&quot;, sans-serif;
+                  transition: border-color 0.3s;
                 "
               />
             </div>
@@ -1136,8 +1138,11 @@
             ></div>
           </div>
 
-          <!-- ROOMS SECTION -->
-          <div id="roomsSection" style="margin-bottom: 20px; display: none">
+          <!-- ROOMS SELECTION SECTION -->
+          <div
+            id="roomsSelectionSection"
+            style="margin-bottom: 20px; display: none"
+          >
             <label
               style="
                 display: block;
@@ -1145,13 +1150,14 @@
                 font-weight: 600;
                 color: var(--green);
               "
-              ><i class="fas fa-door-open"></i> Chambres Disponibles</label
+              ><i class="fas fa-door-open"></i> Sélectionner vos Chambres
+              *</label
             >
             <div
-              id="roomsContainer"
+              id="roomsSelectionContainer"
               style="
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr 1fr 1fr;
                 gap: 12px;
                 padding: 16px;
                 background: rgba(0, 230, 118, 0.05);
@@ -1159,6 +1165,38 @@
                 border-radius: 12px;
               "
             ></div>
+
+            <div
+              id="roomsCapacityInfo"
+              style="
+                margin-top: 12px;
+                padding: 12px;
+                background: rgba(0, 230, 118, 0.1);
+                border: 1px solid rgba(0, 230, 118, 0.3);
+                border-radius: 8px;
+                font-size: 0.9rem;
+                display: none;
+              "
+            >
+              <div style="color: var(--text); margin-bottom: 4px">
+                <strong>Capacité totale sélectionnée:</strong>
+                <span id="totalCapacity">0</span> /
+                <span id="personnesNeeded">0</span> personne(s)
+              </div>
+              <div
+                id="capacityWarning"
+                style="color: #ffa726; margin-top: 4px; display: none"
+              >
+                <i class="fas fa-exclamation-triangle"></i> La capacité doit
+                être égale ou supérieure au nombre de personnes
+              </div>
+              <div
+                id="capacityOk"
+                style="color: var(--green); margin-top: 4px; display: none"
+              >
+                <i class="fas fa-check-circle"></i> Capacité suffisante
+              </div>
+            </div>
           </div>
 
           <button
@@ -1313,6 +1351,41 @@
 
         parent.querySelector("#" + tabId).classList.add("active");
         button.classList.add("active");
+      }
+
+      // ===== DATE VALIDATION =====
+      function validateReservationDates(formElement) {
+        const form = formElement.closest("form");
+        if (!form) return;
+
+        const inputs = form.querySelectorAll("input");
+        const dateArrival = inputs[4]?.value; // Date d'arrivée
+        const dateDeparture = inputs[5]?.value; // Date de départ
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // Réinitialiser le style
+        if (inputs[4]) inputs[4].style.borderColor = "var(--border)";
+        if (inputs[5]) inputs[5].style.borderColor = "var(--border)";
+
+        if (dateArrival && dateDeparture) {
+          const arrival = new Date(dateArrival);
+          const departure = new Date(dateDeparture);
+
+          if (arrival >= departure) {
+            // Mettre les inputs en rouge
+            if (inputs[4]) inputs[4].style.borderColor = "#ef5350";
+            if (inputs[5]) inputs[5].style.borderColor = "#ef5350";
+
+            // Désactiver le bouton
+            if (submitBtn) submitBtn.disabled = true;
+          } else {
+            // Réactiver le bouton
+            if (submitBtn) submitBtn.disabled = false;
+          }
+        }
+
+        // Appeler la fonction de chargement des chambres
+        loadRoomsForReservation();
       }
 
       // ===== CLIENT LOGIN =====
@@ -1622,6 +1695,279 @@
       `;
 
         document.body.appendChild(modal);
+      }
+
+      // ===== ROOMS MANAGEMENT =====
+      let availableRoomTypes = [];
+      let selectedRooms = {}; // { roomType: quantity }
+
+      function loadActivitiesForReservation() {
+        $.ajax({
+          url: "data/rooms.json",
+          method: "GET",
+          dataType: "json",
+          success: function (resp) {
+            if (resp.types) {
+              availableRoomTypes = resp.types;
+              generateRoomSelectionUI();
+            }
+          },
+          error: function () {
+            console.error("Erreur chargement des types de chambres");
+          },
+        });
+      }
+
+      function loadRoomsForReservation() {
+        const nb_personnes =
+          parseInt(document.querySelector('input[type="number"]').value) || 0;
+
+        if (nb_personnes > 0) {
+          const infoDiv = document.getElementById("roomsCapacityInfo");
+          infoDiv.style.display = "block";
+          document.getElementById("personnesNeeded").textContent = nb_personnes;
+          updateCapacityCalculation();
+        }
+
+        document.getElementById("roomsSelectionSection").style.display =
+          "block";
+      }
+
+      function generateRoomSelectionUI() {
+        const container = document.getElementById("roomsSelectionContainer");
+        container.innerHTML = "";
+        selectedRooms = {};
+
+        availableRoomTypes.forEach((roomType) => {
+          const div = document.createElement("div");
+          div.style.cssText = `
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+          `;
+
+          div.innerHTML = `
+            <div style="margin-bottom: 12px;">
+              <div style="font-weight: 600; color: var(--green); margin-bottom: 4px;">
+                ${roomType.name}
+              </div>
+              <div style="font-size: 0.85rem; color: var(--muted);">
+                Capacité: <strong>${roomType.capacity} pers.</strong> | <strong>${roomType.price_per_night}€</strong>/nuit
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <button
+                type="button"
+                onclick="updateRoomQuantity('${roomType.type}', -1)"
+                style="
+                  background: var(--border);
+                  border: none;
+                  color: var(--text);
+                  width: 32px;
+                  height: 32px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-weight: 600;
+                "
+              >−</button>
+              <input
+                type="number"
+                id="rooms_${roomType.type}"
+                value="0"
+                min="0"
+                onchange="updateCapacityCalculation()"
+                style="
+                  width: 50px;
+                  padding: 6px;
+                  background: rgba(255,255,255,0.05);
+                  border: 1px solid var(--border);
+                  color: var(--text);
+                  border-radius: 4px;
+                  text-align: center;
+                "
+              />
+              <button
+                type="button"
+                onclick="updateRoomQuantity('${roomType.type}', 1)"
+                style="
+                  background: var(--green);
+                  border: none;
+                  color: #001a0a;
+                  width: 32px;
+                  height: 32px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-weight: 600;
+                "
+              >+</button>
+            </div>
+          `;
+
+          container.appendChild(div);
+          selectedRooms[roomType.type] = 0;
+        });
+      }
+
+      function updateRoomQuantity(roomType, change) {
+        const input = document.getElementById(`rooms_${roomType}`);
+        let newValue = Math.max(0, parseInt(input.value || 0) + change);
+        input.value = newValue;
+        updateCapacityCalculation();
+      }
+
+      function updateCapacityCalculation() {
+        let totalCapacity = 0;
+
+        availableRoomTypes.forEach((roomType) => {
+          const quantity = parseInt(
+            document.getElementById(`rooms_${roomType.type}`).value || 0,
+          );
+          selectedRooms[roomType.type] = quantity;
+          totalCapacity += quantity * roomType.capacity;
+        });
+
+        const nb_personnes =
+          parseInt(document.querySelector('input[type="number"]').value) || 0;
+
+        document.getElementById("totalCapacity").textContent = totalCapacity;
+        const capacityWarning = document.getElementById("capacityWarning");
+        const capacityOk = document.getElementById("capacityOk");
+
+        if (totalCapacity < nb_personnes && nb_personnes > 0) {
+          capacityWarning.style.display = "block";
+          capacityOk.style.display = "none";
+        } else if (totalCapacity >= nb_personnes && nb_personnes > 0) {
+          capacityWarning.style.display = "none";
+          capacityOk.style.display = "block";
+        }
+      }
+
+      // Modifier handleReservationRequest pour inclure les chambres
+      const originalHandleReservationRequest = handleReservationRequest;
+      function handleReservationRequest(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const inputs = form.querySelectorAll(
+          'input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"]',
+        );
+        const nom = inputs[0].value.trim();
+        const prenom = inputs[1].value.trim();
+        const email = inputs[2].value.trim();
+        const telephone = inputs[3].value.trim();
+        const date_arrivee = inputs[4].value;
+        const date_depart = inputs[5].value;
+        const nb_personnes = parseInt(inputs[6].value);
+
+        // Vérifier la capacité des chambres
+        let totalCapacity = 0;
+        for (const [roomType, quantity] of Object.entries(selectedRooms)) {
+          const roomInfo = availableRoomTypes.find((r) => r.type === roomType);
+          if (roomInfo) {
+            totalCapacity += quantity * roomInfo.capacity;
+          }
+        }
+
+        if (totalCapacity < nb_personnes) {
+          showMsg(
+            document.getElementById("reservationMsg"),
+            '<i class="fas fa-exclamation-circle"></i> La capacité des chambres sélectionnées doit être égale ou supérieure au nombre de personnes',
+            false,
+          );
+          return;
+        }
+
+        // Récupérer les activités sélectionnées
+        const selectedActivities = [];
+        form
+          .querySelectorAll('input[type="checkbox"]:checked')
+          .forEach((checkbox) => {
+            selectedActivities.push(parseInt(checkbox.value));
+          });
+
+        // Validation téléphone
+        if (!/^[0-9]{10}$/.test(telephone)) {
+          showMsg(
+            document.getElementById("reservationMsg"),
+            '<i class="fas fa-exclamation-circle"></i> Le téléphone doit contenir 10 chiffres',
+            false,
+          );
+          return;
+        }
+
+        // Validation dates
+        if (new Date(date_arrivee) >= new Date(date_depart)) {
+          showMsg(
+            document.getElementById("reservationMsg"),
+            '<i class="fas fa-exclamation-circle"></i> La date de départ doit être après la date d\'arrivée',
+            false,
+          );
+          return;
+        }
+
+        // Générer un mot de passe
+        const generatedPassword = generatePassword();
+
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+
+        $.ajax({
+          url: "api/reservation_request.php",
+          type: "POST",
+          data: JSON.stringify({
+            nom: nom,
+            prenom: prenom,
+            email: email,
+            telephone: telephone,
+            date_arrivee: date_arrivee,
+            date_depart: date_depart,
+            nb_personnes: nb_personnes,
+            activities: selectedActivities,
+            selected_rooms: selectedRooms,
+          }),
+          contentType: "application/json",
+          dataType: "json",
+          timeout: 8000,
+          success: function (resp) {
+            if (resp.success) {
+              // Afficher le modal avec les identifiants
+              showCredentialsModal(
+                email,
+                generatedPassword,
+                resp.reservation_id,
+              );
+              form.reset();
+              loadActivitiesForReservation();
+              setTimeout(() => {
+                form.style.opacity = "0.5";
+                form.style.pointerEvents = "none";
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+              }, 3000);
+            } else {
+              showMsg(
+                document.getElementById("reservationMsg"),
+                '<i class="fas fa-times-circle"></i> ' +
+                  (resp.message || "Erreur lors de la soumission"),
+                false,
+              );
+              btn.disabled = false;
+              btn.innerHTML = originalText;
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error("Erreur:", error);
+            const errorMsg =
+              '<i class="fas fa-exclamation-triangle"></i> Erreur: ' +
+              (status === "timeout" ? "Délai dépassé" : status);
+            showMsg(document.getElementById("reservationMsg"), errorMsg, false);
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+          },
+        });
       }
 
       // ===== PAGE INIT =====

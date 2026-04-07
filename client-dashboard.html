@@ -1195,12 +1195,14 @@
 
         const arrivalError = document.getElementById("arrivalError");
         const departureError = document.getElementById("departureError");
+        const submitBtn = document.getElementById("btnSubmit");
 
         arrivalError.textContent = "";
         departureError.textContent = "";
 
         if (!arrivalVal || !departureVal) {
           displayAvailableRooms();
+          submitBtn.disabled = false;
           return true;
         }
 
@@ -1213,9 +1215,11 @@
           arrivalError.textContent = msg;
           departureError.textContent = msg;
           document.getElementById("roomsAvailability").style.display = "none";
+          submitBtn.disabled = true;
           return false;
         }
 
+        submitBtn.disabled = false;
         displayAvailableRooms();
         return true;
       }
