@@ -51,5 +51,33 @@
             110
         ],
         "room_number": 101
+    },
+    {
+        "id": 3,
+        "nom": "ol",
+        "prenom": "ol",
+        "email": "ol@ol.com",
+        "telephone": "0104020700",
+        "date_arrivee": "2026-04-09",
+        "date_depart": "2026-04-10",
+        "nb_personnes": 5,
+        "activities": [],
+        "selected_facilities": [],
+        "selected_rooms": {
+            "simple": 0,
+            "double": 1,
+            "triple": 1
+        },
+        "status": "validee",
+        "deposit": 80,
+        "room": null,
+        "room_type": null,
+        "room_id": null,
+        "created_at": "2026-04-08 13:19:39",
+        "room_numbers": [
+            102,
+            151
+        ],
+        "room_number": 102
     }
 ]

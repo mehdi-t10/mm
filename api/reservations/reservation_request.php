@@ -12,6 +12,7 @@ $date_arrivee = $input['date_arrivee'] ?? '';
 $date_depart = $input['date_depart'] ?? '';
 $nb_personnes = $input['nb_personnes'] ?? 0;
 $activities = $input['activities'] ?? [];
+$activities_by_day = $input['activities_by_day'] ?? [];
 $selected_facilities = $input['selected_facilities'] ?? [];
 $selected_rooms = $input['selected_rooms'] ?? [];
 
@@ -55,6 +56,7 @@ $newReservation = [
     'date_depart' => $date_depart,
     'nb_personnes' => intval($nb_personnes),
     'activities' => is_array($activities) ? $activities : [],
+    'activities_by_day' => is_array($activities_by_day) ? $activities_by_day : [],
     'selected_facilities' => is_array($selected_facilities) ? $selected_facilities : [],
     'selected_rooms' => is_array($selected_rooms) ? $selected_rooms : [],
     'status' => 'en_attente',

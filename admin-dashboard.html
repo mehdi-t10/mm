@@ -985,7 +985,7 @@
 
       function loadData() {
         $.ajax({
-          url: "api/admin_list_reservations.php",
+          url: "api/reservations/admin_list_reservations.php",
           method: "GET",
           success: function (response) {
             if (response.success) {
@@ -1515,7 +1515,7 @@
           '<div style="text-align: center; padding: 20px;">⏳ Chargement...</div>';
 
         $.ajax({
-          url: "api/get_room_calendar.php",
+          url: "api/rooms/get_room_calendar.php",
           method: "GET",
           data: {
             room_type: "",
@@ -1723,7 +1723,7 @@
 
       function assignRoomToReservation(resId, roomNumber) {
         $.ajax({
-          url: "api/assign_room_number.php",
+          url: "api/rooms/assign_room_number.php",
           method: "POST",
           data: {
             reservation_id: resId,
@@ -1886,7 +1886,7 @@
 
         // Appeler l'API pour attribuer automatiquement les chambres
         $.ajax({
-          url: "api/auto_assign_rooms.php",
+          url: "api/rooms/auto_assign_rooms.php",
           method: "POST",
           data: {
             reservation_id: id,
@@ -1990,7 +1990,7 @@
 
         // Appeler l'API pour valider avec la chambre sélectionnée
         $.ajax({
-          url: "api/admin_validate_reservation_with_room.php",
+          url: "api/reservations/admin_validate_reservation_with_room.php",
           method: "POST",
           data: {
             id: currentValidatingReservationId,
@@ -2115,7 +2115,7 @@
       function rejectRes(id) {
         if (confirm("Êtes-vous sûr de vouloir rejeter cette réservation?")) {
           $.ajax({
-            url: "api/admin_reject_reservation.php",
+            url: "api/reservations/admin_reject_reservation.php",
             method: "POST",
             data: { id: id },
             success: function (resp) {
@@ -2157,7 +2157,7 @@
         $.ajax({
           method: "GET",
           dataType: "json",
-          url: "api/admin_email_config.php",
+          url: "api/admin/admin_email_config.php",
         }).done(function (resp) {
           if (resp.success && resp.config) {
             const config = resp.config;
@@ -2200,7 +2200,7 @@
           $.ajax({
             method: "POST",
             dataType: "json",
-            url: "api/admin_email_config.php",
+            url: "api/admin/admin_email_config.php",
             data: {
               smtp_user: smtpUser,
               smtp_password: smtpPassword,

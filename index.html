@@ -1106,7 +1106,7 @@
               <input
                 type="date"
                 min="2026-04-02"
-                onchange="validateReservationDates(this)"
+                onchange="validateReservationDates(this); generateActivitiesUI();"
                 required
                 style="
                   width: 100%;
@@ -1128,7 +1128,7 @@
               <input
                 type="date"
                 min="2026-04-03"
-                onchange="validateReservationDates(this)"
+                onchange="validateReservationDates(this); generateActivitiesUI();"
                 required
                 style="
                   width: 100%;
@@ -1150,7 +1150,7 @@
               <input
                 type="number"
                 min="1"
-                onchange="loadRoomsForReservation()"
+                onchange="loadRoomsForReservation(); validateActivityConstraints(); updateActivitiesAvailability();"
                 required
                 style="
                   width: 100%;
@@ -1170,9 +1170,16 @@
               >Activités (optionnel)</label
             >
             <div
-              id="activitiesReservation"
-              style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px"
-            ></div>
+              id="activitiesByDayContainer"
+              style="
+                background: rgba(0, 230, 118, 0.05);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 16px;
+              "
+            >
+              <div id="activitiesByDayContent"></div>
+            </div>
           </div>
 
           <!-- FACILITIES SECTION -->
@@ -1468,7 +1475,7 @@
         msgDiv.innerHTML = "";
 
         $.ajax({
-          url: "api/login.php",
+          url: "api/auth/login.php",
           type: "POST",
           data: { email: email, password: password },
           dataType: "json",
@@ -1512,7 +1519,7 @@
         msgDiv.innerHTML = "";
 
         $.ajax({
-          url: "api/admin_login.php",
+          url: "api/admin/admin_login.php",
           type: "POST",
           data: { email: email, password: password },
           dataType: "json",
@@ -1593,7 +1600,7 @@
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
 
         $.ajax({
-          url: "api/reservation_request.php",
+          url: "api/reservations/reservation_request.php",
           type: "POST",
           data: JSON.stringify({
             nom: nom,
@@ -1655,7 +1662,7 @@
         if (!email) return;
 
         $.ajax({
-          url: "api/forgot_password.php",
+          url: "api/auth/forgot_password.php",
           type: "POST",
           data: { email: email, type: userType },
           dataType: "json",
@@ -1790,11 +1797,31 @@
         document.body.appendChild(modal);
       }
 
-      // ===== ROOMS MANAGEMENT =====
+      // ===== ACTIVITIES & ROOMS MANAGEMENT =====
+      let availableActivities = [];
       let availableRoomTypes = [];
+      let activitiesByDay = {}; // { day: [activity_ids] }
       let selectedRooms = {}; // { roomType: quantity }
 
       function loadActivitiesForReservation() {
+        // Charger les activités disponibles
+        $.ajax({
+          url: "api/services/get_activities.php",
+          method: "GET",
+          dataType: "json",
+          success: function (resp) {
+            if (resp.success && resp.activities) {
+              availableActivities = resp.activities;
+              generateActivitiesUI();
+              updateActivitiesAvailability();
+            }
+          },
+          error: function () {
+            console.error("Erreur chargement des activités");
+          },
+        });
+
+        // Charger les types de chambres
         $.ajax({
           url: "data/rooms.json",
           method: "GET",
@@ -1802,13 +1829,209 @@
           success: function (resp) {
             if (resp.types) {
               availableRoomTypes = resp.types;
-              generateRoomSelectionUI();
             }
           },
           error: function () {
             console.error("Erreur chargement des types de chambres");
           },
         });
+      }
+
+      function generateActivitiesUI() {
+        const date_arrivee = document.querySelector('input[type="date"]:nth-of-type(1)').value;
+        const date_depart = document.querySelector('input[type="date"]:nth-of-type(2)').value;
+
+        if (!date_arrivee || !date_depart) {
+          document.getElementById("activitiesByDayContent").innerHTML =
+            '<p style="color: var(--muted); text-align: center;">Veuillez d\'abord sélectionner vos dates de séjour</p>';
+          return;
+        }
+
+        // Calculer le nombre de jours
+        const arrival = new Date(date_arrivee);
+        const departure = new Date(date_depart);
+        const nights = Math.floor((departure - arrival) / (1000 * 60 * 60 * 24));
+
+        if (nights <= 0) {
+          document.getElementById("activitiesByDayContent").innerHTML =
+            '<p style="color: var(--muted); text-align: center;">Les dates invalides</p>';
+          return;
+        }
+
+        // Initialiser les activités par jour s'il n'y a rien
+        activitiesByDay = {};
+        for (let i = 0; i < nights; i++) {
+          activitiesByDay[i] = [];
+        }
+
+        // Générer l'interface pour chaque jour
+        let html = `<div style="font-size: 0.9rem; color: var(--muted); margin-bottom: 16px;">
+          <i class="fas fa-calendar"></i> ${nights} nuit${nights > 1 ? 's' : ''} - Sélectionnez vos activités pour chaque jour
+        </div>`;
+
+        for (let dayIndex = 0; dayIndex < nights; dayIndex++) {
+          const dayDate = new Date(arrival);
+          dayDate.setDate(dayDate.getDate() + dayIndex);
+          const dayLabel = dayDate.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+
+          html += `
+            <div style="margin-bottom: 16px; padding: 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--green); border-radius: 4px;">
+              <div style="font-weight: 600; margin-bottom: 8px; color: var(--green);">
+                <i class="fas fa-calendar-day"></i> Jour ${dayIndex + 1} - ${dayLabel}
+              </div>
+              <div id="activities-day-${dayIndex}" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              </div>
+            </div>
+          `;
+        }
+
+        document.getElementById("activitiesByDayContent").innerHTML = html;
+
+        // Remplir les activités pour chaque jour
+        for (let dayIndex = 0; dayIndex < nights; dayIndex++) {
+          const dayContainer = document.getElementById(`activities-day-${dayIndex}`);
+
+          availableActivities.forEach((activity) => {
+            const div = document.createElement("div");
+            div.className = `activity-day-item activity-day-${dayIndex}`;
+            div.style.cssText = `
+              padding: 10px;
+              background: rgba(0, 230, 118, 0.05);
+              border: 1px solid var(--border);
+              border-radius: 6px;
+              cursor: pointer;
+              transition: all 0.3s;
+            `;
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.value = activity.id;
+            checkbox.className = `activity-checkbox-day activity-day-${dayIndex}-${activity.id}`;
+            checkbox.style.cssText = "margin-right: 6px; cursor: pointer;";
+
+            checkbox.addEventListener("change", function() {
+              const activityList = activitiesByDay[dayIndex] || [];
+              if (this.checked) {
+                if (!activityList.includes(activity.id)) {
+                  activityList.push(activity.id);
+                }
+              } else {
+                activitiesByDay[dayIndex] = activityList.filter(id => id !== activity.id);
+              }
+              validateActivityConstraints();
+            });
+
+            const label = document.createElement("label");
+            label.style.cssText = "cursor: pointer; display: flex; align-items: center; font-size: 0.9rem;";
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(`${activity.icon} ${activity.name}`));
+
+            div.appendChild(label);
+            dayContainer.appendChild(div);
+
+            // Hover effect
+            div.addEventListener("mouseover", () => {
+              if (!checkbox.disabled) {
+                div.style.borderColor = "var(--green)";
+                div.style.background = "rgba(0, 230, 118, 0.1)";
+              }
+            });
+            div.addEventListener("mouseout", () => {
+              if (!checkbox.disabled) {
+                div.style.borderColor = "var(--border)";
+                div.style.background = "rgba(0, 230, 118, 0.05)";
+              }
+            });
+          });
+        }
+
+        updateActivitiesAvailability();
+      }
+
+      function updateActivitiesAvailability() {
+        const nb_personnes = parseInt(document.querySelector('input[type="number"]').value) || 0;
+
+        availableActivities.forEach((activity) => {
+          const checkbox = document.querySelector(`.activity-checkbox.activity-${activity.id}`);
+          if (!checkbox) return;
+
+          const div = checkbox.closest('.activity-item');
+
+          // Vérifier si le nombre de personnes permet de sélectionner cette activité
+          let canSelect = true;
+
+          // Vérifier le minimum de participants
+          if (activity.min_participants && nb_personnes < activity.min_participants) {
+            canSelect = false;
+          }
+
+          // Vérifier le maximum de participants
+          if (activity.max_participants && nb_personnes > activity.max_participants) {
+            canSelect = false;
+          }
+
+          checkbox.disabled = !canSelect;
+
+          if (!canSelect) {
+            div.style.opacity = "0.5";
+            div.style.pointerEvents = "none";
+            div.style.cursor = "not-allowed";
+            div.style.background = "rgba(100, 100, 100, 0.05)";
+          } else {
+            div.style.opacity = "1";
+            div.style.pointerEvents = "auto";
+            div.style.cursor = "pointer";
+            div.style.background = "rgba(0, 230, 118, 0.05)";
+          }
+        });
+      }
+
+      function validateActivityConstraints() {
+        const selectedActivities = [];
+        document.querySelectorAll('#activitiesReservation input[type="checkbox"]:checked').forEach((checkbox) => {
+          selectedActivities.push(parseInt(checkbox.value));
+        });
+
+        const nb_personnes = parseInt(document.querySelector('input[type="number"]').value) || 0;
+
+        let hasConstraintError = false;
+        let errorMessages = [];
+
+        selectedActivities.forEach((activityId) => {
+          const activity = availableActivities.find(a => a.id === activityId);
+          if (activity) {
+            if (activity.min_participants && nb_personnes < activity.min_participants) {
+              hasConstraintError = true;
+              errorMessages.push(
+                `${activity.icon} ${activity.name} nécessite un minimum de ${activity.min_participants} personnes (vous avez: ${nb_personnes})`
+              );
+            }
+            if (activity.max_participants && nb_personnes > activity.max_participants) {
+              hasConstraintError = true;
+              errorMessages.push(
+                `${activity.icon} ${activity.name} ne peut accueillir que ${activity.max_participants} personnes maximum (vous avez: ${nb_personnes})`
+              );
+            }
+          }
+        });
+
+        const msgDiv = document.getElementById("activitiesConstraintMsg");
+        if (!msgDiv) {
+          const newMsgDiv = document.createElement("div");
+          newMsgDiv.id = "activitiesConstraintMsg";
+          document.getElementById("activitiesReservation").parentElement.appendChild(newMsgDiv);
+        }
+
+        const displayMsg = document.getElementById("activitiesConstraintMsg");
+        if (hasConstraintError) {
+          displayMsg.innerHTML = `
+            <div style="margin-top: 12px; padding: 12px; background: rgba(255, 152, 0, 0.1); border: 1px solid #ffa726; border-radius: 8px; color: #ffa726;">
+              <i class="fas fa-exclamation-triangle"></i> ${errorMessages.join("<br>")}
+            </div>
+          `;
+        } else {
+          displayMsg.innerHTML = "";
+        }
       }
 
       function loadRoomsForReservation() {
@@ -1820,6 +2043,29 @@
           infoDiv.style.display = "block";
           document.getElementById("personnesNeeded").textContent = nb_personnes;
           updateCapacityCalculation();
+        }
+
+        // Régénérer les activités par jour
+        generateActivitiesUI();
+
+        // Charger les types de chambres si non chargés
+        if (availableRoomTypes.length === 0) {
+          $.ajax({
+            url: "data/rooms.json",
+            method: "GET",
+            dataType: "json",
+            success: function (resp) {
+              if (resp.types) {
+                availableRoomTypes = resp.types;
+                generateRoomSelectionUI();
+              }
+            },
+            error: function () {
+              console.error("Erreur chargement des types de chambres");
+            },
+          });
+        } else {
+          generateRoomSelectionUI();
         }
 
         document.getElementById("roomsSelectionSection").style.display =
@@ -1971,13 +2217,39 @@
           return;
         }
 
-        // Récupérer les activités sélectionnées
+        // Récupérer les activités sélectionnées par jour
+        // Créer un array avec toutes les activités sélectionnées pour validation
         const selectedActivities = [];
-        form
-          .querySelectorAll('input[type="checkbox"]:checked')
-          .forEach((checkbox) => {
-            selectedActivities.push(parseInt(checkbox.value));
+        Object.values(activitiesByDay).forEach((dayActivities) => {
+          dayActivities.forEach((activityId) => {
+            if (!selectedActivities.includes(activityId)) {
+              selectedActivities.push(activityId);
+            }
           });
+        });
+
+        // Valider les contraintes de participants pour les activités
+        for (let activityId of selectedActivities) {
+          const activity = availableActivities.find(a => a.id === activityId);
+          if (activity) {
+            if (activity.min_participants && nb_personnes < activity.min_participants) {
+              showMsg(
+                document.getElementById("reservationMsg"),
+                `<i class="fas fa-exclamation-circle"></i> ${activity.icon} ${activity.name} nécessite un minimum de ${activity.min_participants} personnes (vous avez: ${nb_personnes})`,
+                false,
+              );
+              return;
+            }
+            if (activity.max_participants && nb_personnes > activity.max_participants) {
+              showMsg(
+                document.getElementById("reservationMsg"),
+                `<i class="fas fa-exclamation-circle"></i> ${activity.icon} ${activity.name} ne peut accueillir que ${activity.max_participants} personnes maximum (vous avez: ${nb_personnes})`,
+                false,
+              );
+              return;
+            }
+          }
+        }
 
         // Validation téléphone
         if (!/^[0-9]{10}$/.test(telephone)) {
@@ -2008,7 +2280,7 @@
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
 
         $.ajax({
-          url: "api/reservation_request.php",
+          url: "api/reservations/reservation_request.php",
           type: "POST",
           data: JSON.stringify({
             nom: nom,
@@ -2019,6 +2291,7 @@
             date_depart: date_depart,
             nb_personnes: nb_personnes,
             activities: selectedActivities,
+            activities_by_day: activitiesByDay,
             selected_rooms: selectedRooms,
           }),
           contentType: "application/json",

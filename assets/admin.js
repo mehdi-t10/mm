@@ -186,7 +186,7 @@ $(function () {
     $.ajax({
       method: "POST",
       dataType: "json",
-      url: "api/admin_plan_activity.php",
+      url: "api/admin/admin_plan_activity.php",
       data: {
         reservation_id: reservation_id,
         day: day,

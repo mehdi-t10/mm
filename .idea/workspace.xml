@@ -6,57 +6,48 @@
   <component name="ChangeListManager">
     <list default="true" id="042131e9-6a67-4b0b-8c39-0dd11e476670" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ARCHITECTURE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHECKLIST.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CONFIG_SUMMARY.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CORRECTION_FINAL.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DIAGNOSTIC.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXAMPLES.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FONT_AWESOME_GUIDE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/INDEX_DOCUMENTATION.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LANDING_PAGE_UPDATES.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QUICKSTART.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/REVENUE_FIX.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROOM_RESTRUCTURE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/STATUS_SUMMARY.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SUMMARY_VISUAL.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VISUAL_SUMMARY.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/admin-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin-dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/add_service.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/add_service.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_day_requests.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_day_requests.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_delete_client.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_delete_client.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_email_config.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_email_config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_list_reservations.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_list_reservations.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_plan_activity.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_plan_activity.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_register.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_register.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_reject_reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_reject_reservation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_set_deposit.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_set_deposit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_set_discount.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_set_discount.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_validate_reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_validate_reservation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin_validate_reservation_with_room.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_validate_reservation_with_room.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/assign_room_number.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/assign_room_number.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/auto_assign_rooms.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/auto_assign_rooms.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/email_logs.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/email_logs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/forgot_password.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/forgot_password.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/get_available_facilities.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_available_facilities.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/get_available_rooms.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_available_rooms.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/get_facilities_for_activities.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_facilities_for_activities.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/get_invoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_invoice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/get_my_reservations.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_my_reservations.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/get_payment_status.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_payment_status.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/get_room_calendar.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_room_calendar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/invoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/invoice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/record_payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/record_payment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/register.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/reservation_request.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/reservation_request.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/reserve.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/reserve.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/send_invoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/send_invoice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/send_invoice_email.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/send_invoice_email.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/send_welcome_email.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/send_welcome_email.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/add_service.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_day_requests.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_delete_client.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_email_config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_list_reservations.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_login.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_plan_activity.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_register.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_reject_reservation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_set_deposit.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_set_discount.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_validate_reservation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_validate_reservation_with_room.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/assign_room_number.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/auto_assign_rooms.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/email_logs.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/forgot_password.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/get_available_facilities.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/get_available_rooms.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/get_facilities_for_activities.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/get_invoice.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/get_my_reservations.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/get_payment_status.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/get_room_calendar.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/invoice.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/login.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/record_payment.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/register.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/reservation_request.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/reservations/reservation_request.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/reservations/reservation_request.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/reserve.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/send_invoice.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/send_invoice_email.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/send_welcome_email.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/client-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/activities.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/activities.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/email_logs.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/email_logs.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/reservations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/reservations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,6 +115,7 @@
       <workItem from="1775495140108" duration="438000" />
       <workItem from="1775495620633" duration="2535000" />
       <workItem from="1775641553569" duration="5281000" />
+      <workItem from="1775653635590" duration="2791000" />
     </task>
     <servers />
   </component>

@@ -4,27 +4,35 @@
         "name": "Entrainement collectif",
         "price": 50,
         "facilities": [1, 2],
-        "icon": "⚽"
+        "icon": "⚽",
+        "min_participants": 22,
+        "max_participants": null
     },
     {
         "id": 2,
         "name": "Match amical",
         "price": 75,
         "facilities": [1],
-        "icon": "🏆"
+        "icon": "🏆",
+        "min_participants": 15,
+        "max_participants": null
     },
     {
         "id": 3,
         "name": "Cours privé",
         "price": 100,
         "facilities": [1, 2, 3],
-        "icon": "👨‍🏫"
+        "icon": "👨‍🏫",
+        "min_participants": null,
+        "max_participants": 5
     },
     {
         "id": 4,
         "name": "Tournoi",
         "price": 200,
         "facilities": [1],
-        "icon": "🎯"
+        "icon": "🎯",
+        "min_participants": 15,
+        "max_participants": null
     }
 ]

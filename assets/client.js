@@ -116,7 +116,7 @@ $(function () {
     $.ajax({
       method: "POST",
       dataType: "json",
-      url: "api/invoice.php",
+      url: "api/billing/invoice.php",
       data: {
         email: email
       }

@@ -978,7 +978,7 @@
 
         $.ajax({
           url:
-            "api/get_my_reservations.php?email=" +
+            "api/reservations/get_my_reservations.php?email=" +
             encodeURIComponent(userData.email),
           type: "GET",
           dataType: "json",
@@ -1070,7 +1070,7 @@
 
       function viewReservationDetails(resId) {
         $.ajax({
-          url: "api/get_invoice.php",
+          url: "api/billing/get_invoice.php",
           method: "GET",
           data: { id: resId },
           dataType: "json",
@@ -1163,7 +1163,7 @@
 
       function sendInvoiceEmail(resId) {
         $.ajax({
-          url: "api/send_invoice_email.php",
+          url: "api/billing/send_invoice_email.php",
           method: "POST",
           data: { reservationId: resId },
           dataType: "json",
@@ -1304,7 +1304,7 @@
 
         // Appeler l'API pour obtenir les chambres disponibles avec les tarifs
         $.ajax({
-          url: "api/get_available_rooms.php",
+          url: "api/rooms/get_available_rooms.php",
           method: "POST",
           data: {
             activities: selectedActivities.length > 0 ? selectedActivities : [],
@@ -1586,7 +1586,7 @@
         btn.textContent = "Enregistrement...";
 
         $.ajax({
-          url: "api/reserve.php",
+          url: "api/reservations/reserve.php",
           type: "POST",
           data: data,
           dataType: "json",
@@ -1661,7 +1661,7 @@
       // ===== CALENDAR =====
       async function loadReservations() {
         try {
-          const response = await fetch("api/admin_list_reservations.php");
+          const response = await fetch("api/reservations/admin_list_reservations.php");
           const data = await response.json();
           if (data.success && data.reservations) {
             reservations = data.reservations;
