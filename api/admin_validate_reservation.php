@@ -107,7 +107,6 @@ DETAILS DE VOTRE RESERVATION:
 - Arrivee: {$reservation['date_arrivee']}
 - Depart: {$reservation['date_depart']}
 - Nombre de personnes: {$reservation['nb_personnes']}
-- Depot: {$reservation['deposit']}€
 
 ACCES CLIENT:
 Connectez-vous a votre compte: https://footcamp-dreams.local/client-dashboard.html

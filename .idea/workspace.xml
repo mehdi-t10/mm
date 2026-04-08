@@ -5,9 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="042131e9-6a67-4b0b-8c39-0dd11e476670" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_set_deposit.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_set_deposit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_validate_reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_validate_reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin_validate_reservation_with_room.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin_validate_reservation_with_room.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/get_invoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_invoice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/get_payment_status.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_payment_status.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/invoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/invoice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/reserve.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/reserve.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/client-dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/email_logs.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/email_logs.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/reservations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/reservations.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/rooms.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/rooms.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/users.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,20 +55,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -73,7 +87,8 @@
       <updated>1775208576604</updated>
       <workItem from="1775208578674" duration="3749000" />
       <workItem from="1775495140108" duration="438000" />
-      <workItem from="1775495620633" duration="1996000" />
+      <workItem from="1775495620633" duration="2535000" />
+      <workItem from="1775641553569" duration="3880000" />
     </task>
     <servers />
   </component>

@@ -67,8 +67,7 @@ foreach ($reservation['activities'] as $actId) {
 }
 
 $subtotal = $roomPrice + $activitiesCost;
-$deposit = $reservation['deposit'] ?? 0;
-$totalDue = $subtotal - $deposit;
+$totalDue = $subtotal;
 
 // Reponse JSON
 jsonResponse([
@@ -87,7 +86,6 @@ jsonResponse([
         'room_total' => round($roomPrice, 2),
         'activities_cost' => round($activitiesCost, 2),
         'subtotal' => round($subtotal, 2),
-        'deposit_paid' => round($deposit, 2),
         'amount_due' => round($totalDue, 2),
         'status' => $reservation['status']
     ]

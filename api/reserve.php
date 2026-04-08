@@ -58,7 +58,6 @@ $newReservation = [
     'activities' => $activities,
     'services' => [],
     'discount_percent' => 0,
-    'deposit' => 80,
     'status' => 'en_attente',
     'room' => '',
     'room_type' => $_POST['room_type'] ?? '',

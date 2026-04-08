@@ -1,7 +1,6 @@
 {
   "site_name": "FootCamp Dreams",
   "price_per_night": 45,
-  "deposit_default": 80,
   "discounts": [10, 20, 50],
   "activities_catalog": [
     {

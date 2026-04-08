@@ -3,6 +3,7 @@ require_once 'utils.php';
 
 $reservations = readJson('reservations.json');
 $settings = readJson('settings.json');
+$rooms = readJson('rooms.json');
 
 $email = $_POST['email'] ?? '';
 $targetReservation = null;
@@ -21,8 +22,19 @@ if ($targetReservation === null) {
     ]);
 }
 
+// Trouver le prix par nuit selon le type de chambre
+$pricePerNight = $settings['price_per_night']; // Default fallback
+if (isset($targetReservation['room_type'])) {
+    foreach ($rooms['types'] as $roomType) {
+        if ($roomType['type'] === $targetReservation['room_type']) {
+            $pricePerNight = $roomType['price_per_night'];
+            break;
+        }
+    }
+}
+
 $nights = nightsCount($targetReservation['date_arrivee'], $targetReservation['date_depart']);
-$roomTotal = $nights * $targetReservation['nb_personnes'] * $settings['price_per_night'];
+$roomTotal = $nights * $pricePerNight;
 
 $activitiesTotal = 0;
 foreach ($settings['activities_catalog'] as $activity) {
@@ -38,7 +50,7 @@ foreach ($targetReservation['services'] as $service) {
 
 $subtotal = $roomTotal + $activitiesTotal + $servicesTotal;
 $discountAmount = $subtotal * ($targetReservation['discount_percent'] / 100);
-$total = $subtotal - $discountAmount - $targetReservation['deposit'];
+$total = $subtotal - $discountAmount;
 
 jsonResponse([
     'success' => true,
@@ -46,6 +58,5 @@ jsonResponse([
     'activities_total' => $activitiesTotal,
     'services_total' => $servicesTotal,
     'discount_amount' => $discountAmount,
-    'deposit' => $targetReservation['deposit'],
     'total' => $total
 ]);

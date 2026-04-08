@@ -595,7 +595,7 @@
           <div class="kpi-icon">💰</div>
           <div class="kpi-label">Chiffre d'Affaires</div>
           <div class="kpi-value" id="totalRevenue">0€</div>
-          <div class="kpi-subtext">Dépôts collectés</div>
+          <div class="kpi-subtext">Revenus validés</div>
         </div>
 
         <div class="kpi-card">
@@ -1164,16 +1164,52 @@
         displayReservations();
       }
 
-      function updateKPIs() {
-        const total = allReservations.length;
-        const totalRevenue = allReservations.reduce(
-          (sum, r) => sum + (r.deposit || 0),
-          0,
-        );
-        const totalParticipants = allReservations.reduce(
-          (sum, r) => sum + (r.nb_personnes || 0),
-          0,
-        );
+       function updateKPIs() {
+         const total = allReservations.length;
+
+         // Charger les données des chambres pour mapper les types et prix
+         const roomsData = JSON.parse(localStorage.getItem("roomsData") || "{}");
+         const roomTypesMap = {}; // { roomNumber: type }
+         const priceMap = {}; // { type: pricePerNight }
+
+         if (roomsData.rooms && Array.isArray(roomsData.rooms)) {
+           roomsData.rooms.forEach((r) => {
+             roomTypesMap[r.number] = r.type;
+           });
+         }
+
+         if (roomsData.types && Array.isArray(roomsData.types)) {
+           roomsData.types.forEach((t) => {
+             priceMap[t.type] = t.price_per_night;
+           });
+         }
+
+         const totalRevenue = allReservations
+           .filter((r) => r.status === "validee")
+           .reduce((sum, r) => {
+             const nights = Math.max(1, Math.floor(
+               (new Date(r.date_depart) - new Date(r.date_arrivee)) / (1000 * 3600 * 24)
+             ));
+
+             // Calculer le prix pour chaque chambre assignée
+             let reservationPrice = 0;
+             if (r.room_numbers && Array.isArray(r.room_numbers)) {
+               r.room_numbers.forEach((roomNum) => {
+                 const roomType = roomTypesMap[roomNum];
+                 const pricePerNight = priceMap[roomType] || 100; // Défaut 100€
+                 reservationPrice += nights * pricePerNight;
+               });
+             } else {
+               // Fallback: utiliser prix par défaut
+               reservationPrice = nights * 100;
+             }
+
+             return sum + reservationPrice;
+           }, 0);
+         const totalParticipants = allReservations.reduce(
+           (sum, r) => sum + (r.nb_personnes || 0),
+           0,
+         );
 
         // Calculate occupancy rate - compter toutes les chambres individuelles occupées
         const occupiedRoomNumbers = new Set();
@@ -1273,32 +1309,66 @@
         });
       }
 
-      function updateRevenueChart() {
-        // Group revenue by month
-        const monthlyRevenue = {};
-        const months = [
-          "Jan",
-          "Fév",
-          "Mar",
-          "Avr",
-          "Mai",
-          "Jun",
-          "Juil",
-          "Aoû",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Déc",
-        ];
+       function updateRevenueChart() {
+         // Group revenue by month
+         const monthlyRevenue = {};
+         const months = [
+           "Jan",
+           "Fév",
+           "Mar",
+           "Avr",
+           "Mai",
+           "Jun",
+           "Juil",
+           "Aoû",
+           "Sep",
+           "Oct",
+           "Nov",
+           "Déc",
+         ];
 
-        allReservations.forEach((r) => {
-          if (r.date_arrivee) {
-            const date = new Date(r.date_arrivee);
-            const month = months[date.getMonth()];
-            monthlyRevenue[month] =
-              (monthlyRevenue[month] || 0) + (r.deposit || 0);
-          }
-        });
+         // Charger les données des chambres pour mapper les types et prix
+         const roomsData = JSON.parse(localStorage.getItem("roomsData") || "{}");
+         const roomTypesMap = {}; // { roomNumber: type }
+         const priceMap = {}; // { type: pricePerNight }
+
+         if (roomsData.rooms && Array.isArray(roomsData.rooms)) {
+           roomsData.rooms.forEach((r) => {
+             roomTypesMap[r.number] = r.type;
+           });
+         }
+
+         if (roomsData.types && Array.isArray(roomsData.types)) {
+           roomsData.types.forEach((t) => {
+             priceMap[t.type] = t.price_per_night;
+           });
+         }
+
+         allReservations.forEach((r) => {
+           if (r.status === "validee" && r.date_arrivee) {
+             const date = new Date(r.date_arrivee);
+             const month = months[date.getMonth()];
+             const nights = Math.max(1, Math.floor(
+               (new Date(r.date_depart) - new Date(r.date_arrivee)) / (1000 * 3600 * 24)
+             ));
+
+             // Calculer le prix pour chaque chambre assignée
+             let reservationPrice = 0;
+             if (r.room_numbers && Array.isArray(r.room_numbers)) {
+               r.room_numbers.forEach((roomNum) => {
+                 const roomType = roomTypesMap[roomNum];
+                 const pricePerNight = priceMap[roomType] || 100; // Défaut 100€
+                 reservationPrice += nights * pricePerNight;
+               });
+             } else {
+               // Fallback: utiliser prix par défaut
+               reservationPrice = nights * 100;
+             }
+
+             monthlyRevenue[month] =
+               (monthlyRevenue[month] || 0) + reservationPrice;
+           }
+         });
 
         const labels = Object.keys(monthlyRevenue);
         const data = Object.values(monthlyRevenue);
@@ -1867,10 +1937,6 @@
                 ${res.nb_personnes}
               </div>
               <div class="res-info-item">
-                <span class="res-info-label">Dépôt</span>
-                <strong>${res.deposit}€</strong>
-              </div>
-              <div class="res-info-item">
                 <span class="res-info-label">Chambres</span>
                 ${
                   res.room_numbers && res.room_numbers.length > 0
@@ -1888,10 +1954,9 @@
                 <button class="action-btn reject" onclick="rejectRes(${res.id})">✗ Rejeter</button>
               `
                   : ""
-              }
-              <button class="action-btn" onclick="openDepositModal(${res.id}, '${res.nom}', '${res.prenom}', ${res.deposit})">💰 Modifier dépôt</button>
+                }
+              </div>
             </div>
-          </div>
         `;
           })
           .join("");

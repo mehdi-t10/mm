@@ -27,15 +27,12 @@ $(function () {
           html += "<strong>Personnes :</strong> " + reservation.nb_personnes + "<br>";
           html += "<strong>Statut :</strong> " + reservation.status + "<br>";
           html += "<strong>Chambre :</strong> " + reservation.room + "<br>";
-          html += "<strong>Arrhes :</strong> " + reservation.deposit + " €<br>";
           html += "<strong>Réduction :</strong> " + reservation.discount_percent + " %<br>";
 
           html += "<div class='mt-3'>";
 
           html += "<button class='btn btn-success btn-sm me-2 btn-validate' data-id='" + reservation.id + "'>Valider</button>";
 
-          html += "<input type='number' min='0' class='form-control form-control-sm d-inline-block me-2 deposit-input' style='width:120px;' id='deposit_" + reservation.id + "' placeholder='Arrhes'>";
-          html += "<button class='btn btn-outline-primary btn-sm me-2 btn-set-deposit' data-id='" + reservation.id + "'>Mettre arrhes</button>";
 
           html += "<select class='form-select form-select-sm d-inline-block me-2 discount-select' style='width:120px;' id='discount_" + reservation.id + "'>";
           html += "<option value='0'>0%</option>";
@@ -107,30 +104,6 @@ $(function () {
     });
   });
 
-  $(document).on("click", ".btn-set-deposit", function () {
-    if (!adminConnected) {
-      return;
-    }
-
-    let id = $(this).data("id");
-    let deposit = $("#deposit_" + id).val();
-
-    $.ajax({
-      method: "POST",
-      dataType: "json",
-      url: "api/admin_set_deposit.php",
-      data: {
-        id: id,
-        deposit: deposit
-      }
-    }).done(function (obj) {
-      alert(obj.message);
-      loadReservations();
-    }).fail(function (e) {
-      console.log(e);
-      alert("Erreur réseau pendant la mise à jour des arrhes.");
-    });
-  });
 
   $(document).on("click", ".btn-set-discount", function () {
     if (!adminConnected) {

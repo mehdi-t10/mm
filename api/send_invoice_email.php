@@ -187,9 +187,6 @@ $invoiceHtml .= "
                     <span>Total à payer</span>
                     <span>" . number_format($total, 2, ',', ' ') . "€</span>
                 </div>
-                <div class='deposit' style='margin-top: 15px;'>
-                    <strong>✓ Acompte versé:</strong> " . number_format($reservation['deposit'], 2, ',', ' ') . "€
-                </div>";
 
 if ($balance > 0) {
     $invoiceHtml .= "
@@ -198,7 +195,7 @@ if ($balance > 0) {
                 </div>";
 } else {
     $invoiceHtml .= "
-                <div class='deposit' style='margin-top: 10px; background: #c8e6c9; border-left-color: #4caf50;'>
+                <div style='margin-top: 10px; background: #c8e6c9; padding: 10px; border-left: 4px solid #4caf50; border-radius: 4px;'>
                     <strong>✓ Paiement complet reçu</strong>
                 </div>";
 }

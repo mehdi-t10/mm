@@ -126,7 +126,6 @@ Type de chambre: " . ucfirst($roomType) . "
 Arrivée: " . date('d/m/Y', strtotime($reservation['date_arrivee'])) . "
 Départ: " . date('d/m/Y', strtotime($reservation['date_depart'])) . "
 Nombre de personnes: {$reservation['nb_personnes']}
-Acompte versé: {$reservation['deposit']}€
 
 ========== ACCÈS CLIENT ==========
 Connectez-vous à votre compte: https://footcamp-dreams.local/client-dashboard.html

@@ -1,74 +1,11 @@
 [
     {
-        "timestamp": "2026-04-03 08:34:24",
-        "to": "mrabeutm@gmail.com",
-        "type": "credentials",
-        "reservation_id": 7,
-        "subject": "FootCamp Dreams - Votre réservation validée! Accès client",
-        "body": "Bonjour ronaldo cristiano,\r\n\r\nFélicitations! Votre réservation a été validée avec succès!\r\n\r\n========== INFORMATIONS DE CONNEXION ==========\r\nEmail: mrabeutm@gmail.com\r\nMot de passe: mehdi2026\r\n\r\n========== DÉTAILS DE VOTRE RÉSERVATION ==========\r\nNuméro de réservation: #7\r\nChambre: Chambre B\r\nArrivée: 01\/05\/2026\r\nDépart: 09\/05\/2026\r\nNombre de personnes: 5\r\nAcompte versé: 80€\r\n\r\n========== ACCÈS CLIENT ==========\r\nConnectez-vous à votre compte: https:\/\/footcamp-dreams.local\/client-dashboard.html\r\n\r\nUne fois connecté, vous pourrez:\r\n- Consulter les détails complets de votre réservation\r\n- Voir votre facture détaillée\r\n- Gérer votre séjour\r\n\r\nBienvenue chez FootCamp Dreams!\r\nMerci d'avoir choisi notre établissement.\r\n\r\nCordialement,\r\nL'équipe FootCamp Dreams",
-        "sent": false
-    },
-    {
-        "timestamp": "2026-04-03 08:38:20",
-        "to": "mrabeutm@gmail.com",
-        "type": "credentials",
-        "reservation_id": 8,
-        "subject": "FootCamp Dreams - Votre réservation validée! Accès client",
-        "body": "Bonjour flkjlkjlj, valverde,\r\n\r\nFélicitations! Votre réservation a été validée avec succès!\r\n\r\n========== INFORMATIONS DE CONNEXION ==========\r\nEmail: mrabeutm@gmail.com\r\nMot de passe: mehdi2026\r\n\r\n========== DÉTAILS DE VOTRE RÉSERVATION ==========\r\nNuméro de réservation: #8\r\nChambre: Chambre C\r\nArrivée: 02\/05\/2026\r\nDépart: 08\/05\/2026\r\nNombre de personnes: 2\r\nAcompte versé: 80€\r\n\r\n========== ACCÈS CLIENT ==========\r\nConnectez-vous à votre compte: https:\/\/footcamp-dreams.local\/client-dashboard.html\r\n\r\nUne fois connecté, vous pourrez:\r\n- Consulter les détails complets de votre réservation\r\n- Voir votre facture détaillée\r\n- Gérer votre séjour\r\n\r\nBienvenue chez FootCamp Dreams!\r\nMerci d'avoir choisi notre établissement.\r\n\r\nCordialement,\r\nL'équipe FootCamp Dreams",
-        "sent": false
-    },
-    {
-        "timestamp": "2026-04-05 22:34:01",
-        "to": "mrabeutm@gmail.com",
-        "type": "credentials",
-        "reservation_id": 8,
-        "subject": "FootCamp Dreams - Votre réservation validée! Accès client",
-        "body": "Bonjour yamal lamine,\r\n\r\nFélicitations! Votre réservation a été validée avec succès!\r\n\r\n========== INFORMATIONS DE CONNEXION ==========\r\nEmail: mrabeutm@gmail.com\r\nMot de passe: yamal2026\r\n\r\n========== DÉTAILS DE VOTRE RÉSERVATION ==========\r\nNuméro de réservation: #8\r\nChambre: Chambre B\r\nArrivée: 18\/04\/2026\r\nDépart: 10\/05\/2026\r\nNombre de personnes: 5\r\nAcompte versé: 80€\r\n\r\n========== ACCÈS CLIENT ==========\r\nConnectez-vous à votre compte: https:\/\/footcamp-dreams.local\/client-dashboard.html\r\n\r\nUne fois connecté, vous pourrez:\r\n- Consulter les détails complets de votre réservation\r\n- Voir votre facture détaillée\r\n- Gérer votre séjour\r\n\r\nBienvenue chez FootCamp Dreams!\r\nMerci d'avoir choisi notre établissement.\r\n\r\nCordialement,\r\nL'équipe FootCamp Dreams",
-        "sent": false
-    },
-    {
-        "timestamp": "2026-04-06 17:15:11",
-        "to": "ilo@test.com",
+        "timestamp": "2026-04-08 12:26:50",
+        "to": "re@test.com",
         "type": "reservation_confirmation",
-        "reservation_id": 9,
+        "reservation_id": 1,
         "subject": "FootCamp Dreams - Reservation recue!",
-        "body": "Bonjour ilo ilo,\r\n\r\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\r\n\r\nDETAILS DE VOTRE DEMANDE:\r\n- Arrivee: 02\/04\/2026\r\n- Depart: 03\/04\/2026\r\n- Nombre de personnes: 2\r\n- Depot: 80€\r\n\r\nUn administrateur examinera votre demande et vous enverra un email avec:\r\n- Votre numero de reservation\r\n- Vos identifiants de connexion\r\n- Les details complets de votre facture\r\n- Les instructions de paiement\r\n\r\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\r\n\r\nCordialement,\r\nL'equipe FootCamp Dreams",
-        "sent": false
-    },
-    {
-        "timestamp": "2026-04-07 07:42:55",
-        "to": "ilo@test.com",
-        "type": "credentials",
-        "reservation_id": 9,
-        "subject": "FootCamp Dreams - Votre réservation validée! Accès client",
-        "body": "Bonjour ilo ilo,\n\nFélicitations! Votre réservation a été validée avec succès!\n\n========== INFORMATIONS DE CONNEXION ==========\nEmail: ilo@test.com\nMot de passe: ilo2026\n\n========== DÉTAILS DE VOTRE RÉSERVATION ==========\nNuméro de réservation: #9\nChambre: Chambre B\nArrivée: 02\/04\/2026\nDépart: 03\/04\/2026\nNombre de personnes: 2\nAcompte versé: 80€\n\n========== ACCÈS CLIENT ==========\nConnectez-vous à votre compte: https:\/\/footcamp-dreams.local\/client-dashboard.html\n\nUne fois connecté, vous pourrez:\n- Consulter les détails complets de votre réservation\n- Voir votre facture détaillée\n- Gérer votre séjour\n\nBienvenue chez FootCamp Dreams!\nMerci d'avoir choisi notre établissement.\n\nCordialement,\nL'équipe FootCamp Dreams",
-        "sent": false
-    },
-    {
-        "timestamp": "2026-04-07 08:55:35",
-        "to": "phil@test.com",
-        "type": "reservation_confirmation",
-        "reservation_id": 10,
-        "subject": "FootCamp Dreams - Reservation recue!",
-        "body": "Bonjour Foden Phil,\n\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\n\nDETAILS DE VOTRE DEMANDE:\n- Arrivee: 09\/04\/2026\n- Depart: 16\/04\/2026\n- Nombre de personnes: 10\n- Depot: 80€\n\nUn administrateur examinera votre demande et vous enverra un email avec:\n- Votre numero de reservation\n- Vos identifiants de connexion\n- Les details complets de votre facture\n- Les instructions de paiement\n\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\n\nCordialement,\nL'equipe FootCamp Dreams",
-        "sent": false
-    },
-    {
-        "timestamp": "2026-04-07 09:08:31",
-        "to": "aaa@aaa.com",
-        "type": "reservation_confirmation",
-        "reservation_id": 11,
-        "subject": "FootCamp Dreams - Reservation recue!",
-        "body": "Bonjour aaa Aaa,\n\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\n\nDETAILS DE VOTRE DEMANDE:\n- Arrivee: 07\/04\/2026\n- Depart: 10\/04\/2026\n- Nombre de personnes: 15\n- Depot: 80€\n\nUn administrateur examinera votre demande et vous enverra un email avec:\n- Votre numero de reservation\n- Vos identifiants de connexion\n- Les details complets de votre facture\n- Les instructions de paiement\n\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\n\nCordialement,\nL'equipe FootCamp Dreams",
-        "sent": false
-    },
-    {
-        "timestamp": "2026-04-07 09:30:25",
-        "to": "zzz@zz.com",
-        "type": "reservation_confirmation",
-        "reservation_id": 12,
-        "subject": "FootCamp Dreams - Reservation recue!",
-        "body": "Bonjour zzz zzz,\n\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\n\nDETAILS DE VOTRE DEMANDE:\n- Arrivee: 08\/04\/2026\n- Depart: 10\/04\/2026\n- Nombre de personnes: 5\n- Depot: 80€\n\nUn administrateur examinera votre demande et vous enverra un email avec:\n- Votre numero de reservation\n- Vos identifiants de connexion\n- Les details complets de votre facture\n- Les instructions de paiement\n\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\n\nCordialement,\nL'equipe FootCamp Dreams",
+        "body": "Bonjour re re,\r\n\r\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\r\n\r\nDETAILS DE VOTRE DEMANDE:\r\n- Arrivee: 08\/04\/2026\r\n- Depart: 10\/04\/2026\r\n- Nombre de personnes: 2\r\n- Depot: 80€\r\n\r\nUn administrateur examinera votre demande et vous enverra un email avec:\r\n- Votre numero de reservation\r\n- Vos identifiants de connexion\r\n- Les details complets de votre facture\r\n- Les instructions de paiement\r\n\r\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\r\n\r\nCordialement,\r\nL'equipe FootCamp Dreams",
         "sent": false
     }
 ]

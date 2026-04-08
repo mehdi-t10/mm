@@ -1039,10 +1039,6 @@
                     <p style="color: var(--green); margin: 4px 0 0 0; font-weight: 600;">${res.room || "À assigner"}</p>
                   </div>
                   <div>
-                    <span style="color: var(--muted); font-size: 0.8rem;">Acompte</span>
-                    <p style="color: var(--green); margin: 4px 0 0 0; font-weight: 600;">${res.deposit}€</p>
-                  </div>
-                  <div>
                     <span style="color: var(--muted); font-size: 0.8rem;">Réduction</span>
                     <p style="color: var(--green); margin: 4px 0 0 0; font-weight: 600;">${res.discount_percent || 0}%</p>
                   </div>
@@ -1143,10 +1139,6 @@
               <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
                 <strong>Activités</strong>
                 <span>${invoice.activities_cost.toFixed(2)}€</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                <strong>Acompte</strong>
-                <span>-${invoice.deposit_paid.toFixed(2)}€</span>
               </div>
               <div style="display: flex; justify-content: space-between; font-weight: 700; padding-top: 12px; border-top: 1px solid var(--border);">
                 <strong>Total à payer</strong>
@@ -1492,8 +1484,6 @@
         const arrival = new Date(dateArrivee);
         const departure = new Date(dateDepart);
         const nights = Math.ceil((departure - arrival) / (1000 * 3600 * 24));
-        const deposit = 80;
-        const amountDue = totalPrice - deposit;
 
         const invoiceHtml = `
         <div style="max-width: 600px; margin: 0 auto;">
@@ -1525,25 +1515,10 @@
                 Activites: ${selectedActivities.length > 0 ? selectedActivities.join(", ") : "Aucune"}
               </div>
             </div>
-            
-            <div style="padding: 15px 0; margin-bottom: 15px; background: rgba(255,215,64,0.1); padding: 12px; border-radius: 8px;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
-                <span>Sous-total</span>
-                <span>${totalPrice}€</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--green);">
-                <span>Acompte (Depot)</span>
-                <span>-${deposit}€</span>
-              </div>
-            </div>
-            
+
             <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 2px solid var(--green);">
-              <span style="font-weight: 700; font-size: 1.1rem;">MONTANT DU</span>
-              <span style="color: var(--green); font-weight: 700; font-size: 1.3rem;">${amountDue}€</span>
-            </div>
-            
-            <div style="margin-top: 15px; padding: 12px; background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; font-size: 0.85rem; color: var(--muted); text-align: center;">
-              Le solde de ${amountDue}€ devra etre verse avant votre arrivee.
+              <span style="font-weight: 700; font-size: 1.1rem;">MONTANT TOTAL</span>
+              <span style="color: var(--green); font-weight: 700; font-size: 1.3rem;">${totalPrice}€</span>
             </div>
           </div>
         </div>

@@ -45,8 +45,7 @@ foreach ($reservations as $reservation) {
         }
 
         $subtotal = $roomPrice + $activitiesCost;
-        $deposit = $reservation['deposit'] ?? 0;
-        $totalDue = $subtotal - $deposit;
+        $totalDue = $subtotal;
         $totalPaid = $reservation['total_paid'] ?? 0;
         $stillDue = $totalDue - $totalPaid;
 
@@ -55,10 +54,9 @@ foreach ($reservations as $reservation) {
             'room_name' => $room ? $room['name'] : 'N/A',
             'check_in' => $reservation['date_arrivee'],
             'check_out' => $reservation['date_depart'],
-            'nights' => intval($nights),
-            'subtotal' => round($subtotal, 2),
-            'deposit_paid' => round($deposit, 2),
-            'total_due' => round($totalDue, 2),
+             'nights' => intval($nights),
+             'subtotal' => round($subtotal, 2),
+             'total_due' => round($totalDue, 2),
             'total_paid' => round($totalPaid, 2),
             'still_due' => round(max(0, $stillDue), 2),
             'payment_status' => $stillDue <= 0 ? 'Paye' : 'En attente'

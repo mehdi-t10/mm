@@ -6,7 +6,7 @@
             "name": "Chambre Simple",
             "capacity": 1,
             "total": 100,
-            "price_per_night": 60,
+            "price_per_night": 50,
             "description": "Chambre confortable pour 1 personne"
         },
         {
@@ -15,7 +15,7 @@
             "name": "Chambre Double",
             "capacity": 2,
             "total": 50,
-            "price_per_night": 100,
+            "price_per_night": 90,
             "description": "Chambre spacieuse pour 2 personnes"
         },
         {
@@ -24,7 +24,7 @@
             "name": "Chambre Triple",
             "capacity": 3,
             "total": 50,
-            "price_per_night": 140,
+            "price_per_night": 120,
             "description": "Chambre parfaite pour 3 personnes"
         }
     ],

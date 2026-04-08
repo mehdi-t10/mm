@@ -1,164 +1,17 @@
 [
     {
-        "id": 2,
-        "nom": "iloniavo",
-        "prenom": "rand",
-        "email": "dfljkfhkljhf@gmail.com",
-        "telephone": "07465984358",
-        "date_arrivee": "2026-03-26",
-        "date_depart": "2026-03-28",
-        "nb_personnes": 2,
-        "activities": [
-            "Match amical"
-        ],
-        "services": [],
-        "discount_percent": 0,
-        "deposit": 80,
-        "status": "validee",
-        "room": "Chambre A"
-    },
-    {
-        "id": 7,
-        "nom": "luis",
-        "prenom": "suarez",
-        "email": "moulay-mehdi.mrabeut@universite-paris-saclay.fr",
-        "telephone": "0749339012",
-        "date_arrivee": "2026-05-02",
-        "date_depart": "2026-05-10",
-        "nb_personnes": 25,
-        "activities": [
-            1
-        ],
-        "selected_facilities": [],
-        "status": "rejetee",
-        "deposit": 80,
-        "room": null,
-        "created_at": "2026-04-05 22:29:18"
-    },
-    {
-        "id": 8,
-        "nom": "lamine",
-        "prenom": "yamal",
-        "email": "mrabeutm@gmail.com",
-        "telephone": "0749339015",
-        "date_arrivee": "2026-04-18",
-        "date_depart": "2026-05-10",
-        "nb_personnes": 5,
-        "activities": [
-            1
-        ],
-        "selected_facilities": [],
-        "status": "validee",
-        "deposit": 80,
-        "room": 2,
-        "created_at": "2026-04-05 22:33:25"
-    },
-    {
-        "id": 9,
-        "nom": "ilo",
-        "prenom": "ilo",
-        "email": "ilo@test.com",
-        "telephone": "0102030405",
-        "date_arrivee": "2026-04-02",
-        "date_depart": "2026-04-03",
-        "nb_personnes": 2,
-        "activities": [
-            1
-        ],
-        "selected_facilities": [],
-        "status": "validee",
-        "deposit": 80,
-        "room": 2,
-        "created_at": "2026-04-06 17:15:11"
-    },
-    {
-        "id": 10,
-        "nom": "Phil",
-        "prenom": "Foden",
-        "email": "phil@test.com",
-        "telephone": "0908070605",
-        "date_arrivee": "2026-04-09",
-        "date_depart": "2026-04-16",
-        "nb_personnes": 10,
-        "activities": [],
-        "selected_facilities": [],
-        "selected_rooms": {
-            "simple": 0,
-            "double": 2,
-            "triple": 2
-        },
-        "status": "validee",
-        "deposit": 80,
-        "room": null,
-        "room_type": null,
-        "room_id": null,
-        "created_at": "2026-04-07 08:55:35",
-        "room_numbers": [
-            101,
-            102,
-            151,
-            152
-        ],
-        "room_number": 101
-    },
-    {
-        "id": 11,
-        "nom": "Aaa",
-        "prenom": "aaa",
-        "email": "aaa@aaa.com",
-        "telephone": "0908070660",
-        "date_arrivee": "2026-04-07",
-        "date_depart": "2026-04-10",
-        "nb_personnes": 15,
-        "activities": [],
-        "selected_facilities": [],
-        "selected_rooms": {
-            "simple": 0,
-            "double": 0,
-            "triple": 5
-        },
-        "status": "validee",
-        "deposit": 80,
-        "room": null,
-        "room_type": null,
-        "room_id": null,
-        "created_at": "2026-04-07 09:08:31",
-        "room_numbers": [
-            153,
-            154,
-            155,
-            156,
-            157
-        ],
-        "room_number": 153
-    },
-    {
-        "id": 12,
-        "nom": "zzz",
-        "prenom": "zzz",
-        "email": "zzz@zz.com",
-        "telephone": "0987654321",
+        "id": 1,
+        "nom": "re",
+        "prenom": "re",
+        "email": "re@test.com",
+        "telephone": "0102040503",
         "date_arrivee": "2026-04-08",
         "date_depart": "2026-04-10",
-        "nb_personnes": 5,
+        "nb_personnes": 2,
         "activities": [],
-        "selected_facilities": [],
-        "selected_rooms": {
-            "simple": 1,
-            "double": 2,
-            "triple": 0
-        },
+        "services": [],
+        "discount_percent": 0,
         "status": "validee",
-        "deposit": 80,
-        "room": null,
-        "room_type": null,
-        "room_id": null,
-        "created_at": "2026-04-07 09:30:25",
-        "room_numbers": [
-            1,
-            103,
-            104
-        ],
-        "room_number": 1
+        "room_numbers": [101]
     }
 ]

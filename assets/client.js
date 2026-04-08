@@ -135,7 +135,6 @@ $(function () {
           "Activités : " + obj.activities_total + " €<br>" +
           "Prestations : " + obj.services_total + " €<br>" +
           "Réduction : -" + obj.discount_amount + " €<br>" +
-          "Arrhes : -" + obj.deposit + " €<br>" +
           "<strong>Total : " + obj.total + " €</strong>" +
         "</div>"
       );
