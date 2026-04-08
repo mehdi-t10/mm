@@ -761,13 +761,6 @@
         ></div>
       </div>
 
-      <!-- CLIENTS MANAGEMENT -->
-      <div class="room-list" style="margin-top: 40px">
-        <div class="chart-title">👥 Gestion des Clients</div>
-
-        <div id="clientsList" style="display: grid; gap: 15px"></div>
-      </div>
-
       <!-- RESERVATIONS MANAGEMENT -->
       <div class="room-list" style="margin-top: 40px">
         <div class="chart-title">📋 Gestion des Réservations</div>
@@ -1000,7 +993,6 @@
                 (a, b) => new Date(b.date_arrivee) - new Date(a.date_arrivee),
               );
               loadRooms();
-              loadClients();
               updateDashboard();
             }
           },
@@ -1058,103 +1050,6 @@
         });
       }
 
-      function loadClients() {
-        $.ajax({
-          url: "data/users.json",
-          method: "GET",
-          dataType: "json",
-          success: function (users) {
-            // Filtrer seulement les clients (role = 'client')
-            const clients = users.filter((u) => u.role === "client");
-            displayClients(clients);
-          },
-          error: function () {
-            document.getElementById("clientsList").innerHTML =
-              '<p style="color: var(--muted);">Erreur chargement clients</p>';
-          },
-        });
-      }
-
-      function displayClients(clients) {
-        const container = document.getElementById("clientsList");
-
-        if (!clients || clients.length === 0) {
-          container.innerHTML =
-            '<p style="color: var(--muted); text-align: center;">Aucun client</p>';
-          return;
-        }
-
-        container.innerHTML = "";
-        clients.forEach((client) => {
-          const card = document.createElement("div");
-          card.className = "reservation-card";
-          card.style.cssText = `
-          border: 1px solid var(--border);
-          border-left: 4px solid var(--gold);
-          padding: 16px;
-          background: var(--panel);
-          border-radius: 12px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        `;
-
-          const clientReservations = allReservations.filter(
-            (r) => r.email === client.email,
-          ).length;
-
-          card.innerHTML = `
-          <div style="flex: 1;">
-            <h4 style="color: var(--text); margin: 0 0 8px 0;">${client.prenom} ${client.nom}</h4>
-            <p style="color: var(--muted); margin: 4px 0; font-size: 0.9rem;">📧 ${client.email}</p>
-            <p style="color: var(--muted); margin: 4px 0; font-size: 0.9rem;">📱 ${client.telephone || "N/A"}</p>
-            <p style="color: var(--gold); margin: 8px 0 0 0; font-size: 0.85rem;">📋 ${clientReservations} réservation(s)</p>
-          </div>
-          <button onclick="deleteClient(${client.id}, '${client.prenom} ${client.nom}')"
-                  style="background: #ef5350; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s;">
-            🗑️ Supprimer
-          </button>
-        `;
-
-          container.appendChild(card);
-        });
-      }
-
-      function deleteClient(clientId, clientName) {
-        if (
-          !confirm(
-            "Êtes-vous sûr de vouloir supprimer le client " +
-              clientName +
-              " et toutes ses réservations?",
-          )
-        ) {
-          return;
-        }
-
-        const currentAdmin =
-          localStorage.getItem("currentAdmin") ||
-          sessionStorage.getItem("currentAdmin");
-
-        $.ajax({
-          url: "api/admin_delete_client.php",
-          method: "POST",
-          data: {
-            clientId: clientId,
-            currentAdmin: currentAdmin,
-          },
-          success: function (resp) {
-            if (resp.success) {
-              showMsg("message", "✓ Client supprimé!", true);
-              loadData();
-            } else {
-              showMsg("message", "✗ " + (resp.message || "Erreur"), false);
-            }
-          },
-          error: function () {
-            showMsg("message", "✗ Erreur serveur", false);
-          },
-        });
-      }
 
       function updateDashboard() {
         updateKPIs();

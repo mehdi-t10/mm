@@ -1,9 +1,1 @@
-<?php
-require_once 'utils.php';
-
-// FONCTIONNALITÉ SUPPRIMÉE - Le dépôt n'est plus géré dans le système
-jsonResponse([
-    'success' => false,
-    'message' => 'Cette fonctionnalité a été supprimée.'
-]);
-?>
+<?php require_once __DIR__ . '/admin/admin_set_deposit.php'; ?>

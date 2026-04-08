@@ -7,5 +7,14 @@
         "subject": "FootCamp Dreams - Reservation recue!",
         "body": "Bonjour re re,\r\n\r\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\r\n\r\nDETAILS DE VOTRE DEMANDE:\r\n- Arrivee: 08\/04\/2026\r\n- Depart: 10\/04\/2026\r\n- Nombre de personnes: 2\r\n- Depot: 80€\r\n\r\nUn administrateur examinera votre demande et vous enverra un email avec:\r\n- Votre numero de reservation\r\n- Vos identifiants de connexion\r\n- Les details complets de votre facture\r\n- Les instructions de paiement\r\n\r\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\r\n\r\nCordialement,\r\nL'equipe FootCamp Dreams",
         "sent": false
+    },
+    {
+        "timestamp": "2026-04-08 12:44:22",
+        "to": "oo@tests.com",
+        "type": "reservation_confirmation",
+        "reservation_id": 2,
+        "subject": "FootCamp Dreams - Reservation recue!",
+        "body": "Bonjour oo oo,\r\n\r\nNous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.\r\n\r\nDETAILS DE VOTRE DEMANDE:\r\n- Arrivee: 10\/04\/2026\r\n- Depart: 12\/04\/2026\r\n- Nombre de personnes: 20\r\n- Depot: 80€\r\n\r\nUn administrateur examinera votre demande et vous enverra un email avec:\r\n- Votre numero de reservation\r\n- Vos identifiants de connexion\r\n- Les details complets de votre facture\r\n- Les instructions de paiement\r\n\r\nCe processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!\r\n\r\nCordialement,\r\nL'equipe FootCamp Dreams",
+        "sent": false
     }
 ]
