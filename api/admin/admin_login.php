@@ -9,18 +9,22 @@ $password = $_POST['password'] ?? '';
 foreach ($users as $user) {
     if (
         $user['email'] === $email &&
-        $user['password'] === $password &&
-        $user['role'] === 'admin'
+        $user['role'] === 'admin' &&
+        password_verify($password, $user['password'])
     ) {
+        // Créer une copie sans le mot de passe pour la réponse
+        $userResponse = $user;
+        unset($userResponse['password']);
+        
         jsonResponse([
             'success' => true,
             'message' => 'Connexion admin réussie',
-            'user' => $user
+            'user' => $userResponse
         ]);
     }
 }
 
 jsonResponse([
     'success' => false,
-    'message' => 'Accès refusé'
+    'message' => 'Email ou mot de passe incorrect'
 ]);

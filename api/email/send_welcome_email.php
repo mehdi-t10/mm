@@ -93,7 +93,6 @@ if ($mailSent) {
     ]);
 } else {
     // Log erreur mais signale quand même le succès (email peut ne pas être configuré en local)
-    error_log("Email envoi échoué pour {$to} - Réservation #{$reservationId}");
     jsonResponse([
         'success' => true,
         'message' => 'Email d\'accueil préparé (serveur mail peut ne pas être configuré)'

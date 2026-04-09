@@ -36,7 +36,7 @@
       }
 
       body {
-        font-family: "DM Sans", sans-serif;
+        font-family: 'DM Sans', sans-serif;
         background: var(--bg);
         color: var(--text);
         overflow-x: hidden;
@@ -108,7 +108,7 @@
       }
 
       .logo {
-        font-family: "Bebas Neue", sans-serif;
+        font-family: 'Bebas Neue', sans-serif;
         font-size: 1.8rem;
         letter-spacing: 2px;
       }
@@ -123,7 +123,7 @@
       }
 
       .page-title {
-        font-family: "Bebas Neue", sans-serif;
+        font-family: 'Bebas Neue', sans-serif;
         font-size: clamp(2.5rem, 5vw, 4rem);
         text-align: center;
         margin-bottom: 60px;
@@ -170,7 +170,7 @@
         align-items: center;
         gap: 12px;
         margin-bottom: 32px;
-        font-family: "Bebas Neue", sans-serif;
+        font-family: 'Bebas Neue', sans-serif;
         font-size: 1.8rem;
         letter-spacing: 1px;
       }
@@ -263,7 +263,7 @@
         color: var(--text);
         border-radius: 12px;
         padding: 11px 14px;
-        font-family: "DM Sans", sans-serif;
+        font-family: 'DM Sans', sans-serif;
         font-size: 1rem;
         transition: all 0.2s;
       }
@@ -390,7 +390,7 @@
       }
 
       .hero-title {
-        font-family: "Bebas Neue", sans-serif;
+        font-family: 'Bebas Neue', sans-serif;
         font-size: clamp(2rem, 8vw, 5rem);
         letter-spacing: 3px;
         margin-bottom: 20px;
@@ -477,7 +477,7 @@
       }
 
       .gallery-title {
-        font-family: "Bebas Neue", sans-serif;
+        font-family: 'Bebas Neue', sans-serif;
         font-size: 2.5rem;
         letter-spacing: 2px;
         text-align: center;
@@ -569,7 +569,7 @@
       }
 
       .cta-title {
-        font-family: "Bebas Neue", sans-serif;
+        font-family: 'Bebas Neue', sans-serif;
         font-size: 2rem;
         letter-spacing: 1px;
         margin-bottom: 16px;
@@ -989,7 +989,7 @@
       <div
         id="reservation-anchor"
         style="
-          max-width: 900px;
+          max-width: 1000px;
           margin: 60px auto 60px;
           padding: 40px;
           background: var(--panel);
@@ -1000,7 +1000,7 @@
       >
         <h2
           style="
-            font-family: &quot;Bebas Neue&quot;, sans-serif;
+            font-family: 'Bebas Neue', sans-serif;
             font-size: 2rem;
             letter-spacing: 1px;
             color: var(--green);
@@ -1035,7 +1035,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: &quot;DM Sans&quot;, sans-serif;
+                  font-family: 'DM Sans', sans-serif;
                 "
               />
             </div>
@@ -1054,7 +1054,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: &quot;DM Sans&quot;, sans-serif;
+                  font-family: 'DM Sans', sans-serif;
                 "
               />
             </div>
@@ -1073,7 +1073,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: &quot;DM Sans&quot;, sans-serif;
+                  font-family: 'DM Sans', sans-serif;
                 "
               />
             </div>
@@ -1094,7 +1094,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: &quot;DM Sans&quot;, sans-serif;
+                  font-family: 'DM Sans', sans-serif;
                 "
               />
             </div>
@@ -1115,7 +1115,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: &quot;DM Sans&quot;, sans-serif;
+                  font-family: 'DM Sans', sans-serif;
                   transition: border-color 0.3s;
                 "
               />
@@ -1137,7 +1137,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: &quot;DM Sans&quot;, sans-serif;
+                  font-family: 'DM Sans', sans-serif;
                   transition: border-color 0.3s;
                 "
               />
@@ -1159,7 +1159,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: &quot;DM Sans&quot;, sans-serif;
+                  font-family: 'DM Sans', sans-serif;
                 "
               />
             </div>
@@ -1167,7 +1167,7 @@
 
           <div style="margin-bottom: 20px">
             <label style="display: block; margin-bottom: 12px; font-weight: 600"
-              >Activités (optionnel)</label
+              >Activités</label
             >
             <div
               id="activitiesByDayContainer"
@@ -1301,12 +1301,6 @@
             <span>Espace Client</span>
           </div>
 
-          <div style="text-align: center; margin-bottom: 20px">
-            <span style="font-weight: 600; color: var(--green)"
-              >Connexion Client</span
-            >
-          </div>
-
           <!-- LOGIN -->
           <div id="client-login" class="tab-content active">
             <form onsubmit="handleClientLogin(event)">
@@ -1331,9 +1325,6 @@
               <button type="submit" class="btn-submit">Se connecter</button>
               <div id="clientLoginMsg"></div>
             </form>
-            <div class="demo-info">
-              <strong>Demo:</strong> demo@footcamp.test / demo2026
-            </div>
             <div style="text-align: center; margin-top: 16px">
               <a
                 href="#"
@@ -1407,6 +1398,8 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="assets/session-manager.js"></script>
+    <script src="assets/auto-redirect.js"></script>
     <script>
       // ===== TAB SWITCHING =====
       function switchTab(e, tabId) {
@@ -1460,199 +1453,98 @@
         loadRoomsForReservation();
       }
 
-      // ===== CLIENT LOGIN =====
-      function handleClientLogin(e) {
-        e.preventDefault();
+       // ===== CLIENT LOGIN =====
+       function handleClientLogin(e) {
+         e.preventDefault();
 
-        const form = e.target;
-        const email = form.querySelector('input[type="email"]').value.trim();
-        const password = form.querySelector('input[type="password"]').value;
-        const msgDiv = form.parentElement.querySelector("#clientLoginMsg");
-        const btn = form.querySelector('button[type="submit"]');
+         const form = e.target;
+         const email = form.querySelector('input[type="email"]').value.trim();
+         const password = form.querySelector('input[type="password"]').value;
+         const msgDiv = form.querySelector("#clientLoginMsg");
+         const btn = form.querySelector('button[type="submit"]');
 
-        btn.disabled = true;
-        btn.textContent = "Connexion...";
-        msgDiv.innerHTML = "";
+         btn.disabled = true;
+         btn.textContent = "Connexion...";
+         msgDiv.innerHTML = "";
 
-        $.ajax({
-          url: "api/auth/login.php",
-          type: "POST",
-          data: { email: email, password: password },
-          dataType: "json",
-          timeout: 8000,
-          success: function (resp) {
-            if (resp.success && resp.user) {
-              localStorage.setItem("currentUser", JSON.stringify(resp.user));
-              sessionStorage.setItem("currentUser", JSON.stringify(resp.user));
-              showMsg(msgDiv, "✓ Connexion réussie! Redirection...", true);
 
-              setTimeout(function () {
-                window.location.href = "client-dashboard.html";
-              }, 400);
-            } else {
-              showMsg(msgDiv, "✗ Email ou mot de passe incorrect", false);
-              btn.disabled = false;
-              btn.textContent = "Se connecter";
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error("Erreur:", error, status);
-            showMsg(msgDiv, "✗ Erreur serveur: " + status, false);
-            btn.disabled = false;
-            btn.textContent = "Se connecter";
-          },
-        });
-      }
+         $.ajax({
+           method: "POST",
+           url: "api/auth/login.php",
+           data: {email: email, password: password},
+           dataType: "json",
+           timeout: 8000
+         })
+         .done(function(resp) {
+           if (resp.success && resp.user) {
+             // Sauvegarder la session via SessionManager
+             sessionManager.saveUserSession(resp.user);
 
-      // ===== ADMIN LOGIN =====
-      function handleAdminLogin(e) {
-        e.preventDefault();
+             showMsg(msgDiv, "✓ Connexion réussie! Redirection...", true);
 
-        const form = e.target;
-        const email = form.querySelector('input[type="email"]').value.trim();
-        const password = form.querySelector('input[type="password"]').value;
-        const msgDiv = form.parentElement.querySelector("#adminLoginMsg");
-        const btn = form.querySelector('button[type="submit"]');
+             // Redirection immédiate vers le dashboard client
+             setTimeout(() => {
+               const userJson = encodeURIComponent(JSON.stringify(resp.user));
+               window.location.href = "client-dashboard.html?user=" + userJson;
+             }, 1500);
+           } else {
+             showMsg(msgDiv, "✗ Email ou mot de passe incorrect", false);
+             btn.disabled = false;
+             btn.textContent = "Se connecter";
+           }
+         })
+         .fail(function(xhr, status, error) {
+           showMsg(msgDiv, "✗ Erreur serveur: " + status, false);
+           btn.disabled = false;
+           btn.textContent = "Se connecter";
+         });
+       }
 
-        btn.disabled = true;
-        btn.textContent = "Connexion...";
-        msgDiv.innerHTML = "";
+      // ...existing code...
 
-        $.ajax({
-          url: "api/admin/admin_login.php",
-          type: "POST",
-          data: { email: email, password: password },
-          dataType: "json",
-          timeout: 8000,
-          success: function (resp) {
-            if (resp.success && resp.user) {
-              localStorage.setItem("currentAdmin", JSON.stringify(resp.user));
-              sessionStorage.setItem("currentAdmin", JSON.stringify(resp.user));
-              showMsg(msgDiv, "✓ Connexion réussie! Redirection...", true);
+       // ===== ADMIN LOGIN =====
+       function handleAdminLogin(e) {
+         e.preventDefault();
 
-              setTimeout(function () {
-                window.location.href = "admin-dashboard.html";
-              }, 400);
-            } else {
-              showMsg(msgDiv, "✗ Email ou mot de passe incorrect", false);
-              btn.disabled = false;
-              btn.textContent = "Se connecter";
-            }
-          },
-          error: function (xhr, status, error) {
-            showMsg(msgDiv, "✗ Erreur: " + status, false);
-            btn.disabled = false;
-            btn.textContent = "Se connecter";
-          },
-        });
-      }
+         const form = e.target;
+         const email = form.querySelector('input[type="email"]').value.trim();
+         const password = form.querySelector('input[type="password"]').value;
+         const msgDiv = form.parentElement.querySelector("#adminLoginMsg");
+         const btn = form.querySelector('button[type="submit"]');
 
-      // ===== RESERVATION REQUEST (LANDING PAGE) =====
-      function handleReservationRequest(e) {
-        e.preventDefault();
+         btn.disabled = true;
+         btn.textContent = "Connexion...";
+         msgDiv.innerHTML = "";
 
-        const form = e.target;
-        const inputs = form.querySelectorAll(
-          'input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"]',
-        );
-        const nom = inputs[0].value.trim();
-        const prenom = inputs[1].value.trim();
-        const email = inputs[2].value.trim();
-        const telephone = inputs[3].value.trim();
-        const date_arrivee = inputs[4].value;
-        const date_depart = inputs[5].value;
-        const nb_personnes = parseInt(inputs[6].value);
+         $.ajax({
+           method: "POST",
+           url: "api/admin/admin_login.php",
+           data: { email: email, password: password },
+           dataType: "json",
+           timeout: 8000
+         })
+         .done(function(resp) {
+           if (resp.success && resp.user) {
+             // Sauvegarder la session via SessionManager
+             sessionManager.saveAdminSession(resp.user);
+             showMsg(msgDiv, "✓ Connexion réussie! Redirection...", true);
 
-        // Récupérer les activités sélectionnées
-        const selectedActivities = [];
-        form
-          .querySelectorAll('input[type="checkbox"]:checked')
-          .forEach((checkbox) => {
-            selectedActivities.push(parseInt(checkbox.value));
-          });
+             setTimeout(function () {
+               window.location.href = "admin-dashboard.html";
+             }, 400);
+           } else {
+             showMsg(msgDiv, "✗ Email ou mot de passe incorrect", false);
+             btn.disabled = false;
+             btn.textContent = "Se connecter";
+           }
+         })
+         .fail(function(xhr, status, error) {
+           showMsg(msgDiv, "✗ Erreur: " + status, false);
+           btn.disabled = false;
+           btn.textContent = "Se connecter";
+         });
+       }
 
-        // Validation téléphone
-        if (!/^[0-9]{10}$/.test(telephone)) {
-          showMsg(
-            document.getElementById("reservationMsg"),
-            '<i class="fas fa-exclamation-circle"></i> Le téléphone doit contenir 10 chiffres',
-            false,
-          );
-          return;
-        }
-
-        // Validation dates
-        if (new Date(date_arrivee) >= new Date(date_depart)) {
-          showMsg(
-            document.getElementById("reservationMsg"),
-            '<i class="fas fa-exclamation-circle"></i> La date de départ doit être après la date d\'arrivée',
-            false,
-          );
-          return;
-        }
-
-        // Générer un mot de passe
-        const generatedPassword = generatePassword();
-
-        const btn = form.querySelector('button[type="submit"]');
-        btn.disabled = true;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
-
-        $.ajax({
-          url: "api/reservations/reservation_request.php",
-          type: "POST",
-          data: JSON.stringify({
-            nom: nom,
-            prenom: prenom,
-            email: email,
-            telephone: telephone,
-            date_arrivee: date_arrivee,
-            date_depart: date_depart,
-            nb_personnes: nb_personnes,
-            activities: selectedActivities,
-          }),
-          contentType: "application/json",
-          dataType: "json",
-          timeout: 8000,
-          success: function (resp) {
-            if (resp.success) {
-              // Afficher le modal avec les identifiants
-              showCredentialsModal(
-                email,
-                generatedPassword,
-                resp.reservation_id,
-              );
-              form.reset();
-              loadActivitiesForReservation();
-              setTimeout(() => {
-                form.style.opacity = "0.5";
-                form.style.pointerEvents = "none";
-                btn.disabled = false;
-                btn.innerHTML = originalText;
-              }, 3000);
-            } else {
-              showMsg(
-                document.getElementById("reservationMsg"),
-                '<i class="fas fa-times-circle"></i> ' +
-                  (resp.message || "Erreur lors de la soumission"),
-                false,
-              );
-              btn.disabled = false;
-              btn.innerHTML = originalText;
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error("Erreur:", error);
-            const errorMsg =
-              '<i class="fas fa-exclamation-triangle"></i> Erreur: ' +
-              (status === "timeout" ? "Délai dépassé" : status);
-            showMsg(document.getElementById("reservationMsg"), errorMsg, false);
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-          },
-        });
-      }
 
       // ===== FORGOT PASSWORD =====
       function handleForgotPassword(e, userType) {
@@ -1662,22 +1554,22 @@
         if (!email) return;
 
         $.ajax({
+          method: "POST",
           url: "api/auth/forgot_password.php",
-          type: "POST",
           data: { email: email, type: userType },
-          dataType: "json",
-          success: function (resp) {
-            if (resp.success) {
-              alert(
-                "Un email a ete envoye avec les instructions pour reinitialiser votre mot de passe.",
-              );
-            } else {
-              alert("Erreur: " + (resp.message || "Email non trouve"));
-            }
-          },
-          error: function () {
-            alert("Erreur serveur");
-          },
+          dataType: "json"
+        })
+        .done(function(resp) {
+          if (!resp.success) {
+            alert("Erreur: " + (resp.message || "Email non trouve"));
+          } else {
+            alert(
+              "Un email a ete envoye avec les instructions pour reinitialiser votre mot de passe.",
+            );
+          }
+        })
+        .fail(function() {
+          alert("Erreur serveur");
         });
       }
 
@@ -1711,10 +1603,9 @@
               }
             }, 300);
           }, 5000);
-        } catch (e) {
-          console.error("Erreur toast:", e);
-        }
-      }
+         } catch (e) {
+         }
+       }
 
       // Fonction pour générer un mot de passe
       function generatePassword() {
@@ -1727,75 +1618,68 @@
         return password;
       }
 
-      // Fonction pour copier dans le presse-papiers
-      function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-          alert("✅ Mot de passe copié dans le presse-papiers!");
-        });
-      }
+       // Fonction pour copier dans le presse-papiers
+       function copyToClipboard(text) {
+         navigator.clipboard.writeText(text).then(() => {
+         });
+       }
 
-      // Fonction pour afficher un modal avec les identifiants
-      function showCredentialsModal(email, password, reservationId) {
-        const modal = document.createElement("div");
-        modal.style.cssText = `
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.8);
-        z-index: 2000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      `;
+       // Fonction pour afficher un modal avec les identifiants
+       function showCredentialsModal(email, password, reservationId) {
+         const modal = document.createElement("div");
+         modal.style.cssText = `
+         position: fixed;
+         inset: 0;
+         background: rgba(0,0,0,0.8);
+         z-index: 2000;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding: 20px;
+       `;
 
-        modal.innerHTML = `
-        <div style="background: var(--panel); border: 2px solid var(--green); border-radius: 16px; max-width: 500px; width: 100%; padding: 32px; text-align: center; backdrop-filter: blur(10px);">
-          <div style="font-size: 3rem; margin-bottom: 16px;"><i class="fas fa-check-circle" style="color: var(--green);"></i></div>
-          <h2 style="font-family: 'Bebas Neue'; font-size: 1.8rem; color: var(--green); margin-bottom: 12px;">RÉSERVATION SOUMISE!</h2>
-          <p style="color: var(--muted); margin-bottom: 24px;">
-            Votre demande a été enregistrée. Utilisez ces identifiants provisoires pour accéder à votre compte.
-          </p>
+         modal.innerHTML = `
+         <div style="background: var(--panel); border: 2px solid var(--green); border-radius: 16px; max-width: 500px; width: 100%; padding: 32px; text-align: center; backdrop-filter: blur(10px);">
+           <div style="font-size: 3rem; margin-bottom: 16px;"><i class="fas fa-check-circle" style="color: var(--green);"></i></div>
+           <h2 style="font-family: 'Bebas Neue'; font-size: 1.8rem; color: var(--green); margin-bottom: 12px;">RÉSERVATION SOUMISE!</h2>
+           <p style="color: var(--muted); margin-bottom: 24px;">
+             Votre demande a été enregistrée avec succès.
+           </p>
 
-          <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: left;">
-            <div style="margin-bottom: 16px;">
-              <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;"><i class="fas fa-envelope"></i> Adresse Email</div>
-              <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
-                <code style="color: var(--green); font-weight: 600; user-select: all; word-break: break-all;">${email}</code>
-                <button onclick="copyToClipboard('${email}')" style="margin-left: 8px; padding: 6px 12px; background: var(--green); color: #001a0a; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">
-                  <i class="fas fa-copy"></i> Copier
-                </button>
-              </div>
-            </div>
+           <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: left;">
+             <div>
+               <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;"><i class="fas fa-envelope"></i> Adresse Email</div>
+               <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
+                 <code style="color: var(--green); font-weight: 600; user-select: all; word-break: break-all;">${email}</code>
+                 <button onclick="copyToClipboard('${email}')" style="margin-left: 8px; padding: 6px 12px; background: var(--green); color: #001a0a; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">
+                   <i class="fas fa-copy"></i> Copier
+                 </button>
+               </div>
+             </div>
+           </div>
 
-            <div>
-              <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;"><i class="fas fa-key"></i> Mot de passe provisoire</div>
-              <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
-                <code style="color: var(--gold); font-weight: 600; user-select: all; word-break: break-all;">${password}</code>
-                <button onclick="copyToClipboard('${password}')" style="margin-left: 8px; padding: 6px 12px; background: var(--gold); color: #1a1000; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">
-                  <i class="fas fa-copy"></i> Copier
-                </button>
-              </div>
-              <p style="color: var(--muted); font-size: 0.8rem; margin: 8px 0 0 0;">
-                <i class="fas fa-shield-alt"></i> Changez ce mot de passe dès votre première connexion
-              </p>
-            </div>
-          </div>
+           <div style="background: rgba(255,215,64,0.1); border: 1px solid var(--gold); padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left;">
+             <p style="color: var(--gold); font-size: 0.9rem; margin: 0;">
+               <i class="fas fa-info-circle"></i> <strong>Prochaine étape:</strong><br>
+               <small style="color: var(--muted);">Un administrateur examinera votre demande. Vous recevrez un email avec vos identifiants de connexion une fois approuvée (généralement dans les 24h).</small>
+             </p>
+           </div>
 
-          <div style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left;">
-            <p style="color: var(--green); font-size: 0.9rem; margin: 0;">
-              <i class="fas fa-info-circle"></i> <strong>Réservation #${reservationId}</strong><br>
-              <small style="color: var(--muted);">Un administrateur examinera votre demande et vous enverra un email de confirmation.</small>
-            </p>
-          </div>
+           <div style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left;">
+             <p style="color: var(--green); font-size: 0.9rem; margin: 0;">
+               <i class="fas fa-info-circle"></i> <strong>Réservation #${reservationId}</strong><br>
+               <small style="color: var(--muted);">Conservez ce numéro pour référence.</small>
+             </p>
+           </div>
 
-          <button onclick="this.closest('[style*=position]').remove()" style="width: 100%; padding: 12px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem;">
-            <i class="fas fa-times"></i> Fermer
-          </button>
-        </div>
-      `;
+           <button onclick="this.closest('[style*=position]').remove()" style="width: 100%; padding: 12px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem;">
+             <i class="fas fa-check"></i> D'accord
+           </button>
+         </div>
+       `;
 
-        document.body.appendChild(modal);
-      }
+         document.body.appendChild(modal);
+       }
 
       // ===== ACTIVITIES & ROOMS MANAGEMENT =====
       let availableActivities = [];
@@ -1806,40 +1690,47 @@
       function loadActivitiesForReservation() {
         // Charger les activités disponibles
         $.ajax({
-          url: "api/services/get_activities.php",
           method: "GET",
-          dataType: "json",
-          success: function (resp) {
-            if (resp.success && resp.activities) {
-              availableActivities = resp.activities;
-              generateActivitiesUI();
-              updateActivitiesAvailability();
-            }
-          },
-          error: function () {
-            console.error("Erreur chargement des activités");
-          },
+          url: "api/services/get_activities.php",
+          dataType: "json"
+        })
+        .done(function(resp) {
+          if (resp.success && resp.activities) {
+            availableActivities = resp.activities;
+            generateActivitiesUI();
+            updateActivitiesAvailability();
+          }
+        })
+        .fail(function() {
         });
 
         // Charger les types de chambres
         $.ajax({
-          url: "data/rooms.json",
           method: "GET",
-          dataType: "json",
-          success: function (resp) {
-            if (resp.types) {
-              availableRoomTypes = resp.types;
-            }
-          },
-          error: function () {
-            console.error("Erreur chargement des types de chambres");
-          },
+          url: "data/rooms.json",
+          dataType: "json"
+        })
+        .done(function(resp) {
+          if (resp.types) {
+            availableRoomTypes = resp.types;
+          }
+        })
+        .fail(function() {
         });
       }
 
       function generateActivitiesUI() {
-        const date_arrivee = document.querySelector('input[type="date"]:nth-of-type(1)').value;
-        const date_depart = document.querySelector('input[type="date"]:nth-of-type(2)').value;
+        // Chercher tous les inputs date du formulaire
+        const dateInputs = document.querySelectorAll('form input[type="date"]');
+
+        if (dateInputs.length < 2) {
+          document.getElementById("activitiesByDayContent").innerHTML =
+            '<p style="color: var(--muted); text-align: center;">Veuillez d\'abord sélectionner vos dates de séjour</p>';
+          return;
+        }
+
+        const date_arrivee = dateInputs[0].value;
+        const date_depart = dateInputs[1].value;
 
         if (!date_arrivee || !date_depart) {
           document.getElementById("activitiesByDayContent").innerHTML =
@@ -1918,6 +1809,8 @@
               } else {
                 activitiesByDay[dayIndex] = activityList.filter(id => id !== activity.id);
               }
+              // Important: mettre à jour activitiesByDay après modification
+              activitiesByDay[dayIndex] = activityList;
               validateActivityConstraints();
             });
 
@@ -1952,10 +1845,8 @@
         const nb_personnes = parseInt(document.querySelector('input[type="number"]').value) || 0;
 
         availableActivities.forEach((activity) => {
-          const checkbox = document.querySelector(`.activity-checkbox.activity-${activity.id}`);
-          if (!checkbox) return;
-
-          const div = checkbox.closest('.activity-item');
+          // Chercher toutes les checkbox pour cette activité (par jour)
+          const checkboxes = document.querySelectorAll(`.activity-checkbox-day[value="${activity.id}"]`);
 
           // Vérifier si le nombre de personnes permet de sélectionner cette activité
           let canSelect = true;
@@ -1970,25 +1861,33 @@
             canSelect = false;
           }
 
-          checkbox.disabled = !canSelect;
+          // Appliquer l'état à toutes les checkbox de cette activité
+          checkboxes.forEach((checkbox) => {
+            checkbox.disabled = !canSelect;
+            const div = checkbox.closest('.activity-day-item');
 
-          if (!canSelect) {
-            div.style.opacity = "0.5";
-            div.style.pointerEvents = "none";
-            div.style.cursor = "not-allowed";
-            div.style.background = "rgba(100, 100, 100, 0.05)";
-          } else {
-            div.style.opacity = "1";
-            div.style.pointerEvents = "auto";
-            div.style.cursor = "pointer";
-            div.style.background = "rgba(0, 230, 118, 0.05)";
-          }
+            if (div) {
+              if (!canSelect) {
+                div.style.opacity = "0.5";
+                div.style.pointerEvents = "none";
+                div.style.cursor = "not-allowed";
+                div.style.background = "rgba(100, 100, 100, 0.05)";
+              } else {
+                div.style.opacity = "1";
+                div.style.pointerEvents = "auto";
+                div.style.cursor = "pointer";
+                div.style.background = "rgba(0, 230, 118, 0.05)";
+              }
+            }
+          });
         });
       }
 
       function validateActivityConstraints() {
         const selectedActivities = [];
-        document.querySelectorAll('#activitiesReservation input[type="checkbox"]:checked').forEach((checkbox) => {
+
+        // Récupérer les activités cochées depuis le nouveau conteneur
+        document.querySelectorAll('input.activity-checkbox-day:checked').forEach((checkbox) => {
           selectedActivities.push(parseInt(checkbox.value));
         });
 
@@ -2019,20 +1918,26 @@
         if (!msgDiv) {
           const newMsgDiv = document.createElement("div");
           newMsgDiv.id = "activitiesConstraintMsg";
-          document.getElementById("activitiesReservation").parentElement.appendChild(newMsgDiv);
+          const activitiesContainer = document.getElementById("activitiesByDayContainer") ||
+                                       document.getElementById("activitiesReservation");
+          if (activitiesContainer && activitiesContainer.parentElement) {
+            activitiesContainer.parentElement.appendChild(newMsgDiv);
+          }
         }
 
         const displayMsg = document.getElementById("activitiesConstraintMsg");
-        if (hasConstraintError) {
-          displayMsg.innerHTML = `
-            <div style="margin-top: 12px; padding: 12px; background: rgba(255, 152, 0, 0.1); border: 1px solid #ffa726; border-radius: 8px; color: #ffa726;">
-              <i class="fas fa-exclamation-triangle"></i> ${errorMessages.join("<br>")}
-            </div>
-          `;
-        } else {
-          displayMsg.innerHTML = "";
-        }
-      }
+        if (displayMsg) {
+          if (hasConstraintError) {
+            displayMsg.innerHTML = `
+              <div style="margin-top: 12px; padding: 12px; background: rgba(255, 152, 0, 0.1); border: 1px solid #ffa726; border-radius: 8px; color: #ffa726;">
+                <i class="fas fa-exclamation-triangle"></i> ${errorMessages.join("<br>")}
+              </div>
+            `;
+          } else {
+            displayMsg.innerHTML = "";
+           }
+         }
+       }
 
       function loadRoomsForReservation() {
         const nb_personnes =
@@ -2040,29 +1945,35 @@
 
         if (nb_personnes > 0) {
           const infoDiv = document.getElementById("roomsCapacityInfo");
-          infoDiv.style.display = "block";
-          document.getElementById("personnesNeeded").textContent = nb_personnes;
+          if (infoDiv) {
+            infoDiv.style.display = "block";
+            const personnesNeeded = document.getElementById("personnesNeeded");
+            if (personnesNeeded) {
+              personnesNeeded.textContent = nb_personnes;
+            }
+          }
           updateCapacityCalculation();
         }
 
-        // Régénérer les activités par jour
-        generateActivitiesUI();
+        // Régénérer les activités par jour si elles sont disponibles
+        if (availableActivities.length > 0) {
+          generateActivitiesUI();
+        }
 
         // Charger les types de chambres si non chargés
         if (availableRoomTypes.length === 0) {
           $.ajax({
-            url: "data/rooms.json",
             method: "GET",
-            dataType: "json",
-            success: function (resp) {
-              if (resp.types) {
-                availableRoomTypes = resp.types;
-                generateRoomSelectionUI();
-              }
-            },
-            error: function () {
-              console.error("Erreur chargement des types de chambres");
-            },
+            url: "data/rooms.json",
+            dataType: "json"
+          })
+          .done(function(resp) {
+            if (resp.types) {
+              availableRoomTypes = resp.types;
+              generateRoomSelectionUI();
+            }
+          })
+          .fail(function() {
           });
         } else {
           generateRoomSelectionUI();
@@ -2074,6 +1985,8 @@
 
       function generateRoomSelectionUI() {
         const container = document.getElementById("roomsSelectionContainer");
+        if (!container) return; // Vérifier que le conteneur existe
+
         container.innerHTML = "";
         selectedRooms = {};
 
@@ -2159,31 +2072,36 @@
         let totalCapacity = 0;
 
         availableRoomTypes.forEach((roomType) => {
-          const quantity = parseInt(
-            document.getElementById(`rooms_${roomType.type}`).value || 0,
-          );
-          selectedRooms[roomType.type] = quantity;
-          totalCapacity += quantity * roomType.capacity;
+          const roomInput = document.getElementById(`rooms_${roomType.type}`);
+          if (roomInput) {
+            const quantity = parseInt(roomInput.value || 0);
+            selectedRooms[roomType.type] = quantity;
+            totalCapacity += quantity * roomType.capacity;
+          }
         });
 
         const nb_personnes =
           parseInt(document.querySelector('input[type="number"]').value) || 0;
 
-        document.getElementById("totalCapacity").textContent = totalCapacity;
+        const totalCapacityElement = document.getElementById("totalCapacity");
+        if (totalCapacityElement) {
+          totalCapacityElement.textContent = totalCapacity;
+        }
+
         const capacityWarning = document.getElementById("capacityWarning");
         const capacityOk = document.getElementById("capacityOk");
 
-        if (totalCapacity < nb_personnes && nb_personnes > 0) {
-          capacityWarning.style.display = "block";
-          capacityOk.style.display = "none";
-        } else if (totalCapacity >= nb_personnes && nb_personnes > 0) {
-          capacityWarning.style.display = "none";
-          capacityOk.style.display = "block";
+        if (capacityWarning && capacityOk) {
+          if (totalCapacity < nb_personnes && nb_personnes > 0) {
+            capacityWarning.style.display = "block";
+            capacityOk.style.display = "none";
+          } else if (totalCapacity >= nb_personnes && nb_personnes > 0) {
+            capacityWarning.style.display = "none";
+            capacityOk.style.display = "block";
+          }
         }
       }
 
-      // Modifier handleReservationRequest pour inclure les chambres
-      const originalHandleReservationRequest = handleReservationRequest;
       function handleReservationRequest(e) {
         e.preventDefault();
 
@@ -2280,8 +2198,8 @@
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
 
         $.ajax({
+          method: "POST",
           url: "api/reservations/reservation_request.php",
-          type: "POST",
           data: JSON.stringify({
             nom: nom,
             prenom: prenom,
@@ -2296,44 +2214,40 @@
           }),
           contentType: "application/json",
           dataType: "json",
-          timeout: 8000,
-          success: function (resp) {
-            if (resp.success) {
-              // Afficher le modal avec les identifiants
-              showCredentialsModal(
-                email,
-                generatedPassword,
-                resp.reservation_id,
-              );
-              form.reset();
-              loadActivitiesForReservation();
-              setTimeout(() => {
-                form.style.opacity = "0.5";
-                form.style.pointerEvents = "none";
-                btn.disabled = false;
-                btn.innerHTML = originalText;
-              }, 3000);
-            } else {
-              showMsg(
-                document.getElementById("reservationMsg"),
-                '<i class="fas fa-times-circle"></i> ' +
-                  (resp.message || "Erreur lors de la soumission"),
-                false,
-              );
-              btn.disabled = false;
-              btn.innerHTML = originalText;
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error("Erreur:", error);
-            const errorMsg =
-              '<i class="fas fa-exclamation-triangle"></i> Erreur: ' +
-              (status === "timeout" ? "Délai dépassé" : status);
-            showMsg(document.getElementById("reservationMsg"), errorMsg, false);
+          timeout: 8000
+        })
+        .done(function(resp) {
+          if (!resp.success) {
+            showMsg(
+              document.getElementById("reservationMsg"),
+              '<i class="fas fa-times-circle"></i> ' +
+                (resp.message || "Erreur lors de la soumission"),
+              false,
+            );
             btn.disabled = false;
             btn.innerHTML = originalText;
-          },
-        });
+          } else {
+            // Afficher le modal avec les identifiants
+            showCredentialsModal(
+              email,
+              generatedPassword,
+              resp.reservation_id,
+            );
+            form.reset();
+            loadActivitiesForReservation();
+            // Réactiver le bouton immédiatement - ne pas bloquer le formulaire
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+          }
+        })
+         .fail(function(xhr, status, error) {
+           const errorMsg =
+             '<i class="fas fa-exclamation-triangle"></i> Erreur: ' +
+             (status === "timeout" ? "Délai dépassé" : status);
+           showMsg(document.getElementById("reservationMsg"), errorMsg, false);
+           btn.disabled = false;
+           btn.innerHTML = originalText;
+         });
       }
 
       // ===== PAGE INIT =====
@@ -2343,3 +2257,4 @@
     </script>
   </body>
 </html>
+

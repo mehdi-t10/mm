@@ -62,8 +62,12 @@ if (sendEmailViaSMTP($email, $subject, $body)) {
     ]);
 }
 
+// Créer une copie sans le mot de passe pour la réponse
+$userResponse = $newUser;
+unset($userResponse['password']);
+
 jsonResponse([
     'success' => true,
     'message' => 'Compte créé avec succès',
-    'user' => $newUser
+    'user' => $userResponse
 ]);

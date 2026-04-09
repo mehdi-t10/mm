@@ -151,35 +151,4 @@ jsonResponse([
     'success' => false,
     'message' => 'Reservation introuvable.'
 ]);
-                if ($mailSent) {
-                    $message .= "\n📧 Email avec les identifiants envoyé à: " . $reservation['email'];
-                } else {
-                    $message .= "\n⚠️ Email non envoyé - Vérifiez la configuration SMTP";
-                }
-
-                jsonResponse([
-                    'success' => true,
-                    'message' => $message,
-                    'room_name' => $room['name'],
-                    'room_id' => $room['id'],
-                    'credentials' => [
-                        'email' => $reservation['email'],
-                        'password' => $passwordToSend
-                    ],
-                    'email_sent' => $mailSent,
-                    'reservation_id' => $reservation['id']
-                ]);
-            }
-        }
-
-        jsonResponse([
-            'success' => false,
-            'message' => 'Aucune chambre disponible.'
-        ]);
-    }
-}
-
-jsonResponse([
-    'success' => false,
-    'message' => 'Reservation introuvable.'
-]);
+?>

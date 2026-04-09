@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Login avec $.ajax()</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 50px;
+            background: #1a1a1a;
+            color: #ecf0f1;
+        }
+        .box {
+            background: #2c3e50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 4px solid #00e676;
+        }
+        .success { color: #00e676; }
+        .error { color: #dc3545; }
+        button {
+            padding: 10px 20px;
+            margin: 10px 0;
+            background: #00e676;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #console {
+            height: 400px;
+            overflow-y: auto;
+            background: #1a1a1a;
+            padding: 15px;
+            border: 1px solid #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 TEST - Login avec $.ajax()</h1>
+
+    <div class="box">
+        <h2>Instructions:</h2>
+        <ol>
+            <li>Clique sur le bouton "Test Login"</li>
+            <li>Regarde la console pour voir les logs</li>
+            <li>Tu devrais être redirigé vers client-dashboard.html</li>
+        </ol>
+    </div>
+
+    <div class="box">
+        <button onclick="testLogin()">🔐 Test Login (az@az.com / az2026)</button>
+    </div>
+
+    <div class="box">
+        <h2>Console:</h2>
+        <div id="console"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function log(msg) {
+            const consoleDiv = document.getElementById('console');
+            const time = new Date().toLocaleTimeString();
+            consoleDiv.innerHTML += `[${time}] ${msg}<br>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            console.log(msg);
+        }
+
+        function testLogin() {
+            log('=== DÉMARRAGE DU TEST LOGIN ===');
+
+            const email = 'az@az.com';
+            const password = 'az2026';
+
+            log(`Email: ${email}`);
+            log(`Mot de passe: ${password}`);
+            log('');
+            log('Envoi de la requête $.ajax()...');
+
+            $.ajax({
+                method: "POST",
+                url: "api/auth/login.php",
+                data: {email: email, password: password},
+                dataType: "json",
+                timeout: 8000
+            })
+            .done(function(resp) {
+                log('✓ Réponse reçue du serveur');
+                log('Réponse JSON: ' + JSON.stringify(resp));
+
+                if (resp.success && resp.user) {
+                    log('<span class="success">✓ Login réussi!</span>');
+                    log('Email: ' + resp.user.email);
+                    log('Prénom: ' + resp.user.prenom);
+                    log('');
+                    log('Sauvegarde dans localStorage...');
+
+                    const userJson = JSON.stringify(resp.user);
+                    localStorage.setItem("currentUser", userJson);
+                    sessionStorage.setItem("currentUser", userJson);
+
+                    log('✓ Données sauvegardées');
+                    log('');
+                    log('Redirection vers client-dashboard.html dans 2 secondes...');
+
+                    setTimeout(() => {
+                        const userJson = encodeURIComponent(JSON.stringify(resp.user));
+                        window.location.href = "client-dashboard.html?user=" + userJson;
+                    }, 2000);
+                } else {
+                    log('<span class="error">✗ Login échoué: ' + resp.message + '</span>');
+                }
+            })
+            .fail(function(xhr, status, error) {
+                log('<span class="error">✗ Erreur: ' + error + ' (status: ' + status + ')</span>');
+                log('XHR Status: ' + xhr.status);
+                log('XHR Response: ' + xhr.responseText);
+            });
+        }
+
+        // Log au chargement
+        window.addEventListener('load', function() {
+            log('Page chargée. Prête à tester!');
+        });
+    </script>
+</body>
+</html>
+

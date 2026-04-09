@@ -276,19 +276,17 @@
 
     function loadEmailLogs() {
       $.ajax({
-        url: 'api/email_logs.php',
         method: 'GET',
-        dataType: 'json',
-        success: function(resp) {
-          if (resp.success) {
-            allEmails = resp.emails || [];
-            filterEmails(currentFilter);
-            showMessage('✅ ' + resp.total + ' emails chargés', 'success');
-          }
-        },
-        error: function() {
-          showMessage('Erreur de chargement', 'error');
-        }
+        url: 'api/email_logs.php',
+        dataType: 'json'
+      })
+      .done(function(resp) {
+        allEmails = resp.emails || [];
+        filterEmails(currentFilter);
+        showMessage('✅ ' + resp.total + ' emails chargés', 'success');
+      })
+      .fail(function() {
+        showMessage('Erreur de chargement', 'error');
       });
     }
 
@@ -370,26 +368,26 @@
       const message = document.getElementById('testMessage').value;
 
       $.ajax({
-        url: 'api/email_logs.php',
         method: 'POST',
+        url: 'api/email_logs.php',
         data: {
           email: email,
           subject: subject,
           message: message
         },
-        dataType: 'json',
-        success: function(resp) {
-          if (resp.success) {
-            showMessage('✅ Email test envoyé à ' + email, 'success');
-            document.getElementById('testEmail').value = '';
-            setTimeout(loadEmailLogs, 1000);
-          } else {
-            showMessage('❌ ' + (resp.message || 'Erreur'), 'error');
-          }
-        },
-        error: function() {
-          showMessage('❌ Erreur lors de l\'envoi', 'error');
+        dataType: 'json'
+      })
+      .done(function(resp) {
+        if (!resp.success) {
+          showMessage('❌ ' + (resp.message || 'Erreur'), 'error');
+        } else {
+          showMessage('✅ Email test envoyé à ' + email, 'success');
+          document.getElementById('testEmail').value = '';
+          setTimeout(loadEmailLogs, 1000);
         }
+      })
+      .fail(function() {
+        showMessage('❌ Erreur lors de l\'envoi', 'error');
       });
     }
 

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Ultra-Simple Storage</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 50px;
+            background: #1a1a1a;
+            color: #ecf0f1;
+            line-height: 1.8;
+        }
+        .box {
+            background: #2c3e50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 4px solid #00e676;
+        }
+        .error { border-left-color: #dc3545; }
+        .warning { border-left-color: #ffc107; }
+        button {
+            padding: 10px 20px;
+            margin: 10px 0;
+            background: #00e676;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background: #00c853; }
+        .success { color: #00e676; }
+        .fail { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>🔬 TEST ULTRA-SIMPLE DE STORAGE</h1>
+
+    <div class="box">
+        <h2>État de localStorage au chargement de cette page:</h2>
+        <div id="status"></div>
+    </div>
+
+    <div class="box">
+        <h2>Actions:</h2>
+        <button onclick="testSaveAndReload()">1️⃣ Sauvegarder et Recharger</button>
+        <button onclick="testSaveAndNavigate()">2️⃣ Sauvegarder et Naviguer vers Dashboard</button>
+        <button onclick="clearAndReload()">🗑️ Effacer et Recharger</button>
+        <button onclick="goToDashboard()">📊 Aller au Dashboard</button>
+    </div>
+
+    <div class="box" id="console" style="height: 300px; overflow-y: auto;"></div>
+
+    <script>
+        function log(msg) {
+            const consoleDiv = document.getElementById('console');
+            consoleDiv.innerHTML += msg + '<br>';
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            console.log(msg);
+        }
+
+        function checkStorage() {
+            const status = document.getElementById('status');
+            const stored = localStorage.getItem('currentUser');
+
+            log('=== VÉRIFICATION STORAGE ===');
+            log('localStorage.length: ' + localStorage.length);
+            log('Clés dans localStorage: ' + JSON.stringify(Object.keys(localStorage)));
+
+            if (stored) {
+                log('<span class="success">✓ localStorage.currentUser EXISTE</span>');
+                try {
+                    const user = JSON.parse(stored);
+                    log('<span class="success">✓ JSON parsé avec succès</span>');
+                    log('Email: ' + user.email);
+                    log('Prénom: ' + user.prenom);
+                    status.innerHTML = '<span class="success">✓ Données trouvées dans localStorage!</span>';
+                } catch (e) {
+                    log('<span class="fail">✗ Erreur parsing JSON: ' + e.message + '</span>');
+                    status.innerHTML = '<span class="fail">✗ Données corrompues!</span>';
+                }
+            } else {
+                log('<span class="fail">✗ localStorage.currentUser N\'EXISTE PAS</span>');
+                status.innerHTML = '<span class="fail">✗ Aucune donnée trouvée!</span>';
+
+                // Vérifier sessionStorage aussi
+                const sessionStored = sessionStorage.getItem('currentUser');
+                if (sessionStored) {
+                    log('<span class="warning">⚠️ Mais sessionStorage.currentUser EXISTE</span>');
+                    status.innerHTML += '<br><span class="warning">⚠️ sessionStorage a les données, mais pas localStorage!</span>';
+                }
+            }
+        }
+
+        function testSaveAndReload() {
+            log('\n=== TEST: Sauvegarder et Recharger ===');
+            const testUser = {
+                id: 1,
+                email: 'test@test.com',
+                prenom: 'Test',
+                nom: 'User',
+                role: 'client'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(testUser));
+            log('✓ Données sauvegardées dans localStorage');
+            log('Recharge de la page...');
+            setTimeout(() => location.reload(), 500);
+        }
+
+        function testSaveAndNavigate() {
+            log('\n=== TEST: Sauvegarder et Naviguer ===');
+            const testUser = {
+                id: 1,
+                email: 'test@test.com',
+                prenom: 'Test',
+                nom: 'User',
+                role: 'client'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(testUser));
+            sessionStorage.setItem('currentUser', JSON.stringify(testUser));
+            log('✓ Données sauvegardées dans localStorage ET sessionStorage');
+            log('Navigation vers client-dashboard.html...');
+            setTimeout(() => window.location.href = 'client-dashboard.html', 500);
+        }
+
+        function clearAndReload() {
+            localStorage.clear();
+            sessionStorage.clear();
+            log('✓ Données effacées, recharge...');
+            setTimeout(() => location.reload(), 500);
+        }
+
+        function goToDashboard() {
+            window.location.href = 'client-dashboard.html';
+        }
+
+        // Vérifier au chargement
+        window.addEventListener('load', checkStorage);
+    </script>
+</body>
+</html>
+

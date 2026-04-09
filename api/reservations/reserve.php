@@ -46,6 +46,16 @@ if (!empty($_POST['activities'])) {
     }
 }
 
+// Handle selected_rooms (multiple rooms from client-dashboard with quantities)
+$selected_rooms = [];
+$room_numbers = [];
+if (!empty($_POST['selected_rooms'])) {
+    $selected_rooms = json_decode($_POST['selected_rooms'], true);
+    if (!is_array($selected_rooms)) {
+        $selected_rooms = [];
+    }
+}
+
 $newReservation = [
     'id' => nextId($reservations),
     'nom' => $nom,
@@ -56,12 +66,19 @@ $newReservation = [
     'date_depart' => $date_depart,
     'nb_personnes' => $nb_personnes,
     'activities' => $activities,
+    'activities_by_day' => [], // Will be set by admin when validating
+    'selected_facilities' => [],
+    'selected_rooms' => $selected_rooms, // Store selected room types and quantities
     'services' => [],
     'discount_percent' => 0,
     'status' => 'en_attente',
-    'room' => '',
-    'room_type' => $_POST['room_type'] ?? '',
-    'room_id' => $_POST['room_id'] ?? ''
+    'room' => null,
+    'room_type' => $_POST['room_type'] ?? null,
+    'room_id' => $_POST['room_id'] ?? null,
+    'room_numbers' => $room_numbers,
+    'room_number' => null,
+    'created_at' => date('Y-m-d H:i:s'),
+    'deposit' => 80 // Default deposit
 ];
 
 $reservations[] = $newReservation;

@@ -49,7 +49,6 @@ $(function () {
 
       $("#reservationsBox").html(html);
     }).fail(function (e) {
-      console.log(e);
       $("#reservationsBox").html("<div class='alert alert-danger'>Erreur réseau.</div>");
     });
   }
@@ -63,7 +62,7 @@ $(function () {
     $.ajax({
       method: "POST",
       dataType: "json",
-      url: "api/admin_login.php",
+      url: "api/admin/admin_login.php",
       data: {
         email: email,
         password: password
@@ -76,7 +75,6 @@ $(function () {
         loadReservations();
       }
     }).fail(function (e) {
-      console.log(e);
       $("#adminLoginMessage").html("<div class='alert alert-danger'>Erreur réseau pendant la connexion admin.</div>");
     });
   });
@@ -99,7 +97,6 @@ $(function () {
       alert(obj.message);
       loadReservations();
     }).fail(function (e) {
-      console.log(e);
       alert("Erreur réseau pendant la validation.");
     });
   });
@@ -125,7 +122,6 @@ $(function () {
       alert(obj.message);
       loadReservations();
     }).fail(function (e) {
-      console.log(e);
       alert("Erreur réseau pendant la mise à jour de la réduction.");
     });
   });
@@ -164,7 +160,6 @@ $(function () {
 
       $("#dayRequestsBox").html(html);
     }).fail(function (e) {
-      console.log(e);
       $("#dayRequestsBox").html("<div class='alert alert-danger'>Erreur réseau.</div>");
     });
   });
@@ -199,7 +194,6 @@ $(function () {
       $("#planActivityMessage").html("<div class='alert alert-info'>" + obj.message + "</div>");
       $("#planActivityForm")[0].reset();
     }).fail(function (e) {
-      console.log(e);
       $("#planActivityMessage").html("<div class='alert alert-danger'>Erreur réseau pendant la planification.</div>");
     });
   });

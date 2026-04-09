@@ -13,11 +13,16 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       :root {
         --bg: #070a0f;
         --green: #00e676;
+        --green-dark: #00c853;
         --gold: #ffd740;
         --text: #f0f4f8;
         --muted: #8a9bb0;
@@ -34,7 +39,7 @@
       body {
         background: var(--bg);
         color: var(--text);
-        font-family: "DM Sans", sans-serif;
+        font-family: 'DM Sans', sans-serif;
         min-height: 100vh;
         overflow-x: hidden;
       }
@@ -99,7 +104,7 @@
       }
 
       .header-left h1 {
-        font-family: "Bebas Neue", sans-serif;
+        font-family: 'Bebas Neue', sans-serif;
         font-size: 2rem;
         letter-spacing: 1px;
         background: linear-gradient(135deg, var(--gold), var(--green));
@@ -129,6 +134,23 @@
       .logout-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 30px rgba(255, 215, 64, 0.3);
+      }
+
+      /* Style du bouton de déconnexion du client */
+      .btn-logout {
+        background: var(--green);
+        color: #001a0a;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.9rem;
+      }
+
+      .btn-logout:hover {
+        background: var(--green-dark);
       }
 
       /* KPI CARDS */
@@ -199,7 +221,7 @@
       }
 
       .chart-title {
-        font-family: "Bebas Neue", sans-serif;
+        font-family: 'Bebas Neue', sans-serif;
         font-size: 1.3rem;
         letter-spacing: 0.5px;
         margin-bottom: 20px;
@@ -565,7 +587,7 @@
     <div class="container-home">
       <header>
         <div class="header-left">
-          <h1>⚽ TABLEAU DE BORD ADMIN</h1>
+          <h1><i class="fas fa-futbol"></i> TABLEAU DE BORD ADMIN</h1>
           <p>Gestion complète des réservations et analyser les données</p>
         </div>
         <div style="display: flex; gap: 12px">
@@ -574,9 +596,9 @@
             onclick="location.href = 'email-logs.html'"
             style="background: rgba(0, 230, 118, 0.15); color: var(--green)"
           >
-            📧 Historique Emails
+            <i class="fas fa-envelope"></i> Historique Emails
           </button>
-          <button class="logout-btn" onclick="logout()">🚪 Déconnexion</button>
+          <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
         </div>
       </header>
 
@@ -585,28 +607,28 @@
       <!-- KPI CARDS -->
       <div class="kpi-grid">
         <div class="kpi-card">
-          <div class="kpi-icon">📅</div>
+          <div class="kpi-icon"><i class="fas fa-calendar"></i></div>
           <div class="kpi-label">Total Réservations</div>
           <div class="kpi-value" id="totalReservations">0</div>
           <div class="kpi-subtext">Toutes les réservations enregistrées</div>
         </div>
 
         <div class="kpi-card">
-          <div class="kpi-icon">💰</div>
+          <div class="kpi-icon"><i class="fas fa-wallet"></i></div>
           <div class="kpi-label">Chiffre d'Affaires</div>
           <div class="kpi-value" id="totalRevenue">0€</div>
           <div class="kpi-subtext">Revenus validés</div>
         </div>
 
         <div class="kpi-card">
-          <div class="kpi-icon">🏠</div>
+          <div class="kpi-icon"><i class="fas fa-home"></i></div>
           <div class="kpi-label">Taux d'Occupation</div>
           <div class="kpi-value" id="occupancyRate">0%</div>
           <div class="kpi-subtext">Salles réservées</div>
         </div>
 
         <div class="kpi-card">
-          <div class="kpi-icon">👥</div>
+          <div class="kpi-icon"><i class="fas fa-users"></i></div>
           <div class="kpi-label">Participants</div>
           <div class="kpi-value" id="totalParticipants">0</div>
           <div class="kpi-subtext">Nombre total de personnes</div>
@@ -616,17 +638,17 @@
       <!-- STATUS OVERVIEW -->
       <div class="status-grid">
         <div class="status-card status-pending">
-          <div class="status-label">⏳ EN ATTENTE</div>
+          <div class="status-label"><i class="fas fa-hourglass-start"></i> EN ATTENTE</div>
           <div class="status-count" id="pendingCount">0</div>
         </div>
 
         <div class="status-card status-approved">
-          <div class="status-label">✅ VALIDÉES</div>
+          <div class="status-label"><i class="fas fa-check-circle"></i> VALIDÉES</div>
           <div class="status-count" id="approvedCount">0</div>
         </div>
 
         <div class="status-card status-rejected">
-          <div class="status-label">❌ REJETÉES</div>
+          <div class="status-label"><i class="fas fa-times-circle"></i> REJETÉES</div>
           <div class="status-count" id="rejectedCount">0</div>
         </div>
       </div>
@@ -650,7 +672,7 @@
 
       <!-- ROOMS OCCUPANCY -->
       <div class="room-list">
-        <div class="chart-title">🛏️ Disponibilité des Chambres</div>
+        <div class="chart-title"><i class="fas fa-bed"></i> Disponibilité des Chambres</div>
         <div
           style="
             display: grid;
@@ -663,7 +685,7 @@
 
       <!-- ROOM MANAGEMENT VIEW -->
       <div class="room-list" style="margin-top: 40px">
-        <div class="chart-title">🛏️ Gestion des Chambres</div>
+        <div class="chart-title"><i class="fas fa-bed"></i> Gestion des Chambres</div>
 
         <div
           style="
@@ -735,7 +757,7 @@
                 font-weight: 600;
               "
             >
-              🔍 Afficher les chambres
+              <i class="fas fa-search"></i> Afficher les chambres
             </button>
           </div>
         </div>
@@ -763,7 +785,7 @@
 
       <!-- RESERVATIONS MANAGEMENT -->
       <div class="room-list" style="margin-top: 40px">
-        <div class="chart-title">📋 Gestion des Réservations</div>
+        <div class="chart-title"><i class="fas fa-list"></i> Gestion des Réservations</div>
 
         <div
           style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap"
@@ -780,7 +802,7 @@
             onclick="filterReservationsBy('en_attente')"
             style="border-color: #ffa726; color: #ffa726; font-weight: 600"
           >
-            ⏳ En attente
+            <i class="fas fa-hourglass-start"></i> En attente
           </button>
           <button
             class="btn-filter"
@@ -791,14 +813,14 @@
               font-weight: 600;
             "
           >
-            ✅ Validees
+            <i class="fas fa-check-circle"></i> Validees
           </button>
           <button
             class="btn-filter"
             onclick="filterReservationsBy('rejetee')"
             style="border-color: #ef5350; color: #ef5350; font-weight: 600"
           >
-            ❌ Rejetees
+            <i class="fas fa-times-circle"></i> Rejetees
           </button>
         </div>
 
@@ -807,7 +829,7 @@
 
       <!-- EMAIL CONFIGURATION -->
       <div class="room-list" style="margin-top: 40px">
-        <div class="chart-title">📧 Configuration des Emails SMTP</div>
+        <div class="chart-title"><i class="fas fa-envelope"></i> Configuration des Emails SMTP</div>
         <p style="color: var(--muted); font-size: 0.9rem; margin: 16px 0 0 0">
           Configurez vos paramètres d'envoi d'emails (Gmail recommandé)
         </p>
@@ -915,7 +937,7 @@
             class="btn btn-success"
             style="padding: 10px 20px; font-weight: 600"
           >
-            💾 Sauvegarder Configuration
+            <i class="fas fa-save"></i> Sauvegarder Configuration
           </button>
         </form>
 
@@ -929,7 +951,7 @@
           "
         >
           <p style="margin: 0; color: var(--green); font-size: 0.9rem">
-            ✅ <strong>Une fois configuré:</strong> L'email sera envoyé
+            <i class="fas fa-check-circle"></i> <strong>Une fois configuré:</strong> L'email sera envoyé
             automatiquement quand vous validerez une réservation!
           </p>
         </div>
@@ -937,6 +959,8 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="assets/session-manager.js"></script>
+    <script src="assets/auto-redirect.js"></script>
     <script>
       let allReservations = [];
       let allRooms = [];
@@ -973,134 +997,168 @@
         if (roomDateEndElem) roomDateEndElem.value = formatDate(tomorrow);
       }
 
-      function checkAdminSession() {
-        const admin =
-          JSON.parse(sessionStorage.getItem("currentAdmin")) ||
-          JSON.parse(localStorage.getItem("currentAdmin"));
+       function checkAdminSession() {
+         const admin = sessionManager.getCurrentAdmin();
 
-        if (!admin) {
-          redirectToLogin();
-        }
-      }
+         if (!admin) {
+           redirectToLogin();
+         }
+       }
 
       function loadData() {
         $.ajax({
-          url: "api/reservations/admin_list_reservations.php",
           method: "GET",
-          success: function (response) {
-            if (response.success) {
-              allReservations = (response.reservations || []).sort(
-                (a, b) => new Date(b.date_arrivee) - new Date(a.date_arrivee),
-              );
-              loadRooms();
-              updateDashboard();
-            }
-          },
-          error: function () {
-            showMsg("message", "Erreur lors du chargement des données", false);
-          },
+          url: "api/reservations/admin_list_reservations.php"
+        })
+        .done(function(response) {
+          if (response.success) {
+            allReservations = (response.reservations || []).sort(
+              (a, b) => new Date(b.date_arrivee) - new Date(a.date_arrivee),
+            );
+            loadRooms();
+            updateDashboard();
+          }
+        })
+        .fail(function() {
+          showMsg("message", "Erreur lors du chargement des données", false);
         });
       }
 
       function loadRooms() {
         // Charger les salles depuis rooms.json
         $.ajax({
-          url: "data/rooms.json",
           method: "GET",
-          dataType: "json",
-          success: function (data) {
-            allRooms = data.types && data.types.length > 0 ? data.types : [];
-            // Sauvegarder les données complètes des chambres pour uso in updateRoomOccupancy
-            localStorage.setItem("roomsData", JSON.stringify(data));
-            updateDashboard();
-          },
-          error: function () {
-            // Utiliser les salles par defaut si erreur
-            allRooms = [
-              {
-                id: 1,
-                name: "Chambre Simple",
-                type: "simple",
-                capacity: 1,
-                total: 100,
-                price_per_night: 60,
-                description: "Chambre confortable pour 1 personne",
-              },
-              {
-                id: 2,
-                name: "Chambre Double",
-                type: "double",
-                capacity: 2,
-                total: 50,
-                price_per_night: 100,
-                description: "Chambre spacieuse pour 2 personnes",
-              },
-              {
-                id: 3,
-                name: "Chambre Triple",
-                type: "triple",
-                capacity: 3,
-                total: 50,
-                price_per_night: 140,
-                description: "Chambre parfaite pour 3 personnes",
-              },
-            ];
-            updateDashboard();
-          },
+          url: "data/rooms.json",
+          dataType: "json"
+        })
+        .done(function(data) {
+          allRooms = data.types && data.types.length > 0 ? data.types : [];
+          // Sauvegarder les données complètes des chambres pour uso in updateRoomOccupancy
+          localStorage.setItem("roomsData", JSON.stringify(data));
+          updateDashboard();
+        })
+        .fail(function() {
+          // Utiliser les salles par defaut si erreur
+          allRooms = [
+            {
+              id: 1,
+              name: "Chambre Simple",
+              type: "simple",
+              capacity: 1,
+              total: 100,
+              price_per_night: 60,
+              description: "Chambre confortable pour 1 personne",
+            },
+            {
+              id: 2,
+              name: "Chambre Double",
+              type: "double",
+              capacity: 2,
+              total: 50,
+              price_per_night: 100,
+              description: "Chambre spacieuse pour 2 personnes",
+            },
+            {
+              id: 3,
+              name: "Chambre Triple",
+              type: "triple",
+              capacity: 3,
+              total: 50,
+              price_per_night: 140,
+              description: "Chambre parfaite pour 3 personnes",
+            },
+          ];
+          updateDashboard();
         });
       }
 
 
-      function updateDashboard() {
-        updateKPIs();
-        updateStatusCounts();
-        updateCharts();
-        updateRoomOccupancy();
-        displayReservations();
-      }
+       function updateDashboard() {
+         updateKPIs();
+         updateStatusCounts();
+         updateCharts();
+         updateRoomOccupancy();
+         displayReservations();
+       }
 
-       function updateKPIs() {
-         const total = allReservations.length;
+        function updateKPIs() {
+          const total = allReservations.length;
 
-         // Charger les données des chambres pour mapper les types et prix
-         const roomsData = JSON.parse(localStorage.getItem("roomsData") || "{}");
-         const roomTypesMap = {}; // { roomNumber: type }
-         const priceMap = {}; // { type: pricePerNight }
+          // Charger les données des chambres pour mapper les types et prix
+          const roomsData = JSON.parse(localStorage.getItem("roomsData") || "{}");
+          const roomTypesMap = {}; // { roomNumber: type }
+          const priceMap = {}; // { type: pricePerNight }
 
-         if (roomsData.rooms && Array.isArray(roomsData.rooms)) {
-           roomsData.rooms.forEach((r) => {
-             roomTypesMap[r.number] = r.type;
-           });
-         }
+          if (roomsData.rooms && Array.isArray(roomsData.rooms)) {
+            roomsData.rooms.forEach((r) => {
+              roomTypesMap[r.number] = r.type;
+            });
+          }
 
-         if (roomsData.types && Array.isArray(roomsData.types)) {
-           roomsData.types.forEach((t) => {
-             priceMap[t.type] = t.price_per_night;
-           });
-         }
+          if (roomsData.types && Array.isArray(roomsData.types)) {
+            roomsData.types.forEach((t) => {
+              priceMap[t.type] = t.price_per_night;
+            });
+          }
 
-         const totalRevenue = allReservations
-           .filter((r) => r.status === "validee")
-           .reduce((sum, r) => {
-             const nights = Math.max(1, Math.floor(
-               (new Date(r.date_depart) - new Date(r.date_arrivee)) / (1000 * 3600 * 24)
-             ));
+          // Charger les activités pour calculer leur coût
+          let activitiesData = [];
+          $.ajax({
+            url: "data/activities.json",
+            method: "GET",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+              activitiesData = data || [];
+            }
+          });
 
-             // Calculer le prix pour chaque chambre assignée
-             let reservationPrice = 0;
-             if (r.room_numbers && Array.isArray(r.room_numbers)) {
-               r.room_numbers.forEach((roomNum) => {
-                 const roomType = roomTypesMap[roomNum];
-                 const pricePerNight = priceMap[roomType] || 100; // Défaut 100€
-                 reservationPrice += nights * pricePerNight;
-               });
-             } else {
-               // Fallback: utiliser prix par défaut
-               reservationPrice = nights * 100;
-             }
+          const totalRevenue = allReservations
+            .filter((r) => r.status === "validee")
+            .reduce((sum, r) => {
+              const nights = Math.max(1, Math.floor(
+                (new Date(r.date_depart) - new Date(r.date_arrivee)) / (1000 * 3600 * 24)
+              ));
 
-             return sum + reservationPrice;
-           }, 0);
+              // Calculer le prix pour chaque chambre assignée
+              let reservationPrice = 0;
+              if (r.room_numbers && Array.isArray(r.room_numbers)) {
+                r.room_numbers.forEach((roomNum) => {
+                  const roomType = roomTypesMap[roomNum];
+                  const pricePerNight = priceMap[roomType] || 100; // Défaut 100€
+                  reservationPrice += nights * pricePerNight;
+                });
+              } else {
+                // Fallback: utiliser prix par défaut
+                reservationPrice = nights * 100;
+              }
+
+              // Ajouter le coût des activités - basé sur activities_by_day pour facturer par jour
+              let activitiesCost = 0;
+              if (r.activities_by_day && Array.isArray(r.activities_by_day)) {
+                // Compter les occurrences de chaque activité par jour
+                const activitiesCount = {};
+                r.activities_by_day.forEach((dayActivities) => {
+                  if (Array.isArray(dayActivities)) {
+                    dayActivities.forEach((actId) => {
+                      const numActId = Number(actId);
+                      activitiesCount[numActId] = (activitiesCount[numActId] || 0) + 1;
+                    });
+                  }
+                });
+
+                // Calculer le coût basé sur le nombre de jours
+                Object.entries(activitiesCount).forEach(([actId, count]) => {
+                  const numActId = Number(actId);
+                  const activity = activitiesData.find(a => Number(a.id) === numActId);
+                  if (activity) {
+                    activitiesCost += activity.price * count;
+                  }
+                });
+              }
+
+              return sum + reservationPrice + activitiesCost;
+            }, 0);
          const totalParticipants = allReservations.reduce(
            (sum, r) => sum + (r.nb_personnes || 0),
            0,
@@ -1204,66 +1262,102 @@
         });
       }
 
-       function updateRevenueChart() {
-         // Group revenue by month
-         const monthlyRevenue = {};
-         const months = [
-           "Jan",
-           "Fév",
-           "Mar",
-           "Avr",
-           "Mai",
-           "Jun",
-           "Juil",
-           "Aoû",
-           "Sep",
-           "Oct",
-           "Nov",
-           "Déc",
-         ];
+        function updateRevenueChart() {
+          // Group revenue by month
+          const monthlyRevenue = {};
+          const months = [
+            "Jan",
+            "Fév",
+            "Mar",
+            "Avr",
+            "Mai",
+            "Jun",
+            "Juil",
+            "Aoû",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Déc",
+          ];
 
-         // Charger les données des chambres pour mapper les types et prix
-         const roomsData = JSON.parse(localStorage.getItem("roomsData") || "{}");
-         const roomTypesMap = {}; // { roomNumber: type }
-         const priceMap = {}; // { type: pricePerNight }
+          // Charger les données des chambres pour mapper les types et prix
+          const roomsData = JSON.parse(localStorage.getItem("roomsData") || "{}");
+          const roomTypesMap = {}; // { roomNumber: type }
+          const priceMap = {}; // { type: pricePerNight }
 
-         if (roomsData.rooms && Array.isArray(roomsData.rooms)) {
-           roomsData.rooms.forEach((r) => {
-             roomTypesMap[r.number] = r.type;
-           });
-         }
+          if (roomsData.rooms && Array.isArray(roomsData.rooms)) {
+            roomsData.rooms.forEach((r) => {
+              roomTypesMap[r.number] = r.type;
+            });
+          }
 
-         if (roomsData.types && Array.isArray(roomsData.types)) {
-           roomsData.types.forEach((t) => {
-             priceMap[t.type] = t.price_per_night;
-           });
-         }
+          if (roomsData.types && Array.isArray(roomsData.types)) {
+            roomsData.types.forEach((t) => {
+              priceMap[t.type] = t.price_per_night;
+            });
+          }
 
-         allReservations.forEach((r) => {
-           if (r.status === "validee" && r.date_arrivee) {
-             const date = new Date(r.date_arrivee);
-             const month = months[date.getMonth()];
-             const nights = Math.max(1, Math.floor(
-               (new Date(r.date_depart) - new Date(r.date_arrivee)) / (1000 * 3600 * 24)
-             ));
+          // Charger les activités pour calculer leur coût
+          let activitiesData = [];
+          $.ajax({
+            url: "data/activities.json",
+            method: "GET",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+              activitiesData = data || [];
+            }
+          });
 
-             // Calculer le prix pour chaque chambre assignée
-             let reservationPrice = 0;
-             if (r.room_numbers && Array.isArray(r.room_numbers)) {
-               r.room_numbers.forEach((roomNum) => {
-                 const roomType = roomTypesMap[roomNum];
-                 const pricePerNight = priceMap[roomType] || 100; // Défaut 100€
-                 reservationPrice += nights * pricePerNight;
-               });
-             } else {
-               // Fallback: utiliser prix par défaut
-               reservationPrice = nights * 100;
-             }
+          allReservations.forEach((r) => {
+            if (r.status === "validee" && r.date_arrivee) {
+              const date = new Date(r.date_arrivee);
+              const month = months[date.getMonth()];
+              const nights = Math.max(1, Math.floor(
+                (new Date(r.date_depart) - new Date(r.date_arrivee)) / (1000 * 3600 * 24)
+              ));
 
-             monthlyRevenue[month] =
-               (monthlyRevenue[month] || 0) + reservationPrice;
-           }
-         });
+              // Calculer le prix pour chaque chambre assignée
+              let reservationPrice = 0;
+              if (r.room_numbers && Array.isArray(r.room_numbers)) {
+                r.room_numbers.forEach((roomNum) => {
+                  const roomType = roomTypesMap[roomNum];
+                  const pricePerNight = priceMap[roomType] || 100; // Défaut 100€
+                  reservationPrice += nights * pricePerNight;
+                });
+              } else {
+                // Fallback: utiliser prix par défaut
+                reservationPrice = nights * 100;
+              }
+
+               // Ajouter le coût des activités - basé sur activities_by_day pour facturer par jour
+               let activitiesCost = 0;
+               if (r.activities_by_day && Array.isArray(r.activities_by_day)) {
+                 // Compter les occurrences de chaque activité par jour
+                 const activitiesCount = {};
+                 r.activities_by_day.forEach((dayActivities) => {
+                   if (Array.isArray(dayActivities)) {
+                     dayActivities.forEach((actId) => {
+                       const numActId = Number(actId);
+                       activitiesCount[numActId] = (activitiesCount[numActId] || 0) + 1;
+                     });
+                   }
+                 });
+
+                 // Calculer le coût basé sur le nombre de jours
+                 Object.entries(activitiesCount).forEach(([actId, count]) => {
+                   const numActId = Number(actId);
+                   const activity = activitiesData.find(a => Number(a.id) === numActId);
+                   if (activity) {
+                     activitiesCost += activity.price * count;
+                   }
+                 });
+               }
+
+              monthlyRevenue[month] =
+                (monthlyRevenue[month] || 0) + reservationPrice + activitiesCost;
+            }
+          });
 
         const labels = Object.keys(monthlyRevenue);
         const data = Object.values(monthlyRevenue);
@@ -1403,7 +1497,7 @@
             <div>
               <h3 style="color: var(--text); margin: 0 0 8px 0; font-size: 1.1rem;">${room.name}</h3>
               <p style="color: var(--muted); margin: 4px 0; font-size: 0.85rem;">${room.description}</p>
-              <p style="color: var(--text); margin: 4px 0; font-size: 0.9rem; margin-top: 8px;">💰 ${pricePerNight}€ par nuit</p>
+              <p style="color: var(--text); margin: 4px 0; font-size: 0.9rem; margin-top: 8px;"><i class="fas fa-wallet"></i> ${pricePerNight}€ par nuit</p>
             </div>
             <div style="text-align: right;">
               <div style="font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 8px;">Statut</div>
@@ -1512,29 +1606,29 @@
 
         currentPage = 1;
         document.getElementById("roomsContainer").innerHTML =
-          '<div style="text-align: center; padding: 20px;">⏳ Chargement...</div>';
+          '<div style="text-align: center; padding: 20px;"><i class="fas fa-hourglass-start"></i> Chargement...</div>';
 
         $.ajax({
-          url: "api/rooms/get_room_calendar.php",
           method: "GET",
+          url: "api/rooms/get_room_calendar.php",
           data: {
             room_type: "",
             date_start: dateStart,
             date_end: dateEnd,
           },
-          dataType: "json",
-          success: function (resp) {
-            if (resp.success) {
-              allRooms = resp.rooms.sort((a, b) => a.number - b.number);
-              displayRoomsList();
-              displayRoomsPagination();
-            } else {
-              showMsg("message", "✗ " + resp.message, false);
-            }
-          },
-          error: function () {
-            showMsg("message", "✗ Erreur lors du chargement", false);
-          },
+          dataType: "json"
+        })
+        .done(function(resp) {
+          if (!resp.success) {
+            showMsg("message", "✗ " + resp.message, false);
+          } else {
+            allRooms = resp.rooms.sort((a, b) => a.number - b.number);
+            displayRoomsList();
+            displayRoomsPagination();
+          }
+        })
+        .fail(function() {
+          showMsg("message", "✗ Erreur lors du chargement", false);
         });
       }
 
@@ -1723,28 +1817,28 @@
 
       function assignRoomToReservation(resId, roomNumber) {
         $.ajax({
-          url: "api/rooms/assign_room_number.php",
           method: "POST",
+          url: "api/rooms/assign_room_number.php",
           data: {
             reservation_id: resId,
             room_number: roomNumber,
           },
-          dataType: "json",
-          success: function (resp) {
-            if (resp.success) {
-              showMsg("message", "✅ " + resp.message, true);
-              // Retirer le modal
-              const modals = document.querySelectorAll("div[role='dialog']");
-              modals.forEach((m) => m.remove());
-              // Recharger les données
-              loadData();
-            } else {
-              showMsg("message", "✗ " + resp.message, false);
-            }
-          },
-          error: function () {
-            showMsg("message", "✗ Erreur serveur", false);
-          },
+          dataType: "json"
+        })
+        .done(function(resp) {
+          if (!resp.success) {
+            showMsg("message", "✗ " + resp.message, false);
+          } else {
+            showMsg("message", '<i class="fas fa-check-circle"></i> ' + resp.message, true);
+            // Retirer le modal
+            const modals = document.querySelectorAll("div[role='dialog']");
+            modals.forEach((m) => m.remove());
+            // Recharger les données
+            loadData();
+          }
+        })
+        .fail(function() {
+          showMsg("message", "✗ Erreur serveur", false);
         });
       }
 
@@ -1754,105 +1848,107 @@
         window.location.href = "index.html";
       }
 
-      // ===== RESERVATIONS MANAGEMENT =====
-      function displayReservations() {
-        const container = document.getElementById("reservationsList");
+       // ===== RESERVATIONS MANAGEMENT =====
+       function displayReservations() {
+         const container = document.getElementById("reservationsList");
 
-        const filtered =
-          currentReservationFilter === "all"
-            ? allReservations
-            : allReservations.filter(
-                (r) => r.status === currentReservationFilter,
+         const filtered =
+           currentReservationFilter === "all"
+             ? allReservations
+             : allReservations.filter(
+                 (r) => r.status === currentReservationFilter,
+               );
+
+         if (!filtered.length) {
+           container.innerHTML =
+             '<div style="text-align: center; color: var(--muted); padding: 40px;">Aucune réservation</div>';
+           return;
+         }
+
+          container.innerHTML = filtered
+            .map((res) => {
+              const arrival = new Date(res.date_arrivee).toLocaleDateString(
+                "fr-FR",
+              );
+              const departure = new Date(res.date_depart).toLocaleDateString(
+                "fr-FR",
+              );
+              const nights = Math.floor(
+                (new Date(res.date_depart) - new Date(res.date_arrivee)) /
+                  (1000 * 3600 * 24),
               );
 
-        if (!filtered.length) {
-          container.innerHTML =
-            '<div style="text-align: center; color: var(--muted); padding: 40px;">Aucune réservation</div>';
-          return;
-        }
-
-        container.innerHTML = filtered
-          .map((res) => {
-            const arrival = new Date(res.date_arrivee).toLocaleDateString(
-              "fr-FR",
-            );
-            const departure = new Date(res.date_depart).toLocaleDateString(
-              "fr-FR",
-            );
-            const nights = Math.floor(
-              (new Date(res.date_depart) - new Date(res.date_arrivee)) /
-                (1000 * 3600 * 24),
-            );
-
-            let statusClass =
-              res.status === "en_attente"
-                ? "pending"
-                : res.status === "validee"
-                  ? "approved"
-                  : "rejected";
-            let statusText =
-              res.status === "en_attente"
-                ? "⏳ EN ATTENTE"
-                : res.status === "validee"
-                  ? "✅ VALIDÉE"
-                  : "❌ REJETÉE";
-
-            return `
-          <div class="reservation-card">
-            <div class="res-card-header">
-              <div>
-                <strong>${res.prenom} ${res.nom}</strong>
-                <span class="status-badge ${statusClass}" style="margin-left: 10px;">${statusText}</span>
-              </div>
-            </div>
-
-            <div class="res-card-info">
-              <div class="res-info-item">
-                <span class="res-info-label">Email</span>
-                ${res.email}
-              </div>
-              <div class="res-info-item">
-                <span class="res-info-label">Téléphone</span>
-                ${res.telephone}
-              </div>
-              <div class="res-info-item">
-                <span class="res-info-label">Arrivée</span>
-                ${arrival}
-              </div>
-              <div class="res-info-item">
-                <span class="res-info-label">Départ</span>
-                ${departure}
-              </div>
-              <div class="res-info-item">
-                <span class="res-info-label">Nuits</span>
-                ${nights}
-              </div>
-              <div class="res-info-item">
-                <span class="res-info-label">Personnes</span>
-                ${res.nb_personnes}
-              </div>
-              <div class="res-info-item">
-                <span class="res-info-label">Chambres</span>
-                ${
-                  res.room_numbers && res.room_numbers.length > 0
-                    ? res.room_numbers.map((n) => "Chb " + n).join(", ")
-                    : "🔲 Non assignées"
-                }
-              </div>
-            </div>
-
-            <div class="res-card-actions">
-              ${
+              let statusClass =
                 res.status === "en_attente"
-                  ? `
-                <button class="action-btn validate" onclick="validateRes(${res.id})">✓ Valider</button>
-                <button class="action-btn reject" onclick="rejectRes(${res.id})">✗ Rejeter</button>
-              `
-                  : ""
-                }
+                  ? "pending"
+                  : res.status === "validee"
+                    ? "approved"
+                    : "rejected";
+              let statusText =
+                res.status === "en_attente"
+                  ? '<i class="fas fa-hourglass-start"></i> EN ATTENTE'
+                  : res.status === "validee"
+                    ? '<i class="fas fa-check-circle"></i> VALIDÉE'
+                    : '<i class="fas fa-times-circle"></i> REJETÉE';
+
+
+             return `
+           <div class="reservation-card">
+             <div class="res-card-header">
+               <div>
+                 <strong>${res.prenom} ${res.nom}</strong>
+                 <span class="status-badge ${statusClass}" style="margin-left: 10px;">${statusText}</span>
+               </div>
+             </div>
+
+             <div class="res-card-info">
+               <div class="res-info-item">
+                 <span class="res-info-label">Email</span>
+                 ${res.email}
+               </div>
+               <div class="res-info-item">
+                 <span class="res-info-label">Téléphone</span>
+                 ${res.telephone}
+               </div>
+               <div class="res-info-item">
+                 <span class="res-info-label">Arrivée</span>
+                 ${arrival}
+               </div>
+               <div class="res-info-item">
+                 <span class="res-info-label">Départ</span>
+                 ${departure}
+               </div>
+               <div class="res-info-item">
+                 <span class="res-info-label">Nuits</span>
+                 ${nights}
+               </div>
+               <div class="res-info-item">
+                 <span class="res-info-label">Personnes</span>
+                 ${res.nb_personnes}
+               </div>
+               <div class="res-info-item">
+                  <span class="res-info-label">Chambres</span>
+                  ${
+                    res.room_numbers && res.room_numbers.length > 0
+                      ? res.room_numbers.map((n) => "Chb " + n).join(", ")
+                      : "[NO_ROOMS] Non assignées"
+                 }
+               </div>
               </div>
-            </div>
-        `;
+
+              <div class="res-card-actions">
+               <button class="action-btn" onclick="viewInvoiceAdmin(${res.id})" style="border-color: var(--gold); color: var(--gold);"><i class="fas fa-wallet"></i> Voir le devis</button>
+               ${
+                 res.status === "en_attente"
+                   ? `
+                 <button class="action-btn validate" onclick="validateRes(${res.id})">✓ Valider</button>
+                 <button class="action-btn reject" onclick="rejectRes(${res.id})">✗ Rejeter</button>
+               `
+                   : ""
+                 }
+               </div>
+             </div>
+         `;
           })
           .join("");
       }
@@ -1860,9 +1956,100 @@
       function filterReservationsBy(status) {
         currentReservationFilter = status;
         displayReservations();
-      }
+       }
 
-      let currentValidatingReservationId = null;
+       function viewInvoiceAdmin(resId) {
+         $.ajax({
+           method: "GET",
+           url: "api/billing/get_invoice.php",
+           data: { id: resId },
+           dataType: "json"
+         })
+         .done(function(resp) {
+           if (!resp.success) {
+             showMsg(
+               "message",
+               resp.message || "Impossible de charger le devis",
+               false,
+             );
+           } else {
+             showInvoiceModalAdmin(resp.invoice);
+           }
+         })
+         .fail(function() {
+           showMsg(
+             "message",
+             "Erreur lors du chargement du devis",
+             false,
+           );
+         });
+       }
+
+       function showInvoiceModalAdmin(invoice) {
+         const modal = document.createElement("div");
+         modal.style.cssText = `
+         position: fixed;
+         inset: 0;
+         background: rgba(0,0,0,0.8);
+         z-index: 2000;
+         overflow-y: auto;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding: 20px;
+       `;
+
+         const invoiceHtml = `
+         <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto;">
+           <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border);">
+             <h2 style="margin: 0; color: var(--green);"><i class="fas fa-list"></i> Devis de réservation #${invoice.id}</h2>
+             <button onclick="this.closest('[style*=position]').remove()" style="background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer;"><i class="fas fa-times"></i></button>
+           </div>
+           <div style="padding: 20px;">
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+               <div>
+                 <div style="color: var(--muted); font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Client</div>
+                 <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">${invoice.client_name}</div>
+                 <div style="color: var(--muted);">${invoice.client_email}</div>
+                 <div style="color: var(--muted);">${invoice.client_phone || "-"} </div>
+               </div>
+               <div>
+                 <div style="color: var(--muted); font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Séjour</div>
+                 <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">${invoice.room_name}</div>
+                 <div style="color: var(--muted);">Arrivée: ${new Date(invoice.check_in).toLocaleDateString("fr-FR")}</div>
+                 <div style="color: var(--muted);">Départ: ${new Date(invoice.check_out).toLocaleDateString("fr-FR")}</div>
+                 <div style="color: var(--muted);">Nuits: ${invoice.nights}</div>
+               </div>
+             </div>
+             <div style="background: rgba(255,255,255,0.04); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+               <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                 <strong>Hébergement (${invoice.nights} nuit${invoice.nights > 1 ? 's' : ''})</strong>
+                 <span style="color: var(--green);">${invoice.room_total.toFixed(2)}€</span>
+               </div>
+               <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                 <strong>Activités</strong>
+                 <span style="color: var(--gold);">${invoice.activities_cost.toFixed(2)}€</span>
+               </div>
+               <div style="display: flex; justify-content: space-between; font-weight: 700; padding-top: 12px; border-top: 1px solid var(--border);">
+                 <strong style="font-size: 1.1rem;">Montant total</strong>
+                 <span style="color: var(--green); font-size: 1.2rem;">${invoice.amount_due.toFixed(2)}€</span>
+               </div>
+             </div>
+             <div style="background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; padding: 12px;">
+               <div style="color: var(--muted); font-size: 0.85rem; text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">Statut</div>
+               <div style="color: ${invoice.status === 'validee' ? 'var(--green)' : invoice.status === 'en_attente' ? '#ffa726' : '#ef5350'}; font-weight: 600;">
+                 ${invoice.status === 'validee' ? '<i class="fas fa-check-circle"></i> Validée' : invoice.status === 'en_attente' ? '<i class="fas fa-hourglass-start"></i> En attente' : '<i class="fas fa-times-circle"></i> Rejetée'}
+               </div>
+             </div>
+           </div>
+         </div>
+       `;
+
+         modal.innerHTML = invoiceHtml;
+         document.body.appendChild(modal);
+       }
+
+       let currentValidatingReservationId = null;
 
       function validateRes(id) {
         const res = allReservations.find((r) => r.id === id);
@@ -1886,42 +2073,42 @@
 
         // Appeler l'API pour attribuer automatiquement les chambres
         $.ajax({
-          url: "api/rooms/auto_assign_rooms.php",
           method: "POST",
+          url: "api/rooms/auto_assign_rooms.php",
           data: {
             reservation_id: id,
           },
-          dataType: "json",
-          success: function (resp) {
-            if (resp.success) {
-              showMsg(
-                "message",
-                "✅ " +
-                  resp.message +
-                  " (Chambres: " +
-                  resp.assigned_rooms.join(", ") +
-                  ")",
-                true,
-              );
+          dataType: "json"
+        })
+        .done(function(resp) {
+          if (!resp.success) {
+            showMsg("message", "✗ " + resp.message, false);
+          } else {
+            showMsg(
+              "message",
+              '<i class="fas fa-check-circle"></i> ' +
+                resp.message +
+                " (Chambres: " +
+                resp.assigned_rooms.join(", ") +
+                ")",
+              true,
+            );
 
-              // Mettre à jour la réservation en mémoire
-              const res = allReservations.find((r) => r.id === id);
-              if (res) {
-                res.status = "validee";
-                res.room_numbers = resp.assigned_rooms;
-                res.room_number = resp.assigned_rooms[0];
-              }
-
-              // Rafraîchir le dashboard
-              displayReservations();
-              updateDashboard();
-            } else {
-              showMsg("message", "✗ " + resp.message, false);
+            // Mettre à jour la réservation en mémoire
+            const res = allReservations.find((r) => r.id === id);
+            if (res) {
+              res.status = "validee";
+              res.room_numbers = resp.assigned_rooms;
+              res.room_number = resp.assigned_rooms[0];
             }
-          },
-          error: function () {
-            showMsg("message", "✗ Erreur lors de la validation", false);
-          },
+
+            // Rafraîchir le dashboard
+            displayReservations();
+            updateDashboard();
+          }
+        })
+        .fail(function() {
+          showMsg("message", "✗ Erreur lors de la validation", false);
         });
       }
 
@@ -1961,8 +2148,8 @@
         <div id="roomSelectionModal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
           <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 30px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-              <h2 style="margin: 0; color: var(--green);">🏠 Sélectionner une chambre</h2>
-              <button onclick="closeRoomSelectionModal()" style="background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer;">✕</button>
+              <h2 style="margin: 0; color: var(--green);"><i class="fas fa-home"></i> Sélectionner une chambre</h2>
+              <button onclick="closeRoomSelectionModal()" style="background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer;"><i class="fas fa-times"></i></button>
             </div>
 
             <div style="background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; padding: 12px; margin-bottom: 20px;">
@@ -1974,7 +2161,7 @@
             </div>
 
             <button onclick="closeRoomSelectionModal()" style="width: 100%; padding: 12px; background: var(--border); border: none; color: var(--text); border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 20px;">
-              ✕ Annuler
+              <i class="fas fa-times"></i> Annuler
             </button>
           </div>
         </div>
@@ -1990,39 +2177,39 @@
 
         // Appeler l'API pour valider avec la chambre sélectionnée
         $.ajax({
-          url: "api/reservations/admin_validate_reservation_with_room.php",
           method: "POST",
+          url: "api/reservations/admin_validate_reservation_with_room.php",
           data: {
             id: currentValidatingReservationId,
             room_id: roomId,
-          },
-          success: function (resp) {
-            if (resp.success) {
-              const res = allReservations.find(
-                (r) => r.id === currentValidatingReservationId,
-              );
-              if (res) {
-                res.status = "validee";
-                res.room = resp.room_name;
-              }
-
-              // Afficher les identifiants dans une modale
-              showCredentialsModal(
-                resp.credentials,
-                resp.reservation_id,
-                resp.email_sent,
-              );
-
-              // Rafraîchir le dashboard
-              displayReservations();
-              updateDashboard();
-            } else {
-              showMsg("message", "✗ " + (resp.message || "Erreur"), false);
+          }
+        })
+        .done(function(resp) {
+          if (!resp.success) {
+            showMsg("message", "✗ " + (resp.message || "Erreur"), false);
+          } else {
+            const res = allReservations.find(
+              (r) => r.id === currentValidatingReservationId,
+            );
+            if (res) {
+              res.status = "validee";
+              res.room = resp.room_name;
             }
-          },
-          error: function () {
-            showMsg("message", "✗ Erreur lors de la validation", false);
-          },
+
+            // Afficher les identifiants dans une modale
+            showCredentialsModal(
+              resp.credentials,
+              resp.reservation_id,
+              resp.email_sent,
+            );
+
+            // Rafraîchir le dashboard
+            displayReservations();
+            updateDashboard();
+          }
+        })
+        .fail(function() {
+          showMsg("message", "✗ Erreur lors de la validation", false);
         });
       }
 
@@ -2042,28 +2229,28 @@
         const credentialHtml = `
         <div style="background: var(--panel); border: 2px solid var(--green); border-radius: 12px; padding: 40px; max-width: 550px; width: 100%; max-height: 80vh; overflow-y: auto;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <h2 style="margin: 0 0 10px 0; color: var(--green); font-size: 1.5rem;">✅ Réservation Validée!</h2>
+            <h2 style="margin: 0 0 10px 0; color: var(--green); font-size: 1.5rem;"><i class="fas fa-check-circle"></i> Réservation Validée!</h2>
             <p style="margin: 0; color: var(--muted);">Identifiants d'accès client</p>
           </div>
 
           <div style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); border-radius: 8px; padding: 20px; margin-bottom: 24px;">
             <div style="display: grid; gap: 16px;">
               <div>
-                <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;">📧 EMAIL CLIENT</div>
+                <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;"><i class="fas fa-envelope"></i> EMAIL CLIENT</div>
                 <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
                   <code style="color: var(--green); font-weight: 600; word-break: break-all;">${credentials.email}</code>
                   <button onclick="copyToClipboard('${credentials.email}')" style="background: var(--green); color: #001a0a; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; margin-left: 8px;">
-                    📋 Copier
+                    <i class="fas fa-list"></i> Copier
                   </button>
                 </div>
               </div>
 
               <div>
-                <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;">🔐 MOT DE PASSE</div>
+                <div style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px;">[SECURE] MOT DE PASSE</div>
                 <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
                   <code style="color: var(--green); font-weight: 600; word-break: break-all;">${credentials.password}</code>
                   <button onclick="copyToClipboard('${credentials.password}')" style="background: var(--green); color: #001a0a; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; margin-left: 8px;">
-                    📋 Copier
+                    <i class="fas fa-list"></i> Copier
                   </button>
                 </div>
               </div>
@@ -2072,15 +2259,15 @@
 
           <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 16px; margin-bottom: 24px;">
             <div style="font-size: 0.9rem; color: var(--muted);">
-              <p style="margin: 0 0 8px 0;"><strong>📋 Numéro de réservation:</strong> #${String(reservationId).padStart(6, "0")}</p>
-              <p style="margin: 0 0 8px 0;"><strong>📧 Email envoyé:</strong> ${emailSent ? "✅ Oui" : "⚠️ Configuration SMTP non disponible"}</p>
-              <p style="margin: 0;"><strong>💡 Info:</strong> Si l'email n'a pas été reçu, les identifiants sont affichés ci-dessus. Le client peut se connecter directement.</p>
+              <p style="margin: 0 0 8px 0;"><strong><i class="fas fa-list"></i> Numéro de réservation:</strong> #${String(reservationId).padStart(6, "0")}</p>
+              <p style="margin: 0 0 8px 0;"><strong><i class="fas fa-envelope"></i> Email envoyé:</strong> ${emailSent ? '<i class="fas fa-check-circle"></i> Oui' : '[WARNING] Configuration SMTP non disponible'}</p>
+              <p style="margin: 0;"><strong>[INFO] Info:</strong> Si l'email n'a pas été reçu, les identifiants sont affichés ci-dessus. Le client peut se connecter directement.</p>
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <button onclick="location.href='email-logs.html'" style="padding: 12px; background: rgba(0,230,118,0.15); border: 1px solid var(--green); color: var(--green); border-radius: 8px; font-weight: 600; cursor: pointer;">
-              📧 Voir logs email
+              <i class="fas fa-envelope"></i> Voir logs email
             </button>
             <button onclick="this.closest('[style*=position]').remove()" style="padding: 12px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
               ✓ Fermer
@@ -2094,14 +2281,14 @@
 
         showMsg(
           "message",
-          "✅ Réservation validée! Les identifiants sont affichés.",
+          '<i class="fas fa-check-circle"></i> Réservation validée! Les identifiants sont affichés.',
           true,
         );
       }
 
       function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
-          showMsg("message", "📋 Copié dans le presse-papiers!", true);
+          showMsg("message", '<i class="fas fa-list"></i> Copié dans le presse-papiers!', true);
         });
       }
 
@@ -2115,25 +2302,25 @@
       function rejectRes(id) {
         if (confirm("Êtes-vous sûr de vouloir rejeter cette réservation?")) {
           $.ajax({
-            url: "api/reservations/admin_reject_reservation.php",
             method: "POST",
-            data: { id: id },
-            success: function (resp) {
-              if (resp.success) {
-                const res = allReservations.find((r) => r.id === id);
-                if (res) {
-                  res.status = "rejetee";
-                }
-                displayReservations();
-                updateDashboard();
-                showMsg("message", "✓ Réservation rejetée!", true);
-              } else {
-                showMsg("message", "✗ " + (resp.message || "Erreur"), false);
+            url: "api/reservations/admin_reject_reservation.php",
+            data: { id: id }
+          })
+          .done(function(resp) {
+            if (resp.success) {
+              const res = allReservations.find((r) => r.id === id);
+              if (res) {
+                res.status = "rejetee";
               }
-            },
-            error: function () {
-              showMsg("message", "✗ Erreur lors du rejet", false);
-            },
+              displayReservations();
+              updateDashboard();
+              showMsg("message", "✓ Réservation rejetée!", true);
+            } else {
+              showMsg("message", "✗ " + (resp.message || "Erreur"), false);
+            }
+          })
+          .fail(function() {
+            showMsg("message", "✗ Erreur lors du rejet", false);
           });
         }
       }
@@ -2170,7 +2357,7 @@
             if (config.is_configured) {
               const alert = document.getElementById("emailStatusAlert");
               alert.innerHTML =
-                '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;">✅ Configuration SMTP détectée - Les emails seront envoyés automatiquement!</div>';
+                '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;"><i class="fas fa-check-circle"></i> Configuration SMTP détectée - Les emails seront envoyés automatiquement!</div>';
             }
           }
         });
@@ -2193,7 +2380,7 @@
             .value.trim();
 
           if (!smtpUser || !smtpPassword) {
-            alert("❌ Email et mot de passe requis");
+            alert('[ERROR] Email et mot de passe requis');
             return;
           }
 
@@ -2212,7 +2399,7 @@
               if (resp.success) {
                 const alert = document.getElementById("emailStatusAlert");
                 alert.innerHTML =
-                  '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;">✅ Configuration sauvegardée! Les emails seront envoyés automatiquement lors de la validation.</div>';
+                  '<div class="alert alert-success" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); padding: 12px; border-radius: 8px; margin: 0;"><i class="fas fa-check-circle"></i> Configuration sauvegardée! Les emails seront envoyés automatiquement lors de la validation.</div>';
 
                 // Réinitialiser le champ mot de passe
                 document.getElementById("smtp_password").value = "";
@@ -2221,11 +2408,11 @@
                   alert.innerHTML = "";
                 }, 5000);
               } else {
-                alert("❌ " + (resp.message || "Erreur lors de la sauvegarde"));
+                alert('[ERROR] ' + (resp.message || "Erreur lors de la sauvegarde"));
               }
             })
             .fail(function () {
-              alert("❌ Erreur réseau");
+              alert('[ERROR] Erreur réseau');
             });
         });
 
@@ -2234,3 +2421,4 @@
     </script>
   </body>
 </html>
+

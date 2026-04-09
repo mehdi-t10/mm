@@ -1,10 +1,19 @@
 [
     {
+        "id": 1,
+        "nom": "az",
+        "prenom": "az",
+        "email": "az@az.com",
+        "password": "$2y$10$8jvc3RiY3uLQJvtWGn2qXerFLA3NP7kg8Iio.HtUZPvIrKbg4RiwS",
+        "telephone": "1234567890",
+        "role": "client"
+    },
+    {
         "id": 2,
         "nom": "Admin",
         "prenom": "Super",
         "email": "admin@footcamp.test",
-        "password": "$2y$12$kBZdWMEIXH0g15wuOsfHhO3RcKs674dKYaX2l9BvcMCMMpWbTkFfC",
+        "password": "$2y$10$NC1lY1ZWeYz.h0J560W/W.H7j4Tut3nVA6pOx9KDTS7ltAp06w0ri",
         "role": "admin"
     }
 ]

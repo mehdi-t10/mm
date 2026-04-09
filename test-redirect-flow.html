@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Redirection Login</title>
+    <style>
+        body { font-family: Arial; padding: 50px; background: #f0f0f0; }
+        .box { background: white; padding: 20px; margin: 10px 0; border-radius: 5px; }
+        .code { background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 3px; font-family: monospace; overflow-x: auto; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; padding: 10px; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Test du flux de redirection du Login</h1>
+
+    <div class="box">
+        <h2>1. Vérifier que localStorage fonctionne</h2>
+        <button onclick="testStorage()">Tester localStorage/sessionStorage</button>
+        <div id="storageResult"></div>
+    </div>
+
+    <div class="box">
+        <h2>2. Simuler la connexion</h2>
+        <button onclick="simulateLogin()">Simuler un login réussi</button>
+        <p><small>Cela va sauvegarder des données et rediriger vers client-dashboard.html après 2 secondes</small></p>
+        <div id="loginResult"></div>
+    </div>
+
+    <div class="box">
+        <h2>3. Vérifier les données actuelles</h2>
+        <button onclick="checkCurrentData()">Vérifier les données stockées</button>
+        <div id="currentDataResult"></div>
+    </div>
+
+    <div class="box" id="consoleBox">
+        <h2>Console de Debug</h2>
+        <div id="console" class="code" style="height: 300px; overflow-y: auto; margin-top: 10px;"></div>
+    </div>
+
+    <script>
+        function log(msg) {
+            const consoleDiv = document.getElementById('console');
+            const time = new Date().toLocaleTimeString();
+            consoleDiv.innerHTML += `[${time}] ${msg}<br>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        function testStorage() {
+            log("=== TEST STORAGE ===");
+            const testUser = {
+                id: 1,
+                email: 'az@az.com',
+                prenom: 'az',
+                nom: 'az',
+                telephone: '1234567890',
+                role: 'client'
+            };
+            const testJson = JSON.stringify(testUser);
+
+            try {
+                localStorage.setItem("testUser", testJson);
+                log("✓ localStorage.setItem() réussi");
+            } catch(e) {
+                log("✗ Erreur localStorage: " + e.message);
+            }
+
+            try {
+                sessionStorage.setItem("testUser", testJson);
+                log("✓ sessionStorage.setItem() réussi");
+            } catch(e) {
+                log("✗ Erreur sessionStorage: " + e.message);
+            }
+
+            const retrieved = localStorage.getItem("testUser");
+            if (retrieved === testJson) {
+                log("✓ localStorage.getItem() retourne les bonnes données");
+            } else {
+                log("✗ localStorage.getItem() ne retourne pas les bonnes données");
+            }
+
+            document.getElementById("storageResult").innerHTML = `
+                <div class="success">✓ Storage fonctionne correctement!</div>
+            `;
+        }
+
+        function simulateLogin() {
+            log("=== SIMULER LOGIN ===");
+            const user = {
+                id: 1,
+                email: 'az@az.com',
+                prenom: 'az',
+                nom: 'az',
+                telephone: '1234567890',
+                role: 'client'
+            };
+
+            log("Sauvegarde des données...");
+            const userJson = JSON.stringify(user);
+
+            try {
+                localStorage.setItem("currentUser", userJson);
+                log("✓ Données sauvegardées dans localStorage");
+            } catch(e) {
+                log("✗ Erreur: " + e.message);
+                return;
+            }
+
+            try {
+                sessionStorage.setItem("currentUser", userJson);
+                log("✓ Données sauvegardées dans sessionStorage");
+            } catch(e) {
+                log("✗ Erreur: " + e.message);
+            }
+
+            // Vérifier immédiatement
+            const check = localStorage.getItem("currentUser");
+            if (check) {
+                log("✓ Vérification immédiate: données présentes dans localStorage");
+            } else {
+                log("✗ Vérification immédiate: ÉCHEC!");
+            }
+
+            document.getElementById("loginResult").innerHTML = `
+                <div class="success">
+                    <strong>✓ Simulation réussie!</strong>
+                    <p>Les données ont été sauvegardées. Vous allez être redirigé vers client-dashboard.html dans 3 secondes...</p>
+                </div>
+            `;
+
+            log("Redirection vers client-dashboard.html dans 3 secondes...");
+            setTimeout(() => {
+                log("REDIRECTION!");
+                window.location.href = "client-dashboard.html";
+            }, 3000);
+        }
+
+        function checkCurrentData() {
+            log("=== VÉRIFIER DONNÉES ACTUELLES ===");
+            const local = localStorage.getItem("currentUser");
+            const session = sessionStorage.getItem("currentUser");
+
+            log("localStorage.currentUser: " + (local ? "PRÉSENT" : "ABSENT"));
+            log("sessionStorage.currentUser: " + (session ? "PRÉSENT" : "ABSENT"));
+
+            if (local) {
+                try {
+                    const user = JSON.parse(local);
+                    log("Email: " + user.email);
+                    log("Nom: " + user.nom);
+                    log("Prénom: " + user.prenom);
+
+                    document.getElementById("currentDataResult").innerHTML = `
+                        <div class="success">
+                            <strong>✓ Données trouvées:</strong>
+                            <p>Email: ${user.email}</p>
+                            <p>Nom: ${user.nom}</p>
+                        </div>
+                    `;
+                } catch(e) {
+                    log("✗ Erreur parsing JSON: " + e.message);
+                }
+            } else {
+                log("Aucune donnée trouvée");
+                document.getElementById("currentDataResult").innerHTML = `
+                    <div class="warning">
+                        <strong>⚠️ Aucune donnée trouvée</strong>
+                    </div>
+                `;
+            }
+        }
+
+        // Log initial
+        window.addEventListener('load', function() {
+            log("Page de test chargée!");
+            log("Ouvre la console du navigateur (F12) pour voir les logs détaillés");
+        });
+    </script>
+</body>
+</html>
+

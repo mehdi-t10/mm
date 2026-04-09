@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Login Flow</title>
+</head>
+<body>
+    <h1>Test du flux de connexion</h1>
+
+    <div id="result"></div>
+
+    <script>
+        // Test 1: Vérifier que localStorage fonctionne
+        console.log("=== TEST 1: localStorage ===");
+        const testUser = { email: 'az@az.com', prenom: 'az', nom: 'az' };
+        localStorage.setItem("currentUser", JSON.stringify(testUser));
+        const retrieved = localStorage.getItem("currentUser");
+        console.log("Stocké:", JSON.stringify(testUser));
+        console.log("Récupéré:", retrieved);
+        console.log("Match:", JSON.stringify(testUser) === retrieved ? "OUI" : "NON");
+
+        // Test 2: Vérifier sessionStorage
+        console.log("\n=== TEST 2: sessionStorage ===");
+        sessionStorage.setItem("currentUser", JSON.stringify(testUser));
+        const sessionRetrieved = sessionStorage.getItem("currentUser");
+        console.log("Stocké:", JSON.stringify(testUser));
+        console.log("Récupéré:", sessionRetrieved);
+        console.log("Match:", JSON.stringify(testUser) === sessionRetrieved ? "OUI" : "NON");
+
+        // Test 3: Simuler une redirection
+        console.log("\n=== TEST 3: Simulation redirection ===");
+        console.log("localStorage avant redirection:", localStorage.getItem("currentUser") ? "PRESENT" : "ABSENT");
+        console.log("sessionStorage avant redirection:", sessionStorage.getItem("currentUser") ? "PRESENT" : "ABSENT");
+
+        document.getElementById("result").innerHTML = `
+            <h2>Résultats des tests:</h2>
+            <p>localStorage: ${retrieved ? "✓ OK" : "✗ FAILED"}</p>
+            <p>sessionStorage: ${sessionRetrieved ? "✓ OK" : "✗ FAILED"}</p>
+            <p><a href="client-dashboard.html">Aller au dashboard</a></p>
+        `;
+    </script>
+</body>
+</html>
+

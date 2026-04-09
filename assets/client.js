@@ -42,12 +42,10 @@ $(function () {
       );
       $("#reservationForm")[0].reset();
     }).fail(function (e) {
-      console.log(e);
       $("#reservationMessage").html(
         "<div class='alert alert-danger'>Erreur réseau pendant la réservation.</div>"
       );
     });
-  });
 
   $("#loginForm").on("submit", function (event) {
     event.preventDefault();
@@ -68,12 +66,10 @@ $(function () {
         "<div class='alert alert-info'>" + obj.message + "</div>"
       );
     }).fail(function (e) {
-      console.log(e);
       $("#loginMessage").html(
         "<div class='alert alert-danger'>Erreur réseau pendant la connexion.</div>"
       );
     });
-  });
 
   $("#serviceForm").on("submit", function (event) {
     event.preventDefault();
@@ -96,7 +92,6 @@ $(function () {
         "<div class='alert alert-info'>" + obj.message + "</div>"
       );
     }).fail(function (e) {
-      console.log(e);
       $("#serviceMessage").html(
         "<div class='alert alert-danger'>Erreur réseau pendant l'ajout de prestation.</div>"
       );
@@ -139,7 +134,6 @@ $(function () {
         "</div>"
       );
     }).fail(function (e) {
-      console.log(e);
       $("#invoiceBox").html(
         "<div class='alert alert-danger'>Erreur réseau pendant le calcul de la facture.</div>"
       );
