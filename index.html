@@ -1708,7 +1708,21 @@
     </div>
 
     <footer>
-      <p>&copy; 2026 FootCamp Dreams. Centre de vacances football.</p>
+      <div style="max-width: 1200px; margin: 0 auto; padding: 40px 24px; text-align: center;">
+        <h3 style="font-size: 1.3rem; margin-bottom: 16px; color: var(--text);">FootCamp Dreams</h3>
+        <p style="margin-bottom: 12px; color: var(--muted);">
+          <i class="fas fa-map-marker-alt"></i> Baie aux Tortues, Île Maurice, Île de l'Océan Indien
+        </p>
+        <p style="margin-bottom: 12px; color: var(--muted);">
+          <i class="fas fa-phone"></i> +230 5890 1234
+        </p>
+        <p style="margin-bottom: 20px; color: var(--muted);">
+          <i class="fas fa-envelope"></i> contact@footcamp-dreams.mu
+        </p>
+        <p style="color: var(--muted); font-size: 0.9rem;">
+          &copy; 2026 FootCamp Dreams. Centre de vacances football. Tous droits réservés.
+        </p>
+      </div>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -2715,7 +2729,7 @@
         ];
 
         // Images terrains
-        const imagesTerrain = [
+        var imagesTerrain = [
           { src: 'assets/ter1.jpeg', label: 'Terrain Principal' },
           { src: 'assets/ter2.jpeg', label: 'Terrain d\'Entraînement' },
           { src: 'assets/ter3.jpeg', label: 'Terrain Pro' },
@@ -2726,45 +2740,72 @@
         carouselChambres = imagesChambres;
         carouselTerrain = imagesTerrain;
 
-        // Initialiser carrousel chambres
-        const wrapperChambres = document.getElementById('carouselChambresWrapper');
-        const controlsChambres = document.getElementById('carouselChambresControls');
+        // Initialiser le carrousel des chambres
+        var wrapperChambres = document.getElementById('carouselChambresWrapper');
+        var controlsChambres = document.getElementById('carouselChambresControls');
         if (wrapperChambres && controlsChambres) {
           wrapperChambres.innerHTML = '';
           controlsChambres.innerHTML = '';
 
-          imagesChambres.forEach((img, index) => {
-            const slide = document.createElement('div');
-            slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
-            slide.innerHTML = `<img src="${img.src}" alt="${img.label}" class="carousel-image" onerror="this.style.display='none'">`;
+          // Boucle pour créer chaque slide de chambre
+          for (var i = 0; i < imagesChambres.length; i++) {
+            var img = imagesChambres[i];
+            // Créer la slide avec l'image
+            var slide = document.createElement('div');
+            if (i === 0) {
+              slide.className = 'carousel-slide active';
+            } else {
+              slide.className = 'carousel-slide';
+            }
+            slide.innerHTML = '<img src="' + img.src + '" alt="' + img.label + '" class="carousel-image" onerror="this.style.display=\'none\'">';
             wrapperChambres.appendChild(slide);
 
-            const dot = document.createElement('button');
-            dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
-            dot.onclick = () => goToSlideChambres(index);
+            // Créer le bouton point pour la navigation
+            var dot = document.createElement('button');
+            if (i === 0) {
+              dot.className = 'carousel-dot active';
+            } else {
+              dot.className = 'carousel-dot';
+            }
+            dot.index = i;
+            dot.onclick = function() {
+              goToSlideChambres(this.index);
+            };
             controlsChambres.appendChild(dot);
-          });
+          }
 
         }
 
-        // Initialiser carrousel terrains
-        const wrapperTerrain = document.getElementById('carouselTerrainWrapper');
-        const controlsTerrain = document.getElementById('carouselTerrainControls');
+        // Initialiser le carrousel des terrains
+        var wrapperTerrain = document.getElementById('carouselTerrainWrapper');
+        var controlsTerrain = document.getElementById('carouselTerrainControls');
         if (wrapperTerrain && controlsTerrain) {
           wrapperTerrain.innerHTML = '';
           controlsTerrain.innerHTML = '';
 
-          imagesTerrain.forEach((img, index) => {
-            const slide = document.createElement('div');
-            slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
-            slide.innerHTML = `<img src="${img.src}" alt="${img.label}" class="carousel-image" onerror="this.style.display='none'">`;
-            wrapperTerrain.appendChild(slide);
+          for (var j = 0; j < imagesTerrain.length; j++) {
+            var imgTer = imagesTerrain[j];
+            var slideTer = document.createElement('div');
+            if (j === 0) {
+              slideTer.className = 'carousel-slide active';
+            } else {
+              slideTer.className = 'carousel-slide';
+            }
+            slideTer.innerHTML = '<img src="' + imgTer.src + '" alt="' + imgTer.label + '" class="carousel-image" onerror="this.style.display=\'none\'">';
+            wrapperTerrain.appendChild(slideTer);
 
-            const dot = document.createElement('button');
-            dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
-            dot.onclick = () => goToSlideTerrain(index);
-            controlsTerrain.appendChild(dot);
-          });
+            var dotTer = document.createElement('button');
+            if (j === 0) {
+              dotTer.className = 'carousel-dot active';
+            } else {
+              dotTer.className = 'carousel-dot';
+            }
+            dotTer.index = j;
+            dotTer.onclick = function() {
+              goToSlideTerrain(this.index);
+            };
+            controlsTerrain.appendChild(dotTer);
+          }
 
         }
       }
@@ -2773,6 +2814,7 @@
       function showSlideChambres(index) {
         if (carouselChambres.length === 0) return;
 
+        // Vérifier que l'index est dans les limites
         if (index >= carouselChambres.length) {
           currentChambresIndex = 0;
         } else if (index < 0) {
@@ -2781,19 +2823,30 @@
           currentChambresIndex = index;
         }
 
-        const slides = document.querySelectorAll('#carouselChambresWrapper .carousel-slide');
-        slides.forEach((slide, i) => {
-          slide.classList.toggle('active', i === currentChambresIndex);
-        });
+        // Mettre à jour les slides actives
+        var slides = document.querySelectorAll('#carouselChambresWrapper .carousel-slide');
+        for (var k = 0; k < slides.length; k++) {
+          if (k === currentChambresIndex) {
+            slides[k].classList.add('active');
+          } else {
+            slides[k].classList.remove('active');
+          }
+        }
 
-        const dots = document.querySelectorAll('#carouselChambresControls .carousel-dot');
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentChambresIndex);
-        });
+        // Mettre à jour les points de navigation
+        var dots = document.querySelectorAll('#carouselChambresControls .carousel-dot');
+        for (var l = 0; l < dots.length; l++) {
+          if (l === currentChambresIndex) {
+            dots[l].classList.add('active');
+          } else {
+            dots[l].classList.remove('active');
+          }
+        }
       }
 
+      // Scroller vers la section de réservation
       function scrollToReservation() {
-        const reservationSection = document.querySelector('.client .tab-content.active');
+        var reservationSection = document.querySelector('.client .tab-content.active');
         if (reservationSection) {
           reservationSection.scrollIntoView({ behavior: 'smooth' });
         } else {
@@ -2801,8 +2854,9 @@
         }
       }
 
+      // Scroller vers la section des services
       function scrollToServices() {
-        const servicesSection = document.querySelector('.services-section');
+        var servicesSection = document.querySelector('.services-section');
         if (servicesSection) {
           servicesSection.scrollIntoView({ behavior: 'smooth' });
         }
@@ -2834,14 +2888,22 @@
         }
 
         const slides = document.querySelectorAll('#carouselTerrainWrapper .carousel-slide');
-        slides.forEach((slide, i) => {
-          slide.classList.toggle('active', i === currentTerrainIndex);
-        });
+        for (var m = 0; m < slides.length; m++) {
+          if (m === currentTerrainIndex) {
+            slides[m].classList.add('active');
+          } else {
+            slides[m].classList.remove('active');
+          }
+        }
 
         const dots = document.querySelectorAll('#carouselTerrainControls .carousel-dot');
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentTerrainIndex);
-        });
+        for (var n = 0; n < dots.length; n++) {
+          if (n === currentTerrainIndex) {
+            dots[n].classList.add('active');
+          } else {
+            dots[n].classList.remove('active');
+          }
+        }
       }
 
       function nextSlideTerrain() {
