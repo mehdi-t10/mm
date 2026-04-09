@@ -36,7 +36,7 @@
       }
 
       body {
-        font-family: 'DM Sans', sans-serif;
+        font-family: "DM Sans", sans-serif;
         background: var(--bg);
         color: var(--text);
         overflow-x: hidden;
@@ -97,7 +97,7 @@
       }
 
       .logo {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: 1.8rem;
         letter-spacing: 2px;
       }
@@ -141,7 +141,7 @@
       }
 
       .page-title {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: 2.5rem;
         letter-spacing: 1px;
         margin-bottom: 40px;
@@ -177,7 +177,7 @@
       }
 
       .form-card h3 {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: 1.4rem;
         letter-spacing: 1px;
         margin-bottom: 24px;
@@ -203,7 +203,7 @@
         color: var(--text);
         border-radius: 12px;
         padding: 11px 14px;
-        font-family: 'DM Sans', sans-serif;
+        font-family: "DM Sans", sans-serif;
         font-size: 1rem;
         transition: all 0.2s;
       }
@@ -299,8 +299,6 @@
         border: 1px solid rgba(255, 107, 107, 0.3);
         color: #ff9999;
       }
-
-
 
       footer {
         position: relative;
@@ -422,20 +420,20 @@
           <h2 style="margin: 0; color: var(--green); font-size: 1.3rem">
             [USER] Mon Profil
           </h2>
-           <button
-             onclick="toggleCredentialsDisplay()"
-             style="
-               background: rgba(0, 230, 118, 0.15);
-               color: var(--green);
-               border: 1px solid var(--green);
-               padding: 8px 16px;
-               border-radius: 8px;
-               cursor: pointer;
-               font-weight: 600;
-             "
-           >
-             Afficher identifiants
-           </button>
+          <button
+            onclick="toggleCredentialsDisplay()"
+            style="
+              background: rgba(0, 230, 118, 0.15);
+              color: var(--green);
+              border: 1px solid var(--green);
+              padding: 8px 16px;
+              border-radius: 8px;
+              cursor: pointer;
+              font-weight: 600;
+            "
+          >
+            Afficher identifiants
+          </button>
         </div>
 
         <div
@@ -516,73 +514,84 @@
           </div>
         </div>
 
-         <div
-           id="credentialsDisplay"
-           style="
-             display: none;
-             background: rgba(0, 230, 118, 0.1);
-             border: 1px solid var(--green);
-             border-radius: 8px;
-             padding: 16px;
-             margin-top: 16px;
-           "
-         >
-           <div style="display: grid; gap: 12px">
-             <div>
-               <div
-                 style="
-                   color: var(--muted);
-                   font-size: 0.85rem;
-                   margin-bottom: 6px;
-                 "
-               >
-                 <i class="fas fa-envelope"></i> Adresse Email
-               </div>
-               <div
-                 style="
-                   background: rgba(0, 0, 0, 0.3);
-                   border: 1px solid var(--border);
-                   border-radius: 6px;
-                   padding: 10px;
-                   display: flex;
-                   justify-content: space-between;
-                   align-items: center;
-                 "
-               >
-                 <code
-                   style="color: var(--green); font-weight: 600"
-                   id="profileEmail"
-                   >-</code
-                 >
-                 <button
-                   onclick="
-                     copyToClipboardProfile(
-                       document.getElementById('profileEmail').textContent,
-                     )
-                   "
-                   style="
-                     background: var(--green);
-                     color: #001a0a;
-                     border: none;
-                     padding: 4px 8px;
-                     border-radius: 4px;
-                     cursor: pointer;
-                     font-weight: 600;
-                     font-size: 0.8rem;
-                   "
-                 >
-                   <i class="fas fa-list"></i> Copier
-                 </button>
-               </div>
-             </div>
-              <div style="background: rgba(0, 230, 118, 0.05); border: 1px solid rgba(0, 230, 118, 0.2); border-radius: 8px; padding: 12px;">
-                <p style="color: var(--green); margin: 0; font-size: 0.9rem;">
-                  <strong>Mot de passe:</strong><br>
-                  <small style="color: var(--muted);">Vous recevrez vos identifiants de connexion par email une fois votre réservation approuvée par un administrateur. Le mot de passe sera basé sur votre prénom suivi de "2026".</small>
-                </p>
+        <div
+          id="credentialsDisplay"
+          style="
+            display: none;
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid var(--green);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+          "
+        >
+          <div style="display: grid; gap: 12px">
+            <div>
+              <div
+                style="
+                  color: var(--muted);
+                  font-size: 0.85rem;
+                  margin-bottom: 6px;
+                "
+              >
+                <i class="fas fa-envelope"></i> Adresse Email
               </div>
-           </div>
-         </div>
+              <div
+                style="
+                  background: rgba(0, 0, 0, 0.3);
+                  border: 1px solid var(--border);
+                  border-radius: 6px;
+                  padding: 10px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <code
+                  style="color: var(--green); font-weight: 600"
+                  id="profileEmail"
+                  >-</code
+                >
+                <button
+                  onclick="
+                    copyToClipboardProfile(
+                      document.getElementById('profileEmail').textContent,
+                    )
+                  "
+                  style="
+                    background: var(--green);
+                    color: #001a0a;
+                    border: none;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.8rem;
+                  "
+                >
+                  <i class="fas fa-list"></i> Copier
+                </button>
+              </div>
+            </div>
+            <div
+              style="
+                background: rgba(0, 230, 118, 0.05);
+                border: 1px solid rgba(0, 230, 118, 0.2);
+                border-radius: 8px;
+                padding: 12px;
+              "
+            >
+              <p style="color: var(--green); margin: 0; font-size: 0.9rem">
+                <strong>Mot de passe:</strong><br />
+                <small style="color: var(--muted)"
+                  >Vous recevrez vos identifiants de connexion par email une
+                  fois votre réservation approuvée par un administrateur. Le mot
+                  de passe sera basé sur votre prénom suivi de "2026".</small
+                >
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- MY RESERVATIONS SECTION -->
@@ -642,7 +651,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
@@ -662,7 +671,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
@@ -682,7 +691,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
@@ -704,7 +713,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
@@ -717,7 +726,10 @@
                 type="date"
                 id="date_arrivee"
                 min="2026-04-02"
-                onchange="validateReservationDates(this); generateActivitiesUI();"
+                onchange="
+                  validateReservationDates(this);
+                  generateActivitiesUI();
+                "
                 required
                 style="
                   width: 100%;
@@ -726,7 +738,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                   transition: border-color 0.3s;
                 "
               />
@@ -740,7 +752,10 @@
                 type="date"
                 id="date_depart"
                 min="2026-04-03"
-                onchange="validateReservationDates(this); generateActivitiesUI();"
+                onchange="
+                  validateReservationDates(this);
+                  generateActivitiesUI();
+                "
                 required
                 style="
                   width: 100%;
@@ -749,7 +764,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                   transition: border-color 0.3s;
                 "
               />
@@ -763,7 +778,12 @@
                 type="number"
                 id="nb_personnes"
                 min="1"
-                onchange="loadRoomsForReservation(); validateActivityConstraints(); updateActivitiesAvailability(); updateServicesTotalDisplay();"
+                onchange="
+                  loadRoomsForReservation();
+                  validateActivityConstraints();
+                  updateActivitiesAvailability();
+                  updateServicesTotalDisplay();
+                "
                 required
                 style="
                   width: 100%;
@@ -772,7 +792,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
@@ -795,11 +815,13 @@
             </div>
           </div>
 
-           <!-- SERVICES/PRESTATIONS SECTION -->
-           <div style="margin-bottom: 20px">
-             <label style="display: block; margin-bottom: 12px; font-weight: 600">
-               Prestations (Optionnel)
-             </label>
+          <!-- SERVICES/PRESTATIONS SECTION -->
+          <div style="margin-bottom: 20px">
+            <label
+              style="display: block; margin-bottom: 12px; font-weight: 600"
+            >
+              Prestations (Optionnel)
+            </label>
             <div
               id="servicesContainer"
               style="
@@ -827,92 +849,93 @@
                 display: none;
               "
             >
-              <strong>Total prestations:</strong> <span id="servicesTotalAmount">0€</span>
+              <strong>Total prestations:</strong>
+              <span id="servicesTotalAmount">0€</span>
             </div>
           </div>
 
-           <!-- ROOMS SELECTION SECTION -->
-           <div
-             id="roomsSelectionSection"
-             style="margin-bottom: 20px; display: none"
-           >
-             <label
-               style="
-                 display: block;
-                 margin-bottom: 12px;
-                 font-weight: 600;
-                 color: var(--green);
-               "
-               ><i class="fas fa-door-open"></i> Sélectionner vos Chambres
-               *</label
-             >
-             <div
-               id="roomsSelectionContainer"
-               style="
-                 display: grid;
-                 grid-template-columns: 1fr 1fr 1fr;
-                 gap: 12px;
-                 padding: 16px;
-                 background: rgba(0, 230, 118, 0.05);
-                 border: 1px solid rgba(0, 230, 118, 0.2);
-                 border-radius: 12px;
-               "
-             ></div>
+          <!-- ROOMS SELECTION SECTION -->
+          <div
+            id="roomsSelectionSection"
+            style="margin-bottom: 20px; display: none"
+          >
+            <label
+              style="
+                display: block;
+                margin-bottom: 12px;
+                font-weight: 600;
+                color: var(--green);
+              "
+              ><i class="fas fa-door-open"></i> Sélectionner vos Chambres
+              *</label
+            >
+            <div
+              id="roomsSelectionContainer"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 12px;
+                padding: 16px;
+                background: rgba(0, 230, 118, 0.05);
+                border: 1px solid rgba(0, 230, 118, 0.2);
+                border-radius: 12px;
+              "
+            ></div>
 
-             <div
-               id="roomsCapacityInfo"
-               style="
-                 margin-top: 12px;
-                 padding: 12px;
-                 background: rgba(0, 230, 118, 0.1);
-                 border: 1px solid rgba(0, 230, 118, 0.3);
-                 border-radius: 8px;
-                 font-size: 0.9rem;
-                 display: none;
-               "
-             >
-               <div style="color: var(--text); margin-bottom: 4px">
-                 <strong>Capacité totale sélectionnée:</strong>
-                 <span id="totalCapacity">0</span> /
-                 <span id="personnesNeeded">0</span> personne(s)
-               </div>
-               <div
-                 id="capacityWarning"
-                 style="color: #ffa726; margin-top: 4px; display: none"
-               >
-                 <i class="fas fa-exclamation-triangle"></i> La capacité doit
-                 être égale ou supérieure au nombre de personnes
-               </div>
-               <div
-                 id="capacityOk"
-                 style="color: var(--green); margin-top: 4px; display: none"
-               >
-                 <i class="fas fa-check-circle"></i> Capacité suffisante
-               </div>
-             </div>
-           </div>
+            <div
+              id="roomsCapacityInfo"
+              style="
+                margin-top: 12px;
+                padding: 12px;
+                background: rgba(0, 230, 118, 0.1);
+                border: 1px solid rgba(0, 230, 118, 0.3);
+                border-radius: 8px;
+                font-size: 0.9rem;
+                display: none;
+              "
+            >
+              <div style="color: var(--text); margin-bottom: 4px">
+                <strong>Capacité totale sélectionnée:</strong>
+                <span id="totalCapacity">0</span> /
+                <span id="personnesNeeded">0</span> personne(s)
+              </div>
+              <div
+                id="capacityWarning"
+                style="color: #ffa726; margin-top: 4px; display: none"
+              >
+                <i class="fas fa-exclamation-triangle"></i> La capacité doit
+                être égale ou supérieure au nombre de personnes
+              </div>
+              <div
+                id="capacityOk"
+                style="color: var(--green); margin-top: 4px; display: none"
+              >
+                <i class="fas fa-check-circle"></i> Capacité suffisante
+              </div>
+            </div>
+          </div>
 
-           <button
-             type="submit"
-             style="
-               width: 100%;
-               padding: 14px;
-               background: linear-gradient(135deg, var(--green), #00c853);
-               color: #000;
-               border: none;
-               border-radius: 8px;
-               font-weight: 700;
-               font-size: 1rem;
-               cursor: pointer;
-               transition: all 0.3s;
-             "
-           >
-             <i class="fas fa-paper-plane"></i> SOUMETTRE MA RÉSERVATION
-           </button>
-           <div id="reservationMsg" style="margin-top: 16px"></div>
-         </form>
-       </div>
-     </div>
+          <button
+            type="submit"
+            style="
+              width: 100%;
+              padding: 14px;
+              background: linear-gradient(135deg, var(--green), #00c853);
+              color: #000;
+              border: none;
+              border-radius: 8px;
+              font-weight: 700;
+              font-size: 1rem;
+              cursor: pointer;
+              transition: all 0.3s;
+            "
+          >
+            <i class="fas fa-paper-plane"></i> SOUMETTRE MA RÉSERVATION
+          </button>
+          <div id="reservationMsg" style="margin-top: 16px"></div>
+        </form>
+      </div>
+    </div>
 
     <footer>
       <p>&copy; 2026 FootCamp Dreams. Centre de vacances football.</p>
@@ -935,66 +958,66 @@
       let selectedRooms = {}; // { roomType: quantity }
       let selectedRoomsDashboard = {};
 
-         // ===== INIT =====
-         document.addEventListener("DOMContentLoaded", function () {
-         // Ajouter un délai pour laisser le temps à localStorage d'être disponible et synchronisé
-            setTimeout(() => {
-              initializeUserData();
-              loadMyReservations();
-              loadActivities();
-              loadServices();
-              loadReservations();
-              setupDateValidation();
-            }, 300);
-         });
+      // ===== INIT =====
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ajouter un délai pour laisser le temps à localStorage d'être disponible et synchronisé
+        setTimeout(() => {
+          initializeUserData();
+          loadMyReservations();
+          loadActivities();
+          loadServices();
+          loadReservations();
+          setupDateValidation();
+        }, 300);
+      });
 
-        // ===== SYSTÈME D'AUTHENTIFICATION UNIQUE =====
-        // Tous les utilisateurs passent par SessionManager
-        // La redirection automatique est gérée par auto-redirect.js
+      // ===== SYSTÈME D'AUTHENTIFICATION UNIQUE =====
+      // Tous les utilisateurs passent par SessionManager
+      // La redirection automatique est gérée par auto-redirect.js
 
-        // Initialiser les données utilisateur depuis SessionManager
-        function initializeUserData() {
-         userData = sessionManager.getCurrentUser();
-          if (!userData) {
-            window.location.href = "index.html";
-            return false;
-          }
+      // Initialiser les données utilisateur depuis SessionManager
+      function initializeUserData() {
+        userData = sessionManager.getCurrentUser();
+        if (!userData) {
+          window.location.href = "index.html";
+          return false;
+        }
 
-          // Remplir les champs du formulaire
-          try {
-            document.getElementById("userName").textContent = userData.prenom;
-            document.getElementById("nom").value = userData.nom;
-            document.getElementById("prenom").value = userData.prenom;
-            document.getElementById("email").value = userData.email;
-            document.getElementById("telephone").value = userData.telephone || "";
+        // Remplir les champs du formulaire
+        try {
+          document.getElementById("userName").textContent = userData.prenom;
+          document.getElementById("nom").value = userData.nom;
+          document.getElementById("prenom").value = userData.prenom;
+          document.getElementById("email").value = userData.email;
+          document.getElementById("telephone").value = userData.telephone || "";
 
-            // Afficher le profil
-            displayUserProfile(userData);
-          } catch (e) {
-          }
+          // Afficher le profil
+          displayUserProfile(userData);
+        } catch (e) {}
 
-          return true;
-         }
+        return true;
+      }
 
-        function displayUserProfile(user) {
-         // Afficher les données de profil si les éléments existent
-         const profileElements = {
-           profileLastName: user.nom || "-",
-           profileFirstName: user.prenom || "-",
-           profilePhone: user.telephone || "-",
-           profileMainEmail: user.email || "-",
-           profileEmail: user.email || "-",
-           profilePassword: "Mot de passe non affiché pour des raisons de sécurité"
-         };
+      function displayUserProfile(user) {
+        // Afficher les données de profil si les éléments existent
+        const profileElements = {
+          profileLastName: user.nom || "-",
+          profileFirstName: user.prenom || "-",
+          profilePhone: user.telephone || "-",
+          profileMainEmail: user.email || "-",
+          profileEmail: user.email || "-",
+          profilePassword:
+            "Mot de passe non affiché pour des raisons de sécurité",
+        };
 
-         // Remplir les éléments s'ils existent
-          for (const [id, value] of Object.entries(profileElements)) {
-            const element = document.getElementById(id);
-            if (element) {
-              element.textContent = value;
-            }
+        // Remplir les éléments s'ils existent
+        for (const [id, value] of Object.entries(profileElements)) {
+          const element = document.getElementById(id);
+          if (element) {
+            element.textContent = value;
           }
         }
+      }
 
       function toggleCredentialsDisplay() {
         const div = document.getElementById("credentialsDisplay");
@@ -1016,17 +1039,19 @@
 
       function copyToClipboardProfile(text) {
         navigator.clipboard.writeText(text).then(() => {
-          showMsg("reservationMsg", '<i class="fas fa-list"></i> Copié dans le presse-papiers!', true);
+          showMsg(
+            "reservationMsg",
+            '<i class="fas fa-list"></i> Copié dans le presse-papiers!',
+            true,
+          );
         });
       }
 
-       function logout() {
-         // Utiliser le sessionManager pour une déconnexion complète
-         if (confirm('Êtes-vous sûr de vouloir vous déconnecter?')) {
-           sessionManager.logoutUser();
-           window.location.href = "index.html";
-         }
-       }
+      function logout() {
+        // Utiliser le sessionManager pour une déconnexion
+        sessionManager.logoutUser();
+        window.location.href = "index.html";
+      }
       function loadMyReservations() {
         if (!userData || !userData.email) return;
 
@@ -1037,37 +1062,45 @@
           url:
             "api/reservations/get_my_reservations.php?email=" +
             encodeURIComponent(userData.email),
-          dataType: "json"
+          dataType: "json",
         })
-        .done(function(resp) {
-          if (
-            resp.success &&
-            resp.reservations &&
-            resp.reservations.length > 0
-          ) {
-            container.innerHTML = "";
-            resp.reservations.forEach((res) => {
-              const statusDisplay = {
-                en_attente: {
-                  icon: '<i class="fas fa-hourglass-start"></i>',
-                  label: "En attente",
-                  color: "#ffa726",
-                },
-                validee: { icon: '<i class="fas fa-check-circle"></i>', label: "Validée", color: "#00e676" },
-                rejetee: { icon: '<i class="fas fa-times-circle"></i>', label: "Rejetée", color: "#ef5350" },
-              }[res.status] || {
-                icon: "❓",
-                label: "Inconnu",
-                color: "#888",
-              };
+          .done(function (resp) {
+            if (
+              resp.success &&
+              resp.reservations &&
+              resp.reservations.length > 0
+            ) {
+              container.innerHTML = "";
+              resp.reservations.forEach((res) => {
+                const statusDisplay = {
+                  en_attente: {
+                    icon: '<i class="fas fa-hourglass-start"></i>',
+                    label: "En attente",
+                    color: "#ffa726",
+                  },
+                  validee: {
+                    icon: '<i class="fas fa-check-circle"></i>',
+                    label: "Validée",
+                    color: "#00e676",
+                  },
+                  rejetee: {
+                    icon: '<i class="fas fa-times-circle"></i>',
+                    label: "Rejetée",
+                    color: "#ef5350",
+                  },
+                }[res.status] || {
+                  icon: "❓",
+                  label: "Inconnu",
+                  color: "#888",
+                };
 
-              const dates =
-                new Date(res.date_arrivee).toLocaleDateString("fr-FR") +
-                " → " +
-                new Date(res.date_depart).toLocaleDateString("fr-FR");
+                const dates =
+                  new Date(res.date_arrivee).toLocaleDateString("fr-FR") +
+                  " → " +
+                  new Date(res.date_depart).toLocaleDateString("fr-FR");
 
-              const card = document.createElement("div");
-              card.style.cssText = `
+                const card = document.createElement("div");
+                card.style.cssText = `
               border: 1px solid var(--border);
               border-radius: 16px;
               padding: 24px;
@@ -1076,7 +1109,7 @@
               border-left: 4px solid ${statusDisplay.color};
             `;
 
-               card.innerHTML = `
+                card.innerHTML = `
                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
                  <div>
                    <h4 style="color: var(--green); margin: 0 0 8px 0; font-size: 1.1rem;">Réservation #${res.id}</h4>
@@ -1095,9 +1128,16 @@
                   <div>
                     <span style="color: var(--muted); font-size: 0.8rem;">Chambre(s)</span>
                     <p style="color: var(--green); margin: 4px 0 0 0; font-weight: 600;">
-                      ${res.room_numbers && res.room_numbers.length > 0
-                        ? res.room_numbers.map(n => '<i class="fas fa-sign-out-alt"></i> ' + n).join(", ")
-                        : (res.room || "À assigner")}
+                      ${
+                        res.room_numbers && res.room_numbers.length > 0
+                          ? res.room_numbers
+                              .map(
+                                (n) =>
+                                  '<i class="fas fa-sign-out-alt"></i> ' + n,
+                              )
+                              .join(", ")
+                          : res.room || "À assigner"
+                      }
                     </p>
                   </div>
                   <div>
@@ -1108,54 +1148,78 @@
                 ${
                   res.activities_by_day && res.activities_by_day.length > 0
                     ? (() => {
-                        let activitiesHtml = '<div style="background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; padding: 12px; margin-bottom: 16px;">';
-                        activitiesHtml += '<div style="font-weight: 600; color: var(--green); margin-bottom: 10px; font-size: 0.9rem;">[ACTIVITIES] Activités programmées</div>';
+                        let activitiesHtml =
+                          '<div style="background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; padding: 12px; margin-bottom: 16px;">';
+                        activitiesHtml +=
+                          '<div style="font-weight: 600; color: var(--green); margin-bottom: 10px; font-size: 0.9rem;">[ACTIVITIES] Activités programmées</div>';
 
-                        res.activities_by_day.forEach((dayActivities, dayIndex) => {
-                          const dayDate = new Date(res.date_arrivee);
-                          dayDate.setDate(dayDate.getDate() + dayIndex);
-                          const dayDateStr = dayDate.toLocaleDateString("fr-FR", { weekday: "short", day: "2-digit", month: "short" });
+                        res.activities_by_day.forEach(
+                          (dayActivities, dayIndex) => {
+                            const dayDate = new Date(res.date_arrivee);
+                            dayDate.setDate(dayDate.getDate() + dayIndex);
+                            const dayDateStr = dayDate.toLocaleDateString(
+                              "fr-FR",
+                              {
+                                weekday: "short",
+                                day: "2-digit",
+                                month: "short",
+                              },
+                            );
 
-                          if (dayActivities && dayActivities.length > 0) {
-                            activitiesHtml += '<div style="margin-bottom: 8px;">';
-                            activitiesHtml += '<div style="color: var(--green); font-size: 0.85rem; font-weight: 600; margin-bottom: 4px;"><i class="fas fa-calendar"></i> ' + dayDateStr + '</div>';
+                            if (dayActivities && dayActivities.length > 0) {
+                              activitiesHtml +=
+                                '<div style="margin-bottom: 8px;">';
+                              activitiesHtml +=
+                                '<div style="color: var(--green); font-size: 0.85rem; font-weight: 600; margin-bottom: 4px;"><i class="fas fa-calendar"></i> ' +
+                                dayDateStr +
+                                "</div>";
 
-                            dayActivities.forEach((actId) => {
-                              const activity = allActivities.find(a => a.id === actId);
-                              if (activity) {
-                                activitiesHtml += '<div style="color: var(--text); font-size: 0.85rem; margin-left: 12px; margin-bottom: 3px;">'
-                                  + activity.icon + ' ' + activity.name
-                                  + ' <span style="color: var(--gold); font-weight: 600;">' + activity.price + '€</span></div>';
-                              }
-                            });
+                              dayActivities.forEach((actId) => {
+                                const activity = allActivities.find(
+                                  (a) => a.id === actId,
+                                );
+                                if (activity) {
+                                  activitiesHtml +=
+                                    '<div style="color: var(--text); font-size: 0.85rem; margin-left: 12px; margin-bottom: 3px;">' +
+                                    activity.icon +
+                                    " " +
+                                    activity.name +
+                                    ' <span style="color: var(--gold); font-weight: 600;">' +
+                                    activity.price +
+                                    "€</span></div>";
+                                }
+                              });
 
-                            activitiesHtml += '</div>';
-                          }
-                        });
+                              activitiesHtml += "</div>";
+                            }
+                          },
+                        );
 
-                        activitiesHtml += '</div>';
+                        activitiesHtml += "</div>";
                         return activitiesHtml;
                       })()
                     : ""
                 }
                 ${
-                 res.status === "validee"
-                   ? '<button onclick="viewReservationDetails(' + res.id + ')" style="width: 100%; padding: 10px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 12px;"><i class="fas fa-file"></i> Voir ma facture</button>'
-                   : ""
-               }
+                  res.status === "validee"
+                    ? '<button onclick="viewReservationDetails(' +
+                      res.id +
+                      ')" style="width: 100%; padding: 10px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 12px;"><i class="fas fa-file"></i> Voir ma facture</button>'
+                    : ""
+                }
             `;
 
-              container.appendChild(card);
-            });
-          } else {
+                container.appendChild(card);
+              });
+            } else {
+              container.innerHTML =
+                '<p style="color: var(--muted); text-align: center; padding: 40px;">Aucune réservation trouvée. Créez-en une!</p>';
+            }
+          })
+          .fail(function () {
             container.innerHTML =
-              '<p style="color: var(--muted); text-align: center; padding: 40px;">Aucune réservation trouvée. Créez-en une!</p>';
-          }
-        })
-        .fail(function() {
-          container.innerHTML =
-            '<p style="color: #ef5350; text-align: center; padding: 40px;">Erreur lors du chargement de vos réservations</p>';
-        });
+              '<p style="color: #ef5350; text-align: center; padding: 40px;">Erreur lors du chargement de vos réservations</p>';
+          });
       }
 
       function viewReservationDetails(resId) {
@@ -1163,31 +1227,31 @@
           method: "GET",
           url: "api/billing/get_invoice.php",
           data: { id: resId },
-          dataType: "json"
+          dataType: "json",
         })
-        .done(function(resp) {
-          if (!resp.success) {
+          .done(function (resp) {
+            if (!resp.success) {
+              showMsg(
+                "reservationMsg",
+                resp.message || "Impossible de charger la facture",
+                false,
+              );
+            } else {
+              showInvoiceModal(resp.invoice);
+            }
+          })
+          .fail(function () {
             showMsg(
               "reservationMsg",
-              resp.message || "Impossible de charger la facture",
+              "Erreur lors du chargement de la facture",
               false,
             );
-          } else {
-            showInvoiceModal(resp.invoice);
-          }
-        })
-        .fail(function() {
-          showMsg(
-            "reservationMsg",
-            "Erreur lors du chargement de la facture",
-            false,
-          );
-        });
+          });
       }
 
-       function showInvoiceModal(invoice) {
-         const modal = document.createElement("div");
-         modal.style.cssText = `
+      function showInvoiceModal(invoice) {
+        const modal = document.createElement("div");
+        modal.style.cssText = `
          position: fixed;
          inset: 0;
          background: rgba(0,0,0,0.8);
@@ -1199,7 +1263,7 @@
          padding: 20px;
        `;
 
-         const invoiceHtml = `
+        const invoiceHtml = `
          <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto;">
            <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border);">
              <h2 style="margin: 0; color: var(--green);"><i class="fas fa-list"></i> Facture de réservation #${invoice.id}</h2>
@@ -1232,20 +1296,35 @@
                   <strong>Activités</strong>
                   <span>${invoice.activities_cost.toFixed(2)}€</span>
                 </div>
-                ${invoice.services_cost > 0 ? `
+                ${
+                  invoice.services_cost > 0
+                    ? `
                 <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-top: 1px solid rgba(255,215,64,0.2);">
                   <strong>Prestations</strong>
                   <span>${invoice.services_cost.toFixed(2)}€</span>
                 </div>
-                ${invoice.services_details && invoice.services_details.length > 0 ? `
+                ${
+                  invoice.services_details &&
+                  invoice.services_details.length > 0
+                    ? `
                 <div style="margin: 8px 0 12px 20px; padding: 8px; background: rgba(255,215,64,0.05); border-left: 3px solid var(--gold); border-radius: 4px;">
-                  ${invoice.services_details.map(service => `<div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; color: var(--muted);">
+                  ${invoice.services_details
+                    .map(
+                      (
+                        service,
+                      ) => `<div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; color: var(--muted);">
                     <span>• ${service.name}</span>
                     <span style="color: var(--gold);">${service.total.toFixed(2)}€</span>
-                  </div>`).join('')}
+                  </div>`,
+                    )
+                    .join("")}
                 </div>
-                ` : ''}
-                ` : ''}
+                `
+                    : ""
+                }
+                `
+                    : ""
+                }
                 <div style="display: flex; justify-content: space-between; font-weight: 700; padding-top: 12px; border-top: 1px solid var(--border);">
                   <strong>Total à payer</strong>
                   <span>${invoice.amount_due.toFixed(2)}€</span>
@@ -1263,9 +1342,9 @@
          </div>
        `;
 
-         modal.innerHTML = invoiceHtml;
-         document.body.appendChild(modal);
-       }
+        modal.innerHTML = invoiceHtml;
+        document.body.appendChild(modal);
+      }
 
       function sendInvoiceEmail(resId) {
         $.ajax({
@@ -1295,11 +1374,19 @@
       }
 
       function sendInvoiceEmail(resId) {
-        showMsg("reservationMsg", '<i class="fas fa-envelope"></i> Facture renvoyée à votre email!', true);
+        showMsg(
+          "reservationMsg",
+          '<i class="fas fa-envelope"></i> Facture renvoyée à votre email!',
+          true,
+        );
       }
 
       function downloadInvoice(resId) {
-        showMsg("reservationMsg", '<i class="fas fa-download"></i> Facture téléchargée!', true);
+        showMsg(
+          "reservationMsg",
+          '<i class="fas fa-download"></i> Facture téléchargée!',
+          true,
+        );
       }
 
       // ===== ACTIVITIES =====
@@ -1312,59 +1399,59 @@
           const groupEl = document.getElementById("activitiesGroup");
           groupEl.innerHTML = "";
 
-           allActivities.forEach((act) => {
-             const label = document.createElement("label");
-             label.className = "checkbox-item";
-             label.innerHTML = `
+          allActivities.forEach((act) => {
+            const label = document.createElement("label");
+            label.className = "checkbox-item";
+            label.innerHTML = `
              <input type="checkbox" name="activity" value="${act.id}" onchange="onActivityChange()">
              <span>${act.icon} ${act.name} (${act.price}€)</span>
            `;
-             groupEl.appendChild(label);
-           });
+            groupEl.appendChild(label);
+          });
         });
 
         // Load room/facility data
-         $.get("data/rooms.json", function (data) {
-           facilityData = {};
-           // data.rooms est le tableau des chambres, data.types est le tableau des types
-           const roomsList = (data && data.rooms) || [];
-           roomsList.forEach((room) => {
-             facilityData[room.number] = room;
-           });
-         });
-       }
+        $.get("data/rooms.json", function (data) {
+          facilityData = {};
+          // data.rooms est le tableau des chambres, data.types est le tableau des types
+          const roomsList = (data && data.rooms) || [];
+          roomsList.forEach((room) => {
+            facilityData[room.number] = room;
+          });
+        });
+      }
 
-        function onActivityChange() {
-          const arrivalVal = document.getElementById("date_arrivee").value;
-          const departureVal = document.getElementById("date_depart").value;
+      function onActivityChange() {
+        const arrivalVal = document.getElementById("date_arrivee").value;
+        const departureVal = document.getElementById("date_depart").value;
 
-          if (arrivalVal && departureVal) {
-            loadRoomsForReservation();
-          }
+        if (arrivalVal && departureVal) {
+          loadRoomsForReservation();
         }
+      }
 
-       // ===== SERVICES/PRESTATIONS =====
-       function loadServices() {
-         $.get("data/settings.json", function (settings) {
-           availableServices = settings.services_catalog || [];
-           generateServicesUI();
-         }).fail(function() {
-           console.error("Erreur lors du chargement des services");
-         });
-       }
+      // ===== SERVICES/PRESTATIONS =====
+      function loadServices() {
+        $.get("data/settings.json", function (settings) {
+          availableServices = settings.services_catalog || [];
+          generateServicesUI();
+        }).fail(function () {
+          console.error("Erreur lors du chargement des services");
+        });
+      }
 
-       function generateServicesUI() {
-         const container = document.getElementById("servicesContent");
-         if (!container) return;
+      function generateServicesUI() {
+        const container = document.getElementById("servicesContent");
+        if (!container) return;
 
-         container.innerHTML = "";
-         selectedServices = {};
+        container.innerHTML = "";
+        selectedServices = {};
 
-         availableServices.forEach((service) => {
-           selectedServices[service.id] = 0;
+        availableServices.forEach((service) => {
+          selectedServices[service.id] = 0;
 
-           const div = document.createElement("div");
-           div.style.cssText = `
+          const div = document.createElement("div");
+          div.style.cssText = `
              padding: 14px;
              background: rgba(255, 255, 255, 0.04);
              border: 1px solid rgba(255, 215, 64, 0.3);
@@ -1373,7 +1460,7 @@
              transition: all 0.2s;
            `;
 
-           div.innerHTML = `
+          div.innerHTML = `
              <div style="display: flex; align-items: flex-start; gap: 10px;">
                <input
                  type="checkbox"
@@ -1391,68 +1478,80 @@
                    ${service.description}
                  </div>
                  <div style="font-size: 0.9rem; color: var(--gold); font-weight: 600; margin-top: 6px;">
-                   ${service.price}€ ${service.per_unit ? '<span style="color: var(--muted); font-weight: 400;">(' + service.per_unit + ')</span>' : ''}
+                   ${service.price}€ ${service.per_unit ? '<span style="color: var(--muted); font-weight: 400;">(' + service.per_unit + ")</span>" : ""}
                  </div>
                </div>
              </div>
            `;
 
-           div.addEventListener("mouseover", () => {
-             div.style.borderColor = "rgba(255, 215, 64, 0.6)";
-             div.style.background = "rgba(255, 215, 64, 0.08)";
-           });
-           div.addEventListener("mouseout", () => {
-             div.style.borderColor = "rgba(255, 215, 64, 0.3)";
-             div.style.background = "rgba(255, 255, 255, 0.04)";
-           });
+          div.addEventListener("mouseover", () => {
+            div.style.borderColor = "rgba(255, 215, 64, 0.6)";
+            div.style.background = "rgba(255, 215, 64, 0.08)";
+          });
+          div.addEventListener("mouseout", () => {
+            div.style.borderColor = "rgba(255, 215, 64, 0.3)";
+            div.style.background = "rgba(255, 255, 255, 0.04)";
+          });
 
-           container.appendChild(div);
-         });
-       }
+          container.appendChild(div);
+        });
+      }
 
-       function updateServiceSelection() {
-         const checkboxes = document.querySelectorAll(".service-checkbox:checked");
-         let totalServices = 0;
+      function updateServiceSelection() {
+        const checkboxes = document.querySelectorAll(
+          ".service-checkbox:checked",
+        );
+        let totalServices = 0;
 
-         checkboxes.forEach((checkbox) => {
-           const serviceId = parseInt(checkbox.value);
-           const service = availableServices.find(s => s.id === serviceId);
-           if (service) {
-             selectedServices[serviceId] = 1;
-             totalServices++;
-           }
-         });
+        checkboxes.forEach((checkbox) => {
+          const serviceId = parseInt(checkbox.value);
+          const service = availableServices.find((s) => s.id === serviceId);
+          if (service) {
+            selectedServices[serviceId] = 1;
+            totalServices++;
+          }
+        });
 
-         const servicesTotal = document.getElementById("servicesTotal");
-         if (checkboxes.length > 0) {
-           servicesTotal.style.display = "block";
-           updateServicesTotalDisplay();
-         } else {
-           servicesTotal.style.display = "none";
-           updateServicesTotalDisplay();
-         }
-       }
+        const servicesTotal = document.getElementById("servicesTotal");
+        if (checkboxes.length > 0) {
+          servicesTotal.style.display = "block";
+          updateServicesTotalDisplay();
+        } else {
+          servicesTotal.style.display = "none";
+          updateServicesTotalDisplay();
+        }
+      }
 
-        function updateServicesTotalDisplay() {
-          let totalAmount = 0;
+      function updateServicesTotalDisplay() {
+        let totalAmount = 0;
 
-          document.querySelectorAll(".service-checkbox:checked").forEach((checkbox) => {
+        document
+          .querySelectorAll(".service-checkbox:checked")
+          .forEach((checkbox) => {
             const serviceId = parseInt(checkbox.value);
-            const service = availableServices.find(s => s.id === serviceId);
+            const service = availableServices.find((s) => s.id === serviceId);
             if (service) {
               let servicePrice = service.price;
-              const nbPersonnes = parseInt(document.getElementById("nb_personnes").value || 1);
+              const nbPersonnes = parseInt(
+                document.getElementById("nb_personnes").value || 1,
+              );
 
               if (service.type === "meals") {
-                const dateArrivee = document.getElementById("date_arrivee").value;
+                const dateArrivee =
+                  document.getElementById("date_arrivee").value;
                 const dateDepart = document.getElementById("date_depart").value;
                 if (dateArrivee && dateDepart) {
                   const arrival = new Date(dateArrivee);
                   const departure = new Date(dateDepart);
-                  const nights = Math.ceil((departure - arrival) / (1000 * 60 * 60 * 24));
+                  const nights = Math.ceil(
+                    (departure - arrival) / (1000 * 60 * 60 * 24),
+                  );
                   servicePrice = service.price * nbPersonnes * nights;
                 }
-              } else if (service.type === "transport_per_person" || service.type === "merchandise_per_person") {
+              } else if (
+                service.type === "transport_per_person" ||
+                service.type === "merchandise_per_person"
+              ) {
                 servicePrice = service.price * nbPersonnes;
               }
 
@@ -1460,11 +1559,13 @@
             }
           });
 
-          const servicesAmountSpan = document.getElementById("servicesTotalAmount");
-          if (servicesAmountSpan) {
-            servicesAmountSpan.textContent = totalAmount.toFixed(2) + "€";
-          }
+        const servicesAmountSpan = document.getElementById(
+          "servicesTotalAmount",
+        );
+        if (servicesAmountSpan) {
+          servicesAmountSpan.textContent = totalAmount.toFixed(2) + "€";
         }
+      }
 
       // ===== DATE VALIDATION =====
       function setupDateValidation() {
@@ -1664,155 +1765,161 @@
         }
       }
 
-       // ===== RESERVATION =====
-       function handleReservationRequest(e) {
-         e.preventDefault();
+      // ===== RESERVATION =====
+      function handleReservationRequest(e) {
+        e.preventDefault();
 
-         const form = e.target;
-         const inputs = form.querySelectorAll(
-           'input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"]',
-         );
-         const nom = inputs[0].value.trim();
-         const prenom = inputs[1].value.trim();
-         const email = inputs[2].value.trim();
-         const telephone = inputs[3].value.trim();
-         const date_arrivee = inputs[4].value;
-         const date_depart = inputs[5].value;
-         const nb_personnes = parseInt(inputs[6].value);
+        const form = e.target;
+        const inputs = form.querySelectorAll(
+          'input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"]',
+        );
+        const nom = inputs[0].value.trim();
+        const prenom = inputs[1].value.trim();
+        const email = inputs[2].value.trim();
+        const telephone = inputs[3].value.trim();
+        const date_arrivee = inputs[4].value;
+        const date_depart = inputs[5].value;
+        const nb_personnes = parseInt(inputs[6].value);
 
-         // Vérifier la capacité des chambres
-         let totalCapacity = 0;
-         for (const [roomType, quantity] of Object.entries(selectedRooms)) {
-           const roomInfo = availableRoomTypes.find((r) => r.type === roomType);
-           if (roomInfo) {
-             totalCapacity += quantity * roomInfo.capacity;
-           }
-         }
+        // Vérifier la capacité des chambres
+        let totalCapacity = 0;
+        for (const [roomType, quantity] of Object.entries(selectedRooms)) {
+          const roomInfo = availableRoomTypes.find((r) => r.type === roomType);
+          if (roomInfo) {
+            totalCapacity += quantity * roomInfo.capacity;
+          }
+        }
 
-         if (totalCapacity < nb_personnes) {
-           showMsg(
-             document.getElementById("reservationMsg"),
-             '<i class="fas fa-exclamation-circle"></i> La capacité des chambres sélectionnées doit être égale ou supérieure au nombre de personnes',
-             false,
-           );
-           return;
-         }
+        if (totalCapacity < nb_personnes) {
+          showMsg(
+            document.getElementById("reservationMsg"),
+            '<i class="fas fa-exclamation-circle"></i> La capacité des chambres sélectionnées doit être égale ou supérieure au nombre de personnes',
+            false,
+          );
+          return;
+        }
 
-         // Récupérer les activités sélectionnées par jour
-         // Créer un array avec toutes les activités sélectionnées pour validation
-         const selectedActivities = [];
-         Object.values(activitiesByDay).forEach((dayActivities) => {
-           dayActivities.forEach((activityId) => {
-             if (!selectedActivities.includes(activityId)) {
-               selectedActivities.push(activityId);
-             }
-           });
-         });
+        // Récupérer les activités sélectionnées par jour
+        // Créer un array avec toutes les activités sélectionnées pour validation
+        const selectedActivities = [];
+        Object.values(activitiesByDay).forEach((dayActivities) => {
+          dayActivities.forEach((activityId) => {
+            if (!selectedActivities.includes(activityId)) {
+              selectedActivities.push(activityId);
+            }
+          });
+        });
 
-         // Valider les contraintes de participants pour les activités
-         for (let activityId of selectedActivities) {
-           const activity = availableActivities.find(a => a.id === activityId);
-           if (activity) {
-             if (activity.min_participants && nb_personnes < activity.min_participants) {
-               showMsg(
-                 document.getElementById("reservationMsg"),
-                 `<i class="fas fa-exclamation-circle"></i> ${activity.icon} ${activity.name} nécessite un minimum de ${activity.min_participants} personnes (vous avez: ${nb_personnes})`,
-                 false,
-               );
-               return;
-             }
-             if (activity.max_participants && nb_personnes > activity.max_participants) {
-               showMsg(
-                 document.getElementById("reservationMsg"),
-                 `<i class="fas fa-exclamation-circle"></i> ${activity.icon} ${activity.name} ne peut accueillir que ${activity.max_participants} personnes maximum (vous avez: ${nb_personnes})`,
-                 false,
-               );
-               return;
-             }
-           }
-         }
+        // Valider les contraintes de participants pour les activités
+        for (let activityId of selectedActivities) {
+          const activity = availableActivities.find((a) => a.id === activityId);
+          if (activity) {
+            if (
+              activity.min_participants &&
+              nb_personnes < activity.min_participants
+            ) {
+              showMsg(
+                document.getElementById("reservationMsg"),
+                `<i class="fas fa-exclamation-circle"></i> ${activity.icon} ${activity.name} nécessite un minimum de ${activity.min_participants} personnes (vous avez: ${nb_personnes})`,
+                false,
+              );
+              return;
+            }
+            if (
+              activity.max_participants &&
+              nb_personnes > activity.max_participants
+            ) {
+              showMsg(
+                document.getElementById("reservationMsg"),
+                `<i class="fas fa-exclamation-circle"></i> ${activity.icon} ${activity.name} ne peut accueillir que ${activity.max_participants} personnes maximum (vous avez: ${nb_personnes})`,
+                false,
+              );
+              return;
+            }
+          }
+        }
 
-         // Validation téléphone
-         if (!/^[0-9]{10}$/.test(telephone)) {
-           showMsg(
-             document.getElementById("reservationMsg"),
-             '<i class="fas fa-exclamation-circle"></i> Le téléphone doit contenir 10 chiffres',
-             false,
-           );
-           return;
-         }
+        // Validation téléphone
+        if (!/^[0-9]{10}$/.test(telephone)) {
+          showMsg(
+            document.getElementById("reservationMsg"),
+            '<i class="fas fa-exclamation-circle"></i> Le téléphone doit contenir 10 chiffres',
+            false,
+          );
+          return;
+        }
 
-         // Validation dates
-         if (new Date(date_arrivee) >= new Date(date_depart)) {
-           showMsg(
-             document.getElementById("reservationMsg"),
-             '<i class="fas fa-exclamation-circle"></i> La date de départ doit être après la date d\'arrivée',
-             false,
-           );
-           return;
-         }
+        // Validation dates
+        if (new Date(date_arrivee) >= new Date(date_depart)) {
+          showMsg(
+            document.getElementById("reservationMsg"),
+            '<i class="fas fa-exclamation-circle"></i> La date de départ doit être après la date d\'arrivée',
+            false,
+          );
+          return;
+        }
 
-         const btn = form.querySelector('button[type="submit"]');
-         btn.disabled = true;
-         const originalText = btn.innerHTML;
-         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
 
-          $.ajax({
-            method: "POST",
-            url: "api/reservations/reservation_request.php",
-            data: JSON.stringify({
-              nom: nom,
-              prenom: prenom,
-              email: email,
-              telephone: telephone,
-              date_arrivee: date_arrivee,
-              date_depart: date_depart,
-              nb_personnes: nb_personnes,
-              activities: selectedActivities,
-              activities_by_day: activitiesByDay,
-              selected_rooms: selectedRooms,
-              selected_services: selectedServices,
-            }),
-            contentType: "application/json",
-            dataType: "json",
-            timeout: 8000
+        $.ajax({
+          method: "POST",
+          url: "api/reservations/reservation_request.php",
+          data: JSON.stringify({
+            nom: nom,
+            prenom: prenom,
+            email: email,
+            telephone: telephone,
+            date_arrivee: date_arrivee,
+            date_depart: date_depart,
+            nb_personnes: nb_personnes,
+            activities: selectedActivities,
+            activities_by_day: activitiesByDay,
+            selected_rooms: selectedRooms,
+            selected_services: selectedServices,
+          }),
+          contentType: "application/json",
+          dataType: "json",
+          timeout: 8000,
+        })
+          .done(function (resp) {
+            if (!resp.success) {
+              showMsg(
+                document.getElementById("reservationMsg"),
+                '<i class="fas fa-times-circle"></i> ' +
+                  (resp.message || "Erreur lors de la soumission"),
+                false,
+              );
+              btn.disabled = false;
+              btn.innerHTML = originalText;
+            } else {
+              showMsg(
+                document.getElementById("reservationMsg"),
+                '<i class="fas fa-check-circle"></i> Réservation soumise avec succès! Un email de confirmation a été envoyé.',
+                true,
+              );
+              form.reset();
+              loadActivitiesForReservation();
+              // Recharger les réservations après 2 secondes
+              setTimeout(() => {
+                loadMyReservations();
+              }, 2000);
+              // Réactiver le bouton immédiatement
+              btn.disabled = false;
+              btn.innerHTML = originalText;
+            }
           })
-         .done(function(resp) {
-           if (!resp.success) {
-             showMsg(
-               document.getElementById("reservationMsg"),
-               '<i class="fas fa-times-circle"></i> ' +
-                 (resp.message || "Erreur lors de la soumission"),
-               false,
-             );
-             btn.disabled = false;
-             btn.innerHTML = originalText;
-           } else {
-             showMsg(
-               document.getElementById("reservationMsg"),
-               '<i class="fas fa-check-circle"></i> Réservation soumise avec succès! Un email de confirmation a été envoyé.',
-               true,
-             );
-             form.reset();
-             loadActivitiesForReservation();
-             // Recharger les réservations après 2 secondes
-             setTimeout(() => {
-               loadMyReservations();
-             }, 2000);
-             // Réactiver le bouton immédiatement
-             btn.disabled = false;
-             btn.innerHTML = originalText;
-           }
-         })
-         .fail(function(xhr, status, error) {
-           const errorMsg =
-             '<i class="fas fa-exclamation-triangle"></i> Erreur: ' +
-             (status === "timeout" ? "Délai dépassé" : status);
-           showMsg(document.getElementById("reservationMsg"), errorMsg, false);
-           btn.disabled = false;
-           btn.innerHTML = originalText;
-         });
-       }
+          .fail(function (xhr, status, error) {
+            const errorMsg =
+              '<i class="fas fa-exclamation-triangle"></i> Erreur: ' +
+              (status === "timeout" ? "Délai dépassé" : status);
+            showMsg(document.getElementById("reservationMsg"), errorMsg, false);
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+          });
+      }
 
       function showMsg(elementId, text, isSuccess) {
         try {
@@ -1843,15 +1950,14 @@
               }
             }, 300);
           }, 5000);
-         } catch (e) {
-         }
-       }
+        } catch (e) {}
+      }
 
       // ===== SCROLL FUNCTIONS =====
       function scrollToReservationForm() {
-        const formCard = document.querySelector('.form-card');
+        const formCard = document.querySelector(".form-card");
         if (formCard) {
-          formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          formCard.scrollIntoView({ behavior: "smooth", block: "start" });
           // Focus sur le premier champ du formulaire
           const firstField = formCard.querySelector('input[type="date"]');
           if (firstField) {
@@ -1865,15 +1971,17 @@
       // ===== CALENDAR =====
       async function loadReservations() {
         try {
-          const response = await fetch("api/reservations/admin_list_reservations.php");
+          const response = await fetch(
+            "api/reservations/admin_list_reservations.php",
+          );
           const data = await response.json();
           if (data.success && data.reservations) {
             reservations = data.reservations;
           }
-         } catch (e) {
-         } finally {
-           renderCalendar();
-         }
+        } catch (e) {
+        } finally {
+          renderCalendar();
+        }
       }
 
       function renderCalendar() {
@@ -1976,7 +2084,9 @@
       function loadRoomsForReservation() {
         const arrivalVal = document.getElementById("date_arrivee").value;
         const departureVal = document.getElementById("date_depart").value;
-        const nbPersonnes = parseInt(document.getElementById("nb_personnes").value || 1);
+        const nbPersonnes = parseInt(
+          document.getElementById("nb_personnes").value || 1,
+        );
 
         if (!arrivalVal || !departureVal) {
           document.getElementById("roomsAvailability").style.display = "none";
@@ -2023,7 +2133,7 @@
                   <div>
                     <strong style="font-size: 1.1rem;">${room.name}</strong>
                     <div style="font-size: 0.9rem; color: var(--muted); margin-top: 4px;">
-                      Capacité: ${room.capacity} personne${room.capacity > 1 ? 's' : ''} | Disponible: ${room.available_count}
+                      Capacité: ${room.capacity} personne${room.capacity > 1 ? "s" : ""} | Disponible: ${room.available_count}
                     </div>
                   </div>
                   <div style="text-align: right;">
@@ -2031,7 +2141,7 @@
                       ${room.total_price}€
                     </div>
                     <div style="font-size: 0.85rem; color: var(--muted);">
-                      ${room.price_per_night}€/nuit x ${nights} nuit${nights > 1 ? 's' : ''}
+                      ${room.price_per_night}€/nuit x ${nights} nuit${nights > 1 ? "s" : ""}
                     </div>
                   </div>
                 </div>
@@ -2059,7 +2169,7 @@
 
             // Initialiser les quantités
             window.selectedRoomsDashboard = {};
-            resp.rooms.forEach(room => {
+            resp.rooms.forEach((room) => {
               window.selectedRoomsDashboard[room.type] = 0;
             });
 
@@ -2081,7 +2191,10 @@
         if (!input) return;
 
         const maxAvailable = parseInt(input.max || 10);
-        let newValue = Math.max(0, Math.min(maxAvailable, parseInt(input.value || 0) + change));
+        let newValue = Math.max(
+          0,
+          Math.min(maxAvailable, parseInt(input.value || 0) + change),
+        );
         input.value = newValue;
 
         if (window.selectedRoomsDashboard) {
@@ -2092,7 +2205,9 @@
       }
 
       function updateRoomCapacityInfo() {
-        const nbPersonnes = parseInt(document.getElementById("nb_personnes").value || 1);
+        const nbPersonnes = parseInt(
+          document.getElementById("nb_personnes").value || 1,
+        );
 
         let totalCapacity = 0;
         const roomInputs = document.querySelectorAll('input[id^="rooms_"]');
@@ -2129,16 +2244,20 @@
         const dateDepart = document.getElementById("date_depart").value;
 
         if (!dateArrivee || !dateDepart) {
-          document.getElementById("activitiesByDayContent").innerHTML = '<p style="color: var(--muted); text-align: center;">Veuillez d\'abord sélectionner vos dates de séjour</p>';
+          document.getElementById("activitiesByDayContent").innerHTML =
+            '<p style="color: var(--muted); text-align: center;">Veuillez d\'abord sélectionner vos dates de séjour</p>';
           return;
         }
 
         const arrival = new Date(dateArrivee);
         const departure = new Date(dateDepart);
-        const nights = Math.floor((departure - arrival) / (1000 * 60 * 60 * 24));
+        const nights = Math.floor(
+          (departure - arrival) / (1000 * 60 * 60 * 24),
+        );
 
         if (nights <= 0) {
-          document.getElementById("activitiesByDayContent").innerHTML = '<p style="color: var(--muted); text-align: center;">Les dates invalides</p>';
+          document.getElementById("activitiesByDayContent").innerHTML =
+            '<p style="color: var(--muted); text-align: center;">Les dates invalides</p>';
           return;
         }
 
@@ -2148,13 +2267,17 @@
         }
 
         let html = `<div style="font-size: 0.9rem; color: var(--muted); margin-bottom: 16px;">
-          <i class="fas fa-calendar"></i> ${nights} nuit${nights > 1 ? 's' : ''} - Sélectionnez vos activités pour chaque jour
+          <i class="fas fa-calendar"></i> ${nights} nuit${nights > 1 ? "s" : ""} - Sélectionnez vos activités pour chaque jour
         </div>`;
 
         for (let dayIndex = 0; dayIndex < nights; dayIndex++) {
           const dayDate = new Date(arrival);
           dayDate.setDate(dayDate.getDate() + dayIndex);
-          const dayLabel = dayDate.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+          const dayLabel = dayDate.toLocaleDateString("fr-FR", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+          });
 
           html += `
             <div style="margin-bottom: 16px; padding: 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--green); border-radius: 4px;">
@@ -2170,7 +2293,9 @@
         document.getElementById("activitiesByDayContent").innerHTML = html;
 
         for (let dayIndex = 0; dayIndex < nights; dayIndex++) {
-          const dayContainer = document.getElementById(`activities-day-${dayIndex}`);
+          const dayContainer = document.getElementById(
+            `activities-day-${dayIndex}`,
+          );
 
           availableActivities.forEach((activity) => {
             const div = document.createElement("div");
@@ -2183,14 +2308,16 @@
             checkbox.className = `activity-checkbox-day activity-day-${dayIndex}-${activity.id}`;
             checkbox.style.cssText = "margin-right: 6px; cursor: pointer;";
 
-            checkbox.addEventListener("change", function() {
+            checkbox.addEventListener("change", function () {
               const activityList = activitiesByDay[dayIndex] || [];
               if (this.checked) {
                 if (!activityList.includes(activity.id)) {
                   activityList.push(activity.id);
                 }
               } else {
-                activitiesByDay[dayIndex] = activityList.filter(id => id !== activity.id);
+                activitiesByDay[dayIndex] = activityList.filter(
+                  (id) => id !== activity.id,
+                );
               }
               activitiesByDay[dayIndex] = activityList;
               validateActivityConstraints();
@@ -2198,9 +2325,12 @@
             });
 
             const label = document.createElement("label");
-            label.style.cssText = "cursor: pointer; display: flex; align-items: center; font-size: 0.9rem;";
+            label.style.cssText =
+              "cursor: pointer; display: flex; align-items: center; font-size: 0.9rem;";
             label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(`${activity.icon} ${activity.name}`));
+            label.appendChild(
+              document.createTextNode(`${activity.icon} ${activity.name}`),
+            );
 
             div.appendChild(label);
             dayContainer.appendChild(div);
@@ -2220,29 +2350,38 @@
           });
         }
 
-         updateActivitiesAvailability();
-         loadFacilitiesForActivities();
-         updateServicesTotalDisplay();
-       }
+        updateActivitiesAvailability();
+        loadFacilitiesForActivities();
+        updateServicesTotalDisplay();
+      }
 
       function updateActivitiesAvailability() {
-        const nb_personnes = parseInt(document.getElementById("nb_personnes").value) || 0;
+        const nb_personnes =
+          parseInt(document.getElementById("nb_personnes").value) || 0;
 
         availableActivities.forEach((activity) => {
-          const checkboxes = document.querySelectorAll(`.activity-checkbox-day[value="${activity.id}"]`);
+          const checkboxes = document.querySelectorAll(
+            `.activity-checkbox-day[value="${activity.id}"]`,
+          );
           let canSelect = true;
 
-          if (activity.min_participants && nb_personnes < activity.min_participants) {
+          if (
+            activity.min_participants &&
+            nb_personnes < activity.min_participants
+          ) {
             canSelect = false;
           }
 
-          if (activity.max_participants && nb_personnes > activity.max_participants) {
+          if (
+            activity.max_participants &&
+            nb_personnes > activity.max_participants
+          ) {
             canSelect = false;
           }
 
           checkboxes.forEach((checkbox) => {
             checkbox.disabled = !canSelect;
-            const div = checkbox.closest('.activity-day-item');
+            const div = checkbox.closest(".activity-day-item");
 
             if (div) {
               if (!canSelect) {
@@ -2264,28 +2403,37 @@
       function validateActivityConstraints() {
         const selectedActivities = [];
 
-        document.querySelectorAll('input.activity-checkbox-day:checked').forEach((checkbox) => {
-          selectedActivities.push(parseInt(checkbox.value));
-        });
+        document
+          .querySelectorAll("input.activity-checkbox-day:checked")
+          .forEach((checkbox) => {
+            selectedActivities.push(parseInt(checkbox.value));
+          });
 
-        const nb_personnes = parseInt(document.getElementById("nb_personnes").value) || 0;
+        const nb_personnes =
+          parseInt(document.getElementById("nb_personnes").value) || 0;
 
         let hasConstraintError = false;
         let errorMessages = [];
 
         selectedActivities.forEach((activityId) => {
-          const activity = availableActivities.find(a => a.id === activityId);
+          const activity = availableActivities.find((a) => a.id === activityId);
           if (activity) {
-            if (activity.min_participants && nb_personnes < activity.min_participants) {
+            if (
+              activity.min_participants &&
+              nb_personnes < activity.min_participants
+            ) {
               hasConstraintError = true;
               errorMessages.push(
-                `${activity.icon} ${activity.name} nécessite un minimum de ${activity.min_participants} personnes (vous avez: ${nb_personnes})`
+                `${activity.icon} ${activity.name} nécessite un minimum de ${activity.min_participants} personnes (vous avez: ${nb_personnes})`,
               );
             }
-            if (activity.max_participants && nb_personnes > activity.max_participants) {
+            if (
+              activity.max_participants &&
+              nb_personnes > activity.max_participants
+            ) {
               hasConstraintError = true;
               errorMessages.push(
-                `${activity.icon} ${activity.name} ne peut accueillir que ${activity.max_participants} personnes maximum (vous avez: ${nb_personnes})`
+                `${activity.icon} ${activity.name} ne peut accueillir que ${activity.max_participants} personnes maximum (vous avez: ${nb_personnes})`,
               );
             }
           }
@@ -2297,22 +2445,34 @@
         if (hasConstraintError) {
           const newMsgDiv = document.createElement("div");
           newMsgDiv.id = "activitiesConstraintMsg";
-          newMsgDiv.style.cssText = "margin-top: 12px; padding: 12px; background: rgba(255, 107, 107, 0.1); border: 1px solid #ff6b6b; border-radius: 8px; color: #ff6b6b; font-size: 0.9rem;";
-          newMsgDiv.innerHTML = errorMessages.map(msg => `<div><i class="fas fa-exclamation-circle"></i> ${msg}</div>`).join("");
-          document.getElementById("activitiesByDayContainer").appendChild(newMsgDiv);
+          newMsgDiv.style.cssText =
+            "margin-top: 12px; padding: 12px; background: rgba(255, 107, 107, 0.1); border: 1px solid #ff6b6b; border-radius: 8px; color: #ff6b6b; font-size: 0.9rem;";
+          newMsgDiv.innerHTML = errorMessages
+            .map(
+              (msg) =>
+                `<div><i class="fas fa-exclamation-circle"></i> ${msg}</div>`,
+            )
+            .join("");
+          document
+            .getElementById("activitiesByDayContainer")
+            .appendChild(newMsgDiv);
         }
       }
 
       function loadFacilitiesForActivities() {
         const selectedActivities = [];
-        document.querySelectorAll('input.activity-checkbox-day:checked').forEach((checkbox) => {
-          if (!selectedActivities.includes(parseInt(checkbox.value))) {
-            selectedActivities.push(parseInt(checkbox.value));
-          }
-        });
+        document
+          .querySelectorAll("input.activity-checkbox-day:checked")
+          .forEach((checkbox) => {
+            if (!selectedActivities.includes(parseInt(checkbox.value))) {
+              selectedActivities.push(parseInt(checkbox.value));
+            }
+          });
 
         const facilitiesSection = document.getElementById("facilitiesSection");
-        const facilitiesContainer = document.getElementById("facilitiesContainer");
+        const facilitiesContainer = document.getElementById(
+          "facilitiesContainer",
+        );
 
         if (selectedActivities.length === 0) {
           facilitiesSection.style.display = "none";
@@ -2333,11 +2493,12 @@
         facilitiesContainer.innerHTML = "";
 
         const allRoomTypes = [];
-        $.get("data/rooms.json", function(data) {
+        $.get("data/rooms.json", function (data) {
           data.types.forEach((type) => {
             if (availableFacilities.includes(type.id)) {
               const div = document.createElement("div");
-              div.style.cssText = "padding: 12px; background: rgba(0, 230, 118, 0.05); border: 1px solid var(--border); border-radius: 6px; text-align: center;";
+              div.style.cssText =
+                "padding: 12px; background: rgba(0, 230, 118, 0.05); border: 1px solid var(--border); border-radius: 6px; text-align: center;";
               div.innerHTML = `<div style="font-weight: 600; color: var(--green);">${type.name}</div><div style="font-size: 0.85rem; color: var(--muted);">Capacité: ${type.capacity}</div>`;
               facilitiesContainer.appendChild(div);
             }
@@ -2359,10 +2520,10 @@
         const departure = new Date(dateInputs[1].value);
 
         if (arrival >= departure) {
-          element.style.borderColor = '#ff6b6b';
+          element.style.borderColor = "#ff6b6b";
           return false;
         }
-        element.style.borderColor = '';
+        element.style.borderColor = "";
         return true;
       }
 
@@ -2370,30 +2531,28 @@
         $.ajax({
           method: "GET",
           url: "api/services/get_activities.php",
-          dataType: "json"
+          dataType: "json",
         })
-        .done(function(resp) {
-          if (resp.success && resp.activities) {
-            availableActivities = resp.activities;
-            generateActivitiesUI();
-            updateActivitiesAvailability();
-          }
-        })
-        .fail(function() {
-        });
+          .done(function (resp) {
+            if (resp.success && resp.activities) {
+              availableActivities = resp.activities;
+              generateActivitiesUI();
+              updateActivitiesAvailability();
+            }
+          })
+          .fail(function () {});
 
         $.ajax({
           method: "GET",
           url: "data/rooms.json",
-          dataType: "json"
+          dataType: "json",
         })
-        .done(function(resp) {
-          if (resp.types) {
-            availableRoomTypes = resp.types;
-          }
-        })
-        .fail(function() {
-        });
+          .done(function (resp) {
+            if (resp.types) {
+              availableRoomTypes = resp.types;
+            }
+          })
+          .fail(function () {});
       }
 
       function generateRoomSelectionUI() {
@@ -2493,7 +2652,8 @@
           }
         });
 
-        const nb_personnes = parseInt(document.getElementById("nb_personnes").value) || 0;
+        const nb_personnes =
+          parseInt(document.getElementById("nb_personnes").value) || 0;
 
         const totalCapacityElement = document.getElementById("totalCapacity");
         if (totalCapacityElement) {
@@ -2516,7 +2676,8 @@
 
       // Adaptations des anciennes fonctions pour utiliser la nouvelle structure
       function loadRoomsForReservation() {
-        const nb_personnes = parseInt(document.getElementById("nb_personnes").value) || 0;
+        const nb_personnes =
+          parseInt(document.getElementById("nb_personnes").value) || 0;
 
         if (nb_personnes > 0) {
           const infoDiv = document.getElementById("roomsCapacityInfo");
@@ -2538,25 +2699,22 @@
           $.ajax({
             method: "GET",
             url: "data/rooms.json",
-            dataType: "json"
+            dataType: "json",
           })
-          .done(function(resp) {
-            if (resp.types) {
-              availableRoomTypes = resp.types;
-              generateRoomSelectionUI();
-            }
-          })
-          .fail(function() {
-          });
+            .done(function (resp) {
+              if (resp.types) {
+                availableRoomTypes = resp.types;
+                generateRoomSelectionUI();
+              }
+            })
+            .fail(function () {});
         } else {
           generateRoomSelectionUI();
         }
 
-        document.getElementById("roomsSelectionSection").style.display = "block";
+        document.getElementById("roomsSelectionSection").style.display =
+          "block";
       }
     </script>
   </body>
 </html>
-
-
-

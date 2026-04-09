@@ -36,7 +36,7 @@
       }
 
       body {
-        font-family: 'DM Sans', sans-serif;
+        font-family: "DM Sans", sans-serif;
         background: var(--bg);
         color: var(--text);
         overflow-x: hidden;
@@ -108,7 +108,7 @@
       }
 
       .logo {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: 1.8rem;
         letter-spacing: 2px;
       }
@@ -123,7 +123,7 @@
       }
 
       .page-title {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: clamp(2.5rem, 5vw, 4rem);
         text-align: center;
         margin-bottom: 60px;
@@ -170,7 +170,7 @@
         align-items: center;
         gap: 12px;
         margin-bottom: 32px;
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: 1.8rem;
         letter-spacing: 1px;
       }
@@ -263,7 +263,7 @@
         color: var(--text);
         border-radius: 12px;
         padding: 11px 14px;
-        font-family: 'DM Sans', sans-serif;
+        font-family: "DM Sans", sans-serif;
         font-size: 1rem;
         transition: all 0.2s;
       }
@@ -390,7 +390,7 @@
       }
 
       .hero-title {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: clamp(2rem, 8vw, 5rem);
         letter-spacing: 3px;
         margin-bottom: 20px;
@@ -477,7 +477,7 @@
       }
 
       .gallery-title {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: 2.5rem;
         letter-spacing: 2px;
         text-align: center;
@@ -569,7 +569,7 @@
       }
 
       .cta-title {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: 2rem;
         letter-spacing: 1px;
         margin-bottom: 16px;
@@ -676,7 +676,7 @@
       }
 
       .carousel-title {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: 2.5rem;
         letter-spacing: 2px;
         text-align: center;
@@ -813,7 +813,7 @@
       }
 
       .services-title {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: 2.5rem;
         letter-spacing: 2px;
         text-align: center;
@@ -890,7 +890,11 @@
       .hero-section {
         position: relative;
         padding: 120px 24px;
-        background: linear-gradient(135deg, rgba(0, 230, 118, 0.08) 0%, rgba(255, 215, 64, 0.08) 100%);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 230, 118, 0.08) 0%,
+          rgba(255, 215, 64, 0.08) 100%
+        );
         border-radius: 24px;
         border: 2px solid var(--border);
         margin-bottom: 80px;
@@ -905,8 +909,17 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: radial-gradient(circle at 20% 50%, rgba(0, 230, 118, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 80%, rgba(255, 215, 64, 0.1) 0%, transparent 50%);
+        background:
+          radial-gradient(
+            circle at 20% 50%,
+            rgba(0, 230, 118, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(255, 215, 64, 0.1) 0%,
+            transparent 50%
+          );
         pointer-events: none;
       }
 
@@ -929,8 +942,12 @@
       }
 
       @keyframes shimmer {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
       }
 
       .hero-content {
@@ -942,7 +959,7 @@
       }
 
       .hero-badge {
-          display: inline-flex;
+        display: inline-flex;
         align-items: center;
         gap: 8px;
         background: rgba(0, 230, 118, 0.15);
@@ -961,12 +978,17 @@
       }
 
       @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
       }
 
       .hero-title {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family: "Bebas Neue", sans-serif;
         font-size: clamp(2.5rem, 8vw, 5rem);
         letter-spacing: 3px;
         margin-bottom: 16px;
@@ -1034,7 +1056,11 @@
       }
 
       .hero-btn-primary {
-        background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+        background: linear-gradient(
+          135deg,
+          var(--green) 0%,
+          var(--green-dark) 100%
+        );
         color: #001a0a;
         box-shadow: 0 8px 24px rgba(0, 230, 118, 0.3);
       }
@@ -1071,29 +1097,51 @@
       <!-- HERO SECTION -->
       <div class="hero-section">
         <div class="hero-content">
-          <div class="hero-badge"><i class="fas fa-trophy"></i> Le centre de rêve pour les passionnés de football</div>
+          <div class="hero-badge">
+            <i class="fas fa-trophy"></i> Le centre de rêve pour les passionnés
+            de football
+          </div>
           <h1 class="hero-title">FOOTCAMP DREAMS</h1>
           <p class="hero-subtitle">
-            Vivez l'expérience ultime • Entraînements professionnels • Hébergement premium<br>
-            <strong>Rassemblez votre équipe, créez des souvenirs, gagnez ensemble</strong>
+            Vivez l'expérience ultime • Entraînements professionnels •
+            Hébergement premium<br />
+            <strong
+              >Rassemblez votre équipe, créez des souvenirs, gagnez
+              ensemble</strong
+            >
           </p>
           <div class="hero-cta">
-            <button class="hero-btn hero-btn-primary" onclick="scrollToReservation()"><i class="fas fa-bullseye"></i> Réserver maintenant</button>
-            <button class="hero-btn hero-btn-secondary" onclick="scrollToServices()"><i class="fas fa-list"></i> Voir nos services</button>
+            <button
+              class="hero-btn hero-btn-primary"
+              onclick="scrollToReservation()"
+            >
+              <i class="fas fa-bullseye"></i> Réserver maintenant
+            </button>
+            <button
+              class="hero-btn hero-btn-secondary"
+              onclick="scrollToServices()"
+            >
+              <i class="fas fa-list"></i> Voir nos services
+            </button>
           </div>
         </div>
       </div>
 
-
       <!-- CARROUSEL INSTALLATIONS/TERRAINS -->
       <div class="carousel-section">
-        <h2 class="carousel-title"><i class="fas fa-tree"></i> NOS INSTALLATIONS</h2>
+        <h2 class="carousel-title">
+          <i class="fas fa-tree"></i> NOS INSTALLATIONS
+        </h2>
         <div class="carousel-container">
           <div class="carousel-wrapper" id="carouselTerrainWrapper">
             <!-- Les slides terrains seront générées par JavaScript -->
           </div>
-          <button class="carousel-btn prev" onclick="prevSlideTerrain()"><i class="fas fa-chevron-left"></i></button>
-          <button class="carousel-btn next" onclick="nextSlideTerrain()"><i class="fas fa-chevron-right"></i></button>
+          <button class="carousel-btn prev" onclick="prevSlideTerrain()">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="carousel-btn next" onclick="nextSlideTerrain()">
+            <i class="fas fa-chevron-right"></i>
+          </button>
           <div class="carousel-controls" id="carouselTerrainControls">
             <!-- Les dots seront générées par JavaScript -->
           </div>
@@ -1102,7 +1150,9 @@
 
       <!-- ACTIVITÉS SECTION -->
       <div class="services-section">
-        <h2 class="services-title"><i class="fas fa-soccer-ball"></i> NOS ACTIVITÉS</h2>
+        <h2 class="services-title">
+          <i class="fas fa-soccer-ball"></i> NOS ACTIVITÉS
+        </h2>
         <div class="services-grid">
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-soccer-ball"></i></div>
@@ -1110,16 +1160,21 @@
             <div class="service-description">
               Sessions de groupe sur nos terrains professionnels (min. 22 pers.)
             </div>
-            <div class="service-price">50€<br><span class="service-unit">par activité</span></div>
+            <div class="service-price">
+              50€<br /><span class="service-unit">par activité</span>
+            </div>
           </div>
 
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-trophy"></i></div>
             <div class="service-name">Match Amical</div>
             <div class="service-description">
-              Match complet sur terrain professionnel avec arbitrage (min. 15 pers.)
+              Match complet sur terrain professionnel avec arbitrage (min. 15
+              pers.)
             </div>
-            <div class="service-price">75€<br><span class="service-unit">par activité</span></div>
+            <div class="service-price">
+              75€<br /><span class="service-unit">par activité</span>
+            </div>
           </div>
 
           <div class="service-card">
@@ -1128,7 +1183,9 @@
             <div class="service-description">
               Tournoi complet avec résultats et classement final (min. 15 pers.)
             </div>
-            <div class="service-price">200€<br><span class="service-unit">par tournoi</span></div>
+            <div class="service-price">
+              200€<br /><span class="service-unit">par tournoi</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1140,8 +1197,12 @@
           <div class="carousel-wrapper" id="carouselChambresWrapper">
             <!-- Les slides chambres seront générées par JavaScript -->
           </div>
-          <button class="carousel-btn prev" onclick="prevSlideChambres()"><i class="fas fa-chevron-left"></i></button>
-          <button class="carousel-btn next" onclick="nextSlideChambres()"><i class="fas fa-chevron-right"></i></button>
+          <button class="carousel-btn prev" onclick="prevSlideChambres()">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="carousel-btn next" onclick="nextSlideChambres()">
+            <i class="fas fa-chevron-right"></i>
+          </button>
           <div class="carousel-controls" id="carouselChambresControls">
             <!-- Les dots seront générées par JavaScript -->
           </div>
@@ -1155,9 +1216,12 @@
             <div class="service-icon"><i class="fas fa-bed"></i></div>
             <div class="service-name">Chambre Simple</div>
             <div class="service-description">
-              Hébergement confortable pour 1 personne, idéal pour séjours individuels
+              Hébergement confortable pour 1 personne, idéal pour séjours
+              individuels
             </div>
-            <div class="service-price">50€<br><span class="service-unit">par nuit</span></div>
+            <div class="service-price">
+              50€<br /><span class="service-unit">par nuit</span>
+            </div>
           </div>
 
           <div class="service-card">
@@ -1166,7 +1230,9 @@
             <div class="service-description">
               Chambre spacieuse pour 2 personnes avec tout le confort
             </div>
-            <div class="service-price">90€<br><span class="service-unit">par nuit</span></div>
+            <div class="service-price">
+              90€<br /><span class="service-unit">par nuit</span>
+            </div>
           </div>
 
           <div class="service-card">
@@ -1175,41 +1241,53 @@
             <div class="service-description">
               Chambre parfaite pour 3 personnes, spacieuse et confortable
             </div>
-            <div class="service-price">120€<br><span class="service-unit">par nuit</span></div>
+            <div class="service-price">
+              120€<br /><span class="service-unit">par nuit</span>
+            </div>
           </div>
         </div>
       </div>
 
-
       <!-- PRESTATIONS OPTIONNELLES SECTION -->
       <div class="services-section">
-        <h2 class="services-title"><i class="fas fa-star"></i> PRESTATIONS OPTIONNELLES</h2>
+        <h2 class="services-title">
+          <i class="fas fa-star"></i> PRESTATIONS OPTIONNELLES
+        </h2>
         <div class="services-grid">
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-van-shuttle"></i></div>
             <div class="service-name">Transport Aéroport</div>
             <div class="service-description">
-              Service de navette depuis/vers l'aéroport pour un accueil sans stress
+              Service de navette depuis/vers l'aéroport pour un accueil sans
+              stress
             </div>
-            <div class="service-price">35€<br><span class="service-unit">par personne</span></div>
+            <div class="service-price">
+              35€<br /><span class="service-unit">par personne</span>
+            </div>
           </div>
 
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-bacon"></i></div>
             <div class="service-name">Petits Déjeuners Premium</div>
             <div class="service-description">
-              Petit-déjeuner complet et énergétique pour bien commencer votre journée
+              Petit-déjeuner complet et énergétique pour bien commencer votre
+              journée
             </div>
-            <div class="service-price">8€<br><span class="service-unit">par personne/nuit</span></div>
+            <div class="service-price">
+              8€<br /><span class="service-unit">par personne/nuit</span>
+            </div>
           </div>
 
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-shirt"></i></div>
             <div class="service-name">Maillots d'Échauffement</div>
             <div class="service-description">
-              Maillots et équipement de qualité à tarif avantageux pour toute l'équipe
+              Maillots et équipement de qualité à tarif avantageux pour toute
+              l'équipe
             </div>
-            <div class="service-price">12€<br><span class="service-unit">par personne</span></div>
+            <div class="service-price">
+              12€<br /><span class="service-unit">par personne</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1278,7 +1356,7 @@
       >
         <h2
           style="
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: &quot;Bebas Neue&quot;, sans-serif;
             font-size: 2rem;
             letter-spacing: 1px;
             color: var(--green);
@@ -1313,7 +1391,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
@@ -1332,7 +1410,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
@@ -1351,7 +1429,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
@@ -1372,7 +1450,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
@@ -1384,7 +1462,10 @@
               <input
                 type="date"
                 min="2026-04-02"
-                onchange="validateReservationDates(this); generateActivitiesUI();"
+                onchange="
+                  validateReservationDates(this);
+                  generateActivitiesUI();
+                "
                 required
                 style="
                   width: 100%;
@@ -1393,7 +1474,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                   transition: border-color 0.3s;
                 "
               />
@@ -1406,7 +1487,10 @@
               <input
                 type="date"
                 min="2026-04-03"
-                onchange="validateReservationDates(this); generateActivitiesUI();"
+                onchange="
+                  validateReservationDates(this);
+                  generateActivitiesUI();
+                "
                 required
                 style="
                   width: 100%;
@@ -1415,7 +1499,7 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                   transition: border-color 0.3s;
                 "
               />
@@ -1428,7 +1512,11 @@
               <input
                 type="number"
                 min="1"
-                onchange="loadRoomsForReservation(); validateActivityConstraints(); updateActivitiesAvailability();"
+                onchange="
+                  loadRoomsForReservation();
+                  validateActivityConstraints();
+                  updateActivitiesAvailability();
+                "
                 required
                 style="
                   width: 100%;
@@ -1437,66 +1525,69 @@
                   background: rgba(255, 255, 255, 0.05);
                   border-radius: 8px;
                   color: var(--text);
-                  font-family: 'DM Sans', sans-serif;
+                  font-family: &quot;DM Sans&quot;, sans-serif;
                 "
               />
             </div>
           </div>
 
-           <div style="margin-bottom: 20px">
-             <label style="display: block; margin-bottom: 12px; font-weight: 600"
-               >Activités</label
-             >
-             <div
-               id="activitiesByDayContainer"
-               style="
-                 background: rgba(0, 230, 118, 0.05);
-                 border: 1px solid var(--border);
-                 border-radius: 8px;
-                 padding: 16px;
-               "
-             >
-               <div id="activitiesByDayContent"></div>
-             </div>
-           </div>
+          <div style="margin-bottom: 20px">
+            <label style="display: block; margin-bottom: 12px; font-weight: 600"
+              >Activités</label
+            >
+            <div
+              id="activitiesByDayContainer"
+              style="
+                background: rgba(0, 230, 118, 0.05);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 16px;
+              "
+            >
+              <div id="activitiesByDayContent"></div>
+            </div>
+          </div>
 
-           <!-- SERVICES/PRESTATIONS SECTION -->
-           <div style="margin-bottom: 20px">
-             <label style="display: block; margin-bottom: 12px; font-weight: 600">
-               Prestations (Optionnel)
-             </label>
-             <div
-               id="servicesContainer"
-               style="
-                 background: rgba(255, 215, 64, 0.05);
-                 border: 1px solid rgba(255, 215, 64, 0.3);
-                 border-radius: 8px;
-                 padding: 16px;
-                 display: grid;
-                 grid-template-columns: 1fr 1fr;
-                 gap: 12px;
-               "
-             >
-               <div id="servicesContent"></div>
-             </div>
-             <div
-               id="servicesTotal"
-               style="
-                 margin-top: 12px;
-                 padding: 12px;
-                 background: rgba(255, 215, 64, 0.1);
-                 border: 1px solid rgba(255, 215, 64, 0.3);
-                 border-radius: 8px;
-                 font-size: 0.9rem;
-                 color: var(--gold);
-                 display: none;
-               "
-             >
-               <strong>Total prestations:</strong> <span id="servicesTotalAmount">0€</span>
-             </div>
-           </div>
+          <!-- SERVICES/PRESTATIONS SECTION -->
+          <div style="margin-bottom: 20px">
+            <label
+              style="display: block; margin-bottom: 12px; font-weight: 600"
+            >
+              Prestations (Optionnel)
+            </label>
+            <div
+              id="servicesContainer"
+              style="
+                background: rgba(255, 215, 64, 0.05);
+                border: 1px solid rgba(255, 215, 64, 0.3);
+                border-radius: 8px;
+                padding: 16px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+              "
+            >
+              <div id="servicesContent"></div>
+            </div>
+            <div
+              id="servicesTotal"
+              style="
+                margin-top: 12px;
+                padding: 12px;
+                background: rgba(255, 215, 64, 0.1);
+                border: 1px solid rgba(255, 215, 64, 0.3);
+                border-radius: 8px;
+                font-size: 0.9rem;
+                color: var(--gold);
+                display: none;
+              "
+            >
+              <strong>Total prestations:</strong>
+              <span id="servicesTotalAmount">0€</span>
+            </div>
+          </div>
 
-           <!-- FACILITIES SECTION -->
+          <!-- FACILITIES SECTION -->
           <div
             id="facilitiesSection"
             style="margin-bottom: 20px; display: none"
@@ -1708,19 +1799,30 @@
     </div>
 
     <footer>
-      <div style="max-width: 1200px; margin: 0 auto; padding: 40px 24px; text-align: center;">
-        <h3 style="font-size: 1.3rem; margin-bottom: 16px; color: var(--text);">FootCamp Dreams</h3>
-        <p style="margin-bottom: 12px; color: var(--muted);">
-          <i class="fas fa-map-marker-alt"></i> Baie aux Tortues, Île Maurice, Île de l'Océan Indien
+      <div
+        style="
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 40px 24px;
+          text-align: center;
+        "
+      >
+        <h3 style="font-size: 1.3rem; margin-bottom: 16px; color: var(--text)">
+          FootCamp Dreams
+        </h3>
+        <p style="margin-bottom: 12px; color: var(--muted)">
+          <i class="fas fa-map-marker-alt"></i> Baie aux Tortues, Île Maurice,
+          Île de l'Océan Indien
         </p>
-        <p style="margin-bottom: 12px; color: var(--muted);">
+        <p style="margin-bottom: 12px; color: var(--muted)">
           <i class="fas fa-phone"></i> +230 5890 1234
         </p>
-        <p style="margin-bottom: 20px; color: var(--muted);">
+        <p style="margin-bottom: 20px; color: var(--muted)">
           <i class="fas fa-envelope"></i> contact@footcamp-dreams.mu
         </p>
-        <p style="color: var(--muted); font-size: 0.9rem;">
-          &copy; 2026 FootCamp Dreams. Centre de vacances football. Tous droits réservés.
+        <p style="color: var(--muted); font-size: 0.9rem">
+          &copy; 2026 FootCamp Dreams. Centre de vacances football. Tous droits
+          réservés.
         </p>
       </div>
     </footer>
@@ -1781,98 +1883,96 @@
         loadRoomsForReservation();
       }
 
-       // ===== CLIENT LOGIN =====
-       function handleClientLogin(e) {
-         e.preventDefault();
+      // ===== CLIENT LOGIN =====
+      function handleClientLogin(e) {
+        e.preventDefault();
 
-         const form = e.target;
-         const email = form.querySelector('input[type="email"]').value.trim();
-         const password = form.querySelector('input[type="password"]').value;
-         const msgDiv = form.querySelector("#clientLoginMsg");
-         const btn = form.querySelector('button[type="submit"]');
+        const form = e.target;
+        const email = form.querySelector('input[type="email"]').value.trim();
+        const password = form.querySelector('input[type="password"]').value;
+        const msgDiv = form.querySelector("#clientLoginMsg");
+        const btn = form.querySelector('button[type="submit"]');
 
-         btn.disabled = true;
-         btn.textContent = "Connexion...";
-         msgDiv.innerHTML = "";
+        btn.disabled = true;
+        btn.textContent = "Connexion...";
+        msgDiv.innerHTML = "";
 
+        $.ajax({
+          method: "POST",
+          url: "api/auth/login.php",
+          data: { email: email, password: password },
+          dataType: "json",
+          timeout: 8000,
+        })
+          .done(function (resp) {
+            if (resp.success && resp.user) {
+              // Sauvegarder la session via SessionManager
+              sessionManager.saveUserSession(resp.user);
 
-         $.ajax({
-           method: "POST",
-           url: "api/auth/login.php",
-           data: {email: email, password: password},
-           dataType: "json",
-           timeout: 8000
-         })
-         .done(function(resp) {
-           if (resp.success && resp.user) {
-             // Sauvegarder la session via SessionManager
-             sessionManager.saveUserSession(resp.user);
+              showMsg(msgDiv, "✓ Connexion réussie! Redirection...", true);
 
-             showMsg(msgDiv, "✓ Connexion réussie! Redirection...", true);
-
-             // Redirection immédiate vers le dashboard client
-             setTimeout(() => {
-               const userJson = encodeURIComponent(JSON.stringify(resp.user));
-               window.location.href = "client-dashboard.html?user=" + userJson;
-             }, 1500);
-           } else {
-             showMsg(msgDiv, "✗ Email ou mot de passe incorrect", false);
-             btn.disabled = false;
-             btn.textContent = "Se connecter";
-           }
-         })
-         .fail(function(xhr, status, error) {
-           showMsg(msgDiv, "✗ Erreur serveur: " + status, false);
-           btn.disabled = false;
-           btn.textContent = "Se connecter";
-         });
-       }
+              // Redirection immédiate vers le dashboard client
+              setTimeout(() => {
+                const userJson = encodeURIComponent(JSON.stringify(resp.user));
+                window.location.href = "client-dashboard.html?user=" + userJson;
+              }, 1500);
+            } else {
+              showMsg(msgDiv, "✗ Email ou mot de passe incorrect", false);
+              btn.disabled = false;
+              btn.textContent = "Se connecter";
+            }
+          })
+          .fail(function (xhr, status, error) {
+            showMsg(msgDiv, "✗ Erreur serveur: " + status, false);
+            btn.disabled = false;
+            btn.textContent = "Se connecter";
+          });
+      }
 
       // ...existing code...
 
-       // ===== ADMIN LOGIN =====
-       function handleAdminLogin(e) {
-         e.preventDefault();
+      // ===== ADMIN LOGIN =====
+      function handleAdminLogin(e) {
+        e.preventDefault();
 
-         const form = e.target;
-         const email = form.querySelector('input[type="email"]').value.trim();
-         const password = form.querySelector('input[type="password"]').value;
-         const msgDiv = form.parentElement.querySelector("#adminLoginMsg");
-         const btn = form.querySelector('button[type="submit"]');
+        const form = e.target;
+        const email = form.querySelector('input[type="email"]').value.trim();
+        const password = form.querySelector('input[type="password"]').value;
+        const msgDiv = form.parentElement.querySelector("#adminLoginMsg");
+        const btn = form.querySelector('button[type="submit"]');
 
-         btn.disabled = true;
-         btn.textContent = "Connexion...";
-         msgDiv.innerHTML = "";
+        btn.disabled = true;
+        btn.textContent = "Connexion...";
+        msgDiv.innerHTML = "";
 
-         $.ajax({
-           method: "POST",
-           url: "api/admin/admin_login.php",
-           data: { email: email, password: password },
-           dataType: "json",
-           timeout: 8000
-         })
-         .done(function(resp) {
-           if (resp.success && resp.user) {
-             // Sauvegarder la session via SessionManager
-             sessionManager.saveAdminSession(resp.user);
-             showMsg(msgDiv, "✓ Connexion réussie! Redirection...", true);
+        $.ajax({
+          method: "POST",
+          url: "api/admin/admin_login.php",
+          data: { email: email, password: password },
+          dataType: "json",
+          timeout: 8000,
+        })
+          .done(function (resp) {
+            if (resp.success && resp.user) {
+              // Sauvegarder la session via SessionManager
+              sessionManager.saveAdminSession(resp.user);
+              showMsg(msgDiv, "✓ Connexion réussie! Redirection...", true);
 
-             setTimeout(function () {
-               window.location.href = "admin-dashboard.html";
-             }, 400);
-           } else {
-             showMsg(msgDiv, "✗ Email ou mot de passe incorrect", false);
-             btn.disabled = false;
-             btn.textContent = "Se connecter";
-           }
-         })
-         .fail(function(xhr, status, error) {
-           showMsg(msgDiv, "✗ Erreur: " + status, false);
-           btn.disabled = false;
-           btn.textContent = "Se connecter";
-         });
-       }
-
+              setTimeout(function () {
+                window.location.href = "admin-dashboard.html";
+              }, 400);
+            } else {
+              showMsg(msgDiv, "✗ Email ou mot de passe incorrect", false);
+              btn.disabled = false;
+              btn.textContent = "Se connecter";
+            }
+          })
+          .fail(function (xhr, status, error) {
+            showMsg(msgDiv, "✗ Erreur: " + status, false);
+            btn.disabled = false;
+            btn.textContent = "Se connecter";
+          });
+      }
 
       // ===== FORGOT PASSWORD =====
       function handleForgotPassword(e, userType) {
@@ -1885,20 +1985,20 @@
           method: "POST",
           url: "api/auth/forgot_password.php",
           data: { email: email, type: userType },
-          dataType: "json"
+          dataType: "json",
         })
-        .done(function(resp) {
-          if (!resp.success) {
-            alert("Erreur: " + (resp.message || "Email non trouve"));
-          } else {
-            alert(
-              "Un email a ete envoye avec les instructions pour reinitialiser votre mot de passe.",
-            );
-          }
-        })
-        .fail(function() {
-          alert("Erreur serveur");
-        });
+          .done(function (resp) {
+            if (!resp.success) {
+              alert("Erreur: " + (resp.message || "Email non trouve"));
+            } else {
+              alert(
+                "Un email a ete envoye avec les instructions pour reinitialiser votre mot de passe.",
+              );
+            }
+          })
+          .fail(function () {
+            alert("Erreur serveur");
+          });
       }
 
       // ===== UI HELPERS =====
@@ -1931,9 +2031,8 @@
               }
             }, 300);
           }, 5000);
-         } catch (e) {
-         }
-       }
+        } catch (e) {}
+      }
 
       // Fonction pour générer un mot de passe
       function generatePassword() {
@@ -1946,16 +2045,15 @@
         return password;
       }
 
-       // Fonction pour copier dans le presse-papiers
-       function copyToClipboard(text) {
-         navigator.clipboard.writeText(text).then(() => {
-         });
-       }
+      // Fonction pour copier dans le presse-papiers
+      function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {});
+      }
 
-       // Fonction pour afficher un modal avec les identifiants
-       function showCredentialsModal(email, password, reservationId) {
-         const modal = document.createElement("div");
-         modal.style.cssText = `
+      // Fonction pour afficher un modal avec les identifiants
+      function showCredentialsModal(email, password, reservationId) {
+        const modal = document.createElement("div");
+        modal.style.cssText = `
          position: fixed;
          inset: 0;
          background: rgba(0,0,0,0.8);
@@ -1966,7 +2064,7 @@
          padding: 20px;
        `;
 
-         modal.innerHTML = `
+        modal.innerHTML = `
          <div style="background: var(--panel); border: 2px solid var(--green); border-radius: 16px; max-width: 500px; width: 100%; padding: 32px; text-align: center; backdrop-filter: blur(10px);">
            <div style="font-size: 3rem; margin-bottom: 16px;"><i class="fas fa-check-circle" style="color: var(--green);"></i></div>
            <h2 style="font-family: 'Bebas Neue'; font-size: 1.8rem; color: var(--green); margin-bottom: 12px;">RÉSERVATION SOUMISE!</h2>
@@ -2006,63 +2104,60 @@
          </div>
        `;
 
-         document.body.appendChild(modal);
-       }
+        document.body.appendChild(modal);
+      }
 
       // ===== ACTIVITIES & ROOMS MANAGEMENT =====
-       let availableActivities = [];
-       let availableRoomTypes = [];
-       let availableServices = [];
-       let activitiesByDay = {}; // { day: [activity_ids] }
-       let selectedRooms = {}; // { roomType: quantity }
-       let selectedServices = {}; // { serviceId: quantity }
+      let availableActivities = [];
+      let availableRoomTypes = [];
+      let availableServices = [];
+      let activitiesByDay = {}; // { day: [activity_ids] }
+      let selectedRooms = {}; // { roomType: quantity }
+      let selectedServices = {}; // { serviceId: quantity }
 
-       function loadActivitiesForReservation() {
-         // Charger les activités disponibles
-         $.ajax({
-           method: "GET",
-           url: "api/services/get_activities.php",
-           dataType: "json"
-         })
-         .done(function(resp) {
-           if (resp.success && resp.activities) {
-             availableActivities = resp.activities;
-             generateActivitiesUI();
-             updateActivitiesAvailability();
-           }
-         })
-         .fail(function() {
-         });
+      function loadActivitiesForReservation() {
+        // Charger les activités disponibles
+        $.ajax({
+          method: "GET",
+          url: "api/services/get_activities.php",
+          dataType: "json",
+        })
+          .done(function (resp) {
+            if (resp.success && resp.activities) {
+              availableActivities = resp.activities;
+              generateActivitiesUI();
+              updateActivitiesAvailability();
+            }
+          })
+          .fail(function () {});
 
-         // Charger les prestations
-         $.ajax({
-           method: "GET",
-           url: "data/settings.json",
-           dataType: "json"
-         })
-         .done(function(settings) {
-           if (settings.services_catalog) {
-             availableServices = settings.services_catalog;
-             generateServicesUI();
-           }
-         })
-         .fail(function() {
-         });
+        // Charger les prestations
+        $.ajax({
+          method: "GET",
+          url: "data/settings.json",
+          dataType: "json",
+        })
+          .done(function (settings) {
+            if (settings.services_catalog) {
+              availableServices = settings.services_catalog;
+              generateServicesUI();
+            }
+          })
+          .fail(function () {});
 
-         // Charger les types de chambres
-         $.ajax({
-           method: "GET",
-           url: "data/rooms.json",
-           dataType: "json"
-         })
-         .done(function(resp) {
-           if (resp.types) {
-             availableRoomTypes = resp.types;
-           }
-         })
-         .fail(function() {
-         });
-       }
+        // Charger les types de chambres
+        $.ajax({
+          method: "GET",
+          url: "data/rooms.json",
+          dataType: "json",
+        })
+          .done(function (resp) {
+            if (resp.types) {
+              availableRoomTypes = resp.types;
+            }
+          })
+          .fail(function () {});
+      }
 
       function generateActivitiesUI() {
         // Chercher tous les inputs date du formulaire
@@ -2086,7 +2181,9 @@
         // Calculer le nombre de jours
         const arrival = new Date(date_arrivee);
         const departure = new Date(date_depart);
-        const nights = Math.floor((departure - arrival) / (1000 * 60 * 60 * 24));
+        const nights = Math.floor(
+          (departure - arrival) / (1000 * 60 * 60 * 24),
+        );
 
         if (nights <= 0) {
           document.getElementById("activitiesByDayContent").innerHTML =
@@ -2102,13 +2199,17 @@
 
         // Générer l'interface pour chaque jour
         let html = `<div style="font-size: 0.9rem; color: var(--muted); margin-bottom: 16px;">
-          <i class="fas fa-calendar"></i> ${nights} nuit${nights > 1 ? 's' : ''} - Sélectionnez vos activités pour chaque jour
+          <i class="fas fa-calendar"></i> ${nights} nuit${nights > 1 ? "s" : ""} - Sélectionnez vos activités pour chaque jour
         </div>`;
 
         for (let dayIndex = 0; dayIndex < nights; dayIndex++) {
           const dayDate = new Date(arrival);
           dayDate.setDate(dayDate.getDate() + dayIndex);
-          const dayLabel = dayDate.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+          const dayLabel = dayDate.toLocaleDateString("fr-FR", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+          });
 
           html += `
             <div style="margin-bottom: 16px; padding: 12px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--green); border-radius: 4px;">
@@ -2125,7 +2226,9 @@
 
         // Remplir les activités pour chaque jour
         for (let dayIndex = 0; dayIndex < nights; dayIndex++) {
-          const dayContainer = document.getElementById(`activities-day-${dayIndex}`);
+          const dayContainer = document.getElementById(
+            `activities-day-${dayIndex}`,
+          );
 
           availableActivities.forEach((activity) => {
             const div = document.createElement("div");
@@ -2145,14 +2248,16 @@
             checkbox.className = `activity-checkbox-day activity-day-${dayIndex}-${activity.id}`;
             checkbox.style.cssText = "margin-right: 6px; cursor: pointer;";
 
-            checkbox.addEventListener("change", function() {
+            checkbox.addEventListener("change", function () {
               const activityList = activitiesByDay[dayIndex] || [];
               if (this.checked) {
                 if (!activityList.includes(activity.id)) {
                   activityList.push(activity.id);
                 }
               } else {
-                activitiesByDay[dayIndex] = activityList.filter(id => id !== activity.id);
+                activitiesByDay[dayIndex] = activityList.filter(
+                  (id) => id !== activity.id,
+                );
               }
               // Important: mettre à jour activitiesByDay après modification
               activitiesByDay[dayIndex] = activityList;
@@ -2160,9 +2265,12 @@
             });
 
             const label = document.createElement("label");
-            label.style.cssText = "cursor: pointer; display: flex; align-items: center; font-size: 0.9rem;";
+            label.style.cssText =
+              "cursor: pointer; display: flex; align-items: center; font-size: 0.9rem;";
             label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(`${activity.icon} ${activity.name}`));
+            label.appendChild(
+              document.createTextNode(`${activity.icon} ${activity.name}`),
+            );
 
             div.appendChild(label);
             dayContainer.appendChild(div);
@@ -2186,60 +2294,69 @@
         updateActivitiesAvailability();
       }
 
-       function updateActivitiesAvailability() {
-         const nb_personnes = parseInt(document.querySelector('input[type="number"]').value) || 0;
+      function updateActivitiesAvailability() {
+        const nb_personnes =
+          parseInt(document.querySelector('input[type="number"]').value) || 0;
 
-         availableActivities.forEach((activity) => {
-           // Chercher toutes les checkbox pour cette activité (par jour)
-           const checkboxes = document.querySelectorAll(`.activity-checkbox-day[value="${activity.id}"]`);
+        availableActivities.forEach((activity) => {
+          // Chercher toutes les checkbox pour cette activité (par jour)
+          const checkboxes = document.querySelectorAll(
+            `.activity-checkbox-day[value="${activity.id}"]`,
+          );
 
-           // Vérifier si le nombre de personnes permet de sélectionner cette activité
-           let canSelect = true;
+          // Vérifier si le nombre de personnes permet de sélectionner cette activité
+          let canSelect = true;
 
-           // Vérifier le minimum de participants
-           if (activity.min_participants && nb_personnes < activity.min_participants) {
-             canSelect = false;
-           }
+          // Vérifier le minimum de participants
+          if (
+            activity.min_participants &&
+            nb_personnes < activity.min_participants
+          ) {
+            canSelect = false;
+          }
 
-           // Vérifier le maximum de participants
-           if (activity.max_participants && nb_personnes > activity.max_participants) {
-             canSelect = false;
-           }
+          // Vérifier le maximum de participants
+          if (
+            activity.max_participants &&
+            nb_personnes > activity.max_participants
+          ) {
+            canSelect = false;
+          }
 
-           // Appliquer l'état à toutes les checkbox de cette activité
-           checkboxes.forEach((checkbox) => {
-             checkbox.disabled = !canSelect;
-             const div = checkbox.closest('.activity-day-item');
+          // Appliquer l'état à toutes les checkbox de cette activité
+          checkboxes.forEach((checkbox) => {
+            checkbox.disabled = !canSelect;
+            const div = checkbox.closest(".activity-day-item");
 
-             if (div) {
-               if (!canSelect) {
-                 div.style.opacity = "0.5";
-                 div.style.pointerEvents = "none";
-                 div.style.cursor = "not-allowed";
-                 div.style.background = "rgba(100, 100, 100, 0.05)";
-               } else {
-                 div.style.opacity = "1";
-                 div.style.pointerEvents = "auto";
-                 div.style.cursor = "pointer";
-                 div.style.background = "rgba(0, 230, 118, 0.05)";
-               }
-             }
-           });
-         });
-       }
+            if (div) {
+              if (!canSelect) {
+                div.style.opacity = "0.5";
+                div.style.pointerEvents = "none";
+                div.style.cursor = "not-allowed";
+                div.style.background = "rgba(100, 100, 100, 0.05)";
+              } else {
+                div.style.opacity = "1";
+                div.style.pointerEvents = "auto";
+                div.style.cursor = "pointer";
+                div.style.background = "rgba(0, 230, 118, 0.05)";
+              }
+            }
+          });
+        });
+      }
 
-       function generateServicesUI() {
-         const container = document.getElementById("servicesContent");
-         if (!container) return;
+      function generateServicesUI() {
+        const container = document.getElementById("servicesContent");
+        if (!container) return;
 
-         container.innerHTML = "";
-         selectedServices = {};
+        container.innerHTML = "";
+        selectedServices = {};
 
-         availableServices.forEach((service) => {
-           selectedServices[service.id] = 0;
+        availableServices.forEach((service) => {
+          selectedServices[service.id] = 0;
 
-           const div = document.createElement("div");
-           div.style.cssText = `
+          const div = document.createElement("div");
+          div.style.cssText = `
              padding: 14px;
              background: rgba(255, 255, 255, 0.04);
              border: 1px solid rgba(255, 215, 64, 0.3);
@@ -2248,7 +2365,7 @@
              transition: all 0.2s;
            `;
 
-           div.innerHTML = `
+          div.innerHTML = `
              <div style="display: flex; align-items: flex-start; gap: 10px;">
                <input
                  type="checkbox"
@@ -2266,110 +2383,134 @@
                    ${service.description}
                  </div>
                  <div style="font-size: 0.9rem; color: var(--gold); font-weight: 600; margin-top: 6px;">
-                   ${service.price}€ ${service.per_unit ? '<span style="color: var(--muted); font-weight: 400;">(' + service.per_unit + ')</span>' : ''}
+                   ${service.price}€ ${service.per_unit ? '<span style="color: var(--muted); font-weight: 400;">(' + service.per_unit + ")</span>" : ""}
                  </div>
                </div>
              </div>
            `;
 
-           div.addEventListener("mouseover", () => {
-             div.style.borderColor = "rgba(255, 215, 64, 0.6)";
-             div.style.background = "rgba(255, 215, 64, 0.08)";
-           });
-           div.addEventListener("mouseout", () => {
-             div.style.borderColor = "rgba(255, 215, 64, 0.3)";
-             div.style.background = "rgba(255, 255, 255, 0.04)";
-           });
+          div.addEventListener("mouseover", () => {
+            div.style.borderColor = "rgba(255, 215, 64, 0.6)";
+            div.style.background = "rgba(255, 215, 64, 0.08)";
+          });
+          div.addEventListener("mouseout", () => {
+            div.style.borderColor = "rgba(255, 215, 64, 0.3)";
+            div.style.background = "rgba(255, 255, 255, 0.04)";
+          });
 
-           container.appendChild(div);
-         });
-       }
+          container.appendChild(div);
+        });
+      }
 
-       function updateServiceSelection() {
-         const checkboxes = document.querySelectorAll(".service-checkbox:checked");
-         let totalServices = 0;
+      function updateServiceSelection() {
+        const checkboxes = document.querySelectorAll(
+          ".service-checkbox:checked",
+        );
+        let totalServices = 0;
 
-         checkboxes.forEach((checkbox) => {
-           const serviceId = parseInt(checkbox.value);
-           const service = availableServices.find(s => s.id === serviceId);
-           if (service) {
-             selectedServices[serviceId] = 1;
-             totalServices++;
-           }
-         });
+        checkboxes.forEach((checkbox) => {
+          const serviceId = parseInt(checkbox.value);
+          const service = availableServices.find((s) => s.id === serviceId);
+          if (service) {
+            selectedServices[serviceId] = 1;
+            totalServices++;
+          }
+        });
 
-         const servicesTotal = document.getElementById("servicesTotal");
-         if (checkboxes.length > 0) {
-           servicesTotal.style.display = "block";
-           updateServicesTotalDisplay();
-         } else {
-           servicesTotal.style.display = "none";
-           updateServicesTotalDisplay();
-         }
-       }
+        const servicesTotal = document.getElementById("servicesTotal");
+        if (checkboxes.length > 0) {
+          servicesTotal.style.display = "block";
+          updateServicesTotalDisplay();
+        } else {
+          servicesTotal.style.display = "none";
+          updateServicesTotalDisplay();
+        }
+      }
 
-       function updateServicesTotalDisplay() {
-         let totalAmount = 0;
+      function updateServicesTotalDisplay() {
+        let totalAmount = 0;
 
-         document.querySelectorAll(".service-checkbox:checked").forEach((checkbox) => {
-           const serviceId = parseInt(checkbox.value);
-           const service = availableServices.find(s => s.id === serviceId);
-           if (service) {
-             let servicePrice = service.price;
-             const nbPersonnes = parseInt(document.querySelector('input[type="number"]').value || 1);
+        document
+          .querySelectorAll(".service-checkbox:checked")
+          .forEach((checkbox) => {
+            const serviceId = parseInt(checkbox.value);
+            const service = availableServices.find((s) => s.id === serviceId);
+            if (service) {
+              let servicePrice = service.price;
+              const nbPersonnes = parseInt(
+                document.querySelector('input[type="number"]').value || 1,
+              );
 
-             if (service.type === "meals") {
-               const dateInputs = document.querySelectorAll('form input[type="date"]');
-               if (dateInputs.length >= 2) {
-                 const dateArrivee = dateInputs[0].value;
-                 const dateDepart = dateInputs[1].value;
-                 if (dateArrivee && dateDepart) {
-                   const arrival = new Date(dateArrivee);
-                   const departure = new Date(dateDepart);
-                   const nights = Math.ceil((departure - arrival) / (1000 * 60 * 60 * 24));
-                   servicePrice = service.price * nbPersonnes * nights;
-                 }
-               }
-             } else if (service.type === "transport_per_person" || service.type === "merchandise_per_person") {
-               servicePrice = service.price * nbPersonnes;
-             }
+              if (service.type === "meals") {
+                const dateInputs = document.querySelectorAll(
+                  'form input[type="date"]',
+                );
+                if (dateInputs.length >= 2) {
+                  const dateArrivee = dateInputs[0].value;
+                  const dateDepart = dateInputs[1].value;
+                  if (dateArrivee && dateDepart) {
+                    const arrival = new Date(dateArrivee);
+                    const departure = new Date(dateDepart);
+                    const nights = Math.ceil(
+                      (departure - arrival) / (1000 * 60 * 60 * 24),
+                    );
+                    servicePrice = service.price * nbPersonnes * nights;
+                  }
+                }
+              } else if (
+                service.type === "transport_per_person" ||
+                service.type === "merchandise_per_person"
+              ) {
+                servicePrice = service.price * nbPersonnes;
+              }
 
-             totalAmount += servicePrice;
-           }
-         });
+              totalAmount += servicePrice;
+            }
+          });
 
-         const servicesAmountSpan = document.getElementById("servicesTotalAmount");
-         if (servicesAmountSpan) {
-           servicesAmountSpan.textContent = totalAmount.toFixed(2) + "€";
-         }
-       }
+        const servicesAmountSpan = document.getElementById(
+          "servicesTotalAmount",
+        );
+        if (servicesAmountSpan) {
+          servicesAmountSpan.textContent = totalAmount.toFixed(2) + "€";
+        }
+      }
 
       function validateActivityConstraints() {
         const selectedActivities = [];
 
         // Récupérer les activités cochées depuis le nouveau conteneur
-        document.querySelectorAll('input.activity-checkbox-day:checked').forEach((checkbox) => {
-          selectedActivities.push(parseInt(checkbox.value));
-        });
+        document
+          .querySelectorAll("input.activity-checkbox-day:checked")
+          .forEach((checkbox) => {
+            selectedActivities.push(parseInt(checkbox.value));
+          });
 
-        const nb_personnes = parseInt(document.querySelector('input[type="number"]').value) || 0;
+        const nb_personnes =
+          parseInt(document.querySelector('input[type="number"]').value) || 0;
 
         let hasConstraintError = false;
         let errorMessages = [];
 
         selectedActivities.forEach((activityId) => {
-          const activity = availableActivities.find(a => a.id === activityId);
+          const activity = availableActivities.find((a) => a.id === activityId);
           if (activity) {
-            if (activity.min_participants && nb_personnes < activity.min_participants) {
+            if (
+              activity.min_participants &&
+              nb_personnes < activity.min_participants
+            ) {
               hasConstraintError = true;
               errorMessages.push(
-                `${activity.icon} ${activity.name} nécessite un minimum de ${activity.min_participants} personnes (vous avez: ${nb_personnes})`
+                `${activity.icon} ${activity.name} nécessite un minimum de ${activity.min_participants} personnes (vous avez: ${nb_personnes})`,
               );
             }
-            if (activity.max_participants && nb_personnes > activity.max_participants) {
+            if (
+              activity.max_participants &&
+              nb_personnes > activity.max_participants
+            ) {
               hasConstraintError = true;
               errorMessages.push(
-                `${activity.icon} ${activity.name} ne peut accueillir que ${activity.max_participants} personnes maximum (vous avez: ${nb_personnes})`
+                `${activity.icon} ${activity.name} ne peut accueillir que ${activity.max_participants} personnes maximum (vous avez: ${nb_personnes})`,
               );
             }
           }
@@ -2379,8 +2520,9 @@
         if (!msgDiv) {
           const newMsgDiv = document.createElement("div");
           newMsgDiv.id = "activitiesConstraintMsg";
-          const activitiesContainer = document.getElementById("activitiesByDayContainer") ||
-                                       document.getElementById("activitiesReservation");
+          const activitiesContainer =
+            document.getElementById("activitiesByDayContainer") ||
+            document.getElementById("activitiesReservation");
           if (activitiesContainer && activitiesContainer.parentElement) {
             activitiesContainer.parentElement.appendChild(newMsgDiv);
           }
@@ -2396,9 +2538,9 @@
             `;
           } else {
             displayMsg.innerHTML = "";
-           }
-         }
-       }
+          }
+        }
+      }
 
       function loadRoomsForReservation() {
         const nb_personnes =
@@ -2426,16 +2568,15 @@
           $.ajax({
             method: "GET",
             url: "data/rooms.json",
-            dataType: "json"
+            dataType: "json",
           })
-          .done(function(resp) {
-            if (resp.types) {
-              availableRoomTypes = resp.types;
-              generateRoomSelectionUI();
-            }
-          })
-          .fail(function() {
-          });
+            .done(function (resp) {
+              if (resp.types) {
+                availableRoomTypes = resp.types;
+                generateRoomSelectionUI();
+              }
+            })
+            .fail(function () {});
         } else {
           generateRoomSelectionUI();
         }
@@ -2561,6 +2702,142 @@
             capacityOk.style.display = "block";
           }
         }
+
+        // Vérifier la disponibilité des chambres
+        checkRoomAvailability();
+      }
+
+      function checkRoomAvailability() {
+        const dateInputs = document.querySelectorAll('form input[type="date"]');
+        if (dateInputs.length < 2) return;
+
+        const date_arrivee = dateInputs[0].value;
+        const date_depart = dateInputs[1].value;
+
+        if (!date_arrivee || !date_depart) return;
+
+        const nb_personnes =
+          parseInt(document.querySelector('input[type="number"]').value) || 0;
+        if (nb_personnes <= 0) return;
+
+        // Récupérer les activités sélectionnées
+        const selectedActivities = [];
+        document
+          .querySelectorAll("input.activity-checkbox-day:checked")
+          .forEach((checkbox) => {
+            selectedActivities.push(parseInt(checkbox.value));
+          });
+
+        $.ajax({
+          method: "POST",
+          url: "api/rooms/get_available_rooms.php",
+          data: {
+            activities: JSON.stringify(selectedActivities),
+            date_arrivee: date_arrivee,
+            date_depart: date_depart,
+            nb_personnes: nb_personnes,
+          },
+          dataType: "json",
+        })
+          .done(function (resp) {
+            if (resp.success && resp.rooms) {
+              updateRoomAvailabilityDisplay(resp.rooms);
+            }
+          })
+          .fail(function () {
+            clearRoomAvailabilityWarnings();
+          });
+      }
+
+      function updateRoomAvailabilityDisplay(availableRooms) {
+        let hasAvailabilityIssue = false;
+        const availabilityMsgDiv = document.getElementById(
+          "roomsAvailabilityMsg",
+        );
+
+        // Créer le container de message s'il n'existe pas
+        let msgDiv = availabilityMsgDiv;
+        if (!msgDiv) {
+          msgDiv = document.createElement("div");
+          msgDiv.id = "roomsAvailabilityMsg";
+          const roomsSection = document.getElementById("roomsSelectionSection");
+          if (roomsSection && roomsSection.parentElement) {
+            roomsSection.parentElement.insertBefore(msgDiv, roomsSection);
+          }
+        }
+
+        // Vérifier pour chaque type de chambre sélectionné
+        availableRoomTypes.forEach((roomType) => {
+          const roomInput = document.getElementById(`rooms_${roomType.type}`);
+          const requestedQuantity = parseInt(roomInput?.value || 0);
+
+          if (requestedQuantity > 0) {
+            const availableRoom = availableRooms.find(
+              (r) => r.type === roomType.type,
+            );
+            const availableCount = availableRoom
+              ? availableRoom.available_count
+              : 0;
+
+            if (availableCount < requestedQuantity) {
+              hasAvailabilityIssue = true;
+              roomInput.style.borderColor = "#ef5350";
+              roomInput.style.background = "rgba(239, 83, 80, 0.1)";
+            } else {
+              roomInput.style.borderColor = "var(--border)";
+              roomInput.style.background = "rgba(255,255,255,0.05)";
+            }
+          } else {
+            if (roomInput) {
+              roomInput.style.borderColor = "var(--border)";
+              roomInput.style.background = "rgba(255,255,255,0.05)";
+            }
+          }
+        });
+
+        // Afficher les messages d'erreur
+        if (hasAvailabilityIssue) {
+          let errorMsg =
+            '<div style="margin-top: 12px; padding: 14px; background: rgba(239, 83, 80, 0.15); border: 2px solid #ef5350; border-radius: 8px; color: #ef5350;"><i class="fas fa-exclamation-circle"></i> <strong>Chambres non disponibles:</strong><br>';
+
+          availableRoomTypes.forEach((roomType) => {
+            const roomInput = document.getElementById(`rooms_${roomType.type}`);
+            const requestedQuantity = parseInt(roomInput?.value || 0);
+
+            if (requestedQuantity > 0) {
+              const availableRoom = availableRooms.find(
+                (r) => r.type === roomType.type,
+              );
+              const availableCount = availableRoom
+                ? availableRoom.available_count
+                : 0;
+
+              if (availableCount < requestedQuantity) {
+                errorMsg += `${roomType.name}: ${availableCount}/${requestedQuantity} chambre(s) disponible(s)<br>`;
+              }
+            }
+          });
+
+          errorMsg += "</div>";
+          msgDiv.innerHTML = errorMsg;
+        } else {
+          msgDiv.innerHTML = "";
+        }
+      }
+
+      function clearRoomAvailabilityWarnings() {
+        const msgDiv = document.getElementById("roomsAvailabilityMsg");
+        if (msgDiv) {
+          msgDiv.innerHTML = "";
+        }
+
+        availableRoomTypes.forEach((roomType) => {
+          const roomInput = document.getElementById(`rooms_${roomType.type}`);
+          if (roomInput) {
+            roomInput.style.borderColor = "var(--border)";
+            roomInput.style.background = "rgba(255,255,255,0.05)";
+          }
+        });
       }
 
       function handleReservationRequest(e) {
@@ -2609,9 +2886,12 @@
 
         // Valider les contraintes de participants pour les activités
         for (let activityId of selectedActivities) {
-          const activity = availableActivities.find(a => a.id === activityId);
+          const activity = availableActivities.find((a) => a.id === activityId);
           if (activity) {
-            if (activity.min_participants && nb_personnes < activity.min_participants) {
+            if (
+              activity.min_participants &&
+              nb_personnes < activity.min_participants
+            ) {
               showMsg(
                 document.getElementById("reservationMsg"),
                 `<i class="fas fa-exclamation-circle"></i> ${activity.icon} ${activity.name} nécessite un minimum de ${activity.min_participants} personnes (vous avez: ${nb_personnes})`,
@@ -2619,7 +2899,10 @@
               );
               return;
             }
-            if (activity.max_participants && nb_personnes > activity.max_participants) {
+            if (
+              activity.max_participants &&
+              nb_personnes > activity.max_participants
+            ) {
               showMsg(
                 document.getElementById("reservationMsg"),
                 `<i class="fas fa-exclamation-circle"></i> ${activity.icon} ${activity.name} ne peut accueillir que ${activity.max_participants} personnes maximum (vous avez: ${nb_personnes})`,
@@ -2650,66 +2933,134 @@
           return;
         }
 
-        // Générer un mot de passe
-        const generatedPassword = generatePassword();
+        // Vérifier la disponibilité des chambres avant soumission
+        $.ajax({
+          method: "POST",
+          url: "api/rooms/get_available_rooms.php",
+          data: {
+            activities: JSON.stringify(selectedActivities),
+            date_arrivee: date_arrivee,
+            date_depart: date_depart,
+            nb_personnes: nb_personnes,
+          },
+          dataType: "json",
+        })
+          .done(function (availabilityResp) {
+            if (!availabilityResp.success) {
+              showMsg(
+                document.getElementById("reservationMsg"),
+                '<i class="fas fa-exclamation-circle"></i> Erreur lors de la vérification de disponibilité',
+                false,
+              );
+              return;
+            }
 
-        const btn = form.querySelector('button[type="submit"]');
-        btn.disabled = true;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+            // Vérifier si les chambres demandées sont disponibles
+            let hasAvailabilityProblem = false;
+            let errorMessages = [];
 
-         $.ajax({
-           method: "POST",
-           url: "api/reservations/reservation_request.php",
-           data: JSON.stringify({
-             nom: nom,
-             prenom: prenom,
-             email: email,
-             telephone: telephone,
-             date_arrivee: date_arrivee,
-             date_depart: date_depart,
-             nb_personnes: nb_personnes,
-             activities: selectedActivities,
-             activities_by_day: activitiesByDay,
-             selected_rooms: selectedRooms,
-             selected_services: selectedServices,
-           }),
-           contentType: "application/json",
-           dataType: "json",
-           timeout: 8000
-         })
-        .done(function(resp) {
-          if (!resp.success) {
+            availableRoomTypes.forEach((roomType) => {
+              const requestedQuantity = selectedRooms[roomType.type] || 0;
+              if (requestedQuantity > 0) {
+                const availableRoom = availabilityResp.rooms.find(
+                  (r) => r.type === roomType.type,
+                );
+                const availableCount = availableRoom
+                  ? availableRoom.available_count
+                  : 0;
+
+                if (availableCount < requestedQuantity) {
+                  hasAvailabilityProblem = true;
+                  errorMessages.push(
+                    `${roomType.name}: ${availableCount}/${requestedQuantity} chambre(s) disponible(s)`,
+                  );
+                }
+              }
+            });
+
+            if (hasAvailabilityProblem) {
+              showMsg(
+                document.getElementById("reservationMsg"),
+                '<i class="fas fa-times-circle"></i> <strong>Chambres non disponibles:</strong><br>' +
+                  errorMessages.join("<br>"),
+                false,
+              );
+              return;
+            }
+
+            // Générer un mot de passe
+            const generatedPassword = generatePassword();
+
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            const originalText = btn.innerHTML;
+            btn.innerHTML =
+              '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+
+            $.ajax({
+              method: "POST",
+              url: "api/reservations/reservation_request.php",
+              data: JSON.stringify({
+                nom: nom,
+                prenom: prenom,
+                email: email,
+                telephone: telephone,
+                date_arrivee: date_arrivee,
+                date_depart: date_depart,
+                nb_personnes: nb_personnes,
+                activities: selectedActivities,
+                activities_by_day: activitiesByDay,
+                selected_rooms: selectedRooms,
+                selected_services: selectedServices,
+              }),
+              contentType: "application/json",
+              dataType: "json",
+              timeout: 8000,
+            })
+              .done(function (resp) {
+                if (!resp.success) {
+                  showMsg(
+                    document.getElementById("reservationMsg"),
+                    '<i class="fas fa-times-circle"></i> ' +
+                      (resp.message || "Erreur lors de la soumission"),
+                    false,
+                  );
+                  btn.disabled = false;
+                  btn.innerHTML = originalText;
+                } else {
+                  // Afficher le modal avec les identifiants
+                  showCredentialsModal(
+                    email,
+                    generatedPassword,
+                    resp.reservation_id,
+                  );
+                  form.reset();
+                  loadActivitiesForReservation();
+                  // Réactiver le bouton immédiatement - ne pas bloquer le formulaire
+                  btn.disabled = false;
+                  btn.innerHTML = originalText;
+                }
+              })
+              .fail(function (xhr, status, error) {
+                const errorMsg =
+                  '<i class="fas fa-exclamation-triangle"></i> Erreur: ' +
+                  (status === "timeout" ? "Délai dépassé" : status);
+                showMsg(
+                  document.getElementById("reservationMsg"),
+                  errorMsg,
+                  false,
+                );
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+              });
+          })
+          .fail(function () {
             showMsg(
               document.getElementById("reservationMsg"),
-              '<i class="fas fa-times-circle"></i> ' +
-                (resp.message || "Erreur lors de la soumission"),
+              '<i class="fas fa-exclamation-circle"></i> Erreur lors de la vérification de disponibilité',
               false,
             );
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-          } else {
-            // Afficher le modal avec les identifiants
-            showCredentialsModal(
-              email,
-              generatedPassword,
-              resp.reservation_id,
-            );
-            form.reset();
-            loadActivitiesForReservation();
-            // Réactiver le bouton immédiatement - ne pas bloquer le formulaire
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-          }
-        })
-         .fail(function(xhr, status, error) {
-           const errorMsg =
-             '<i class="fas fa-exclamation-triangle"></i> Erreur: ' +
-             (status === "timeout" ? "Délai dépassé" : status);
-           showMsg(document.getElementById("reservationMsg"), errorMsg, false);
-           btn.disabled = false;
-           btn.innerHTML = originalText;
-         });
+          });
       }
 
       // ===== CAROUSEL INITIALIZATION =====
@@ -2721,92 +3072,106 @@
       function initCarousel() {
         // Images chambres
         const imagesChambres = [
-          { src: 'assets/ch1.jpeg', label: 'Chambre Standard' },
-          { src: 'assets/ch2.jpeg', label: 'Chambre Confort' },
-          { src: 'assets/ch3.jpeg', label: 'Chambre Deluxe' },
-          { src: 'assets/ch4.jpeg', label: 'Chambre Suite' },
-          { src: 'assets/ch5.jpeg', label: 'Chambre VIP' }
+          { src: "assets/ch1.jpeg", label: "Chambre Standard" },
+          { src: "assets/ch2.jpeg", label: "Chambre Confort" },
+          { src: "assets/ch3.jpeg", label: "Chambre Deluxe" },
+          { src: "assets/ch4.jpeg", label: "Chambre Suite" },
+          { src: "assets/ch5.jpeg", label: "Chambre VIP" },
         ];
 
         // Images terrains
         var imagesTerrain = [
-          { src: 'assets/ter1.jpeg', label: 'Terrain Principal' },
-          { src: 'assets/ter2.jpeg', label: 'Terrain d\'Entraînement' },
-          { src: 'assets/ter3.jpeg', label: 'Terrain Pro' },
-          { src: 'assets/ter4.jpeg', label: 'Terrain Loisir' },
-          { src: 'assets/ter5.jpeg', label: 'Terrain Compétition' }
+          { src: "assets/ter1.jpeg", label: "Terrain Principal" },
+          { src: "assets/ter2.jpeg", label: "Terrain d'Entraînement" },
+          { src: "assets/ter3.jpeg", label: "Terrain Pro" },
+          { src: "assets/ter4.jpeg", label: "Terrain Loisir" },
+          { src: "assets/ter5.jpeg", label: "Terrain Compétition" },
         ];
 
         carouselChambres = imagesChambres;
         carouselTerrain = imagesTerrain;
 
         // Initialiser le carrousel des chambres
-        var wrapperChambres = document.getElementById('carouselChambresWrapper');
-        var controlsChambres = document.getElementById('carouselChambresControls');
+        var wrapperChambres = document.getElementById(
+          "carouselChambresWrapper",
+        );
+        var controlsChambres = document.getElementById(
+          "carouselChambresControls",
+        );
         if (wrapperChambres && controlsChambres) {
-          wrapperChambres.innerHTML = '';
-          controlsChambres.innerHTML = '';
+          wrapperChambres.innerHTML = "";
+          controlsChambres.innerHTML = "";
 
           // Boucle pour créer chaque slide de chambre
           for (var i = 0; i < imagesChambres.length; i++) {
             var img = imagesChambres[i];
             // Créer la slide avec l'image
-            var slide = document.createElement('div');
+            var slide = document.createElement("div");
             if (i === 0) {
-              slide.className = 'carousel-slide active';
+              slide.className = "carousel-slide active";
             } else {
-              slide.className = 'carousel-slide';
+              slide.className = "carousel-slide";
             }
-            slide.innerHTML = '<img src="' + img.src + '" alt="' + img.label + '" class="carousel-image" onerror="this.style.display=\'none\'">';
+            slide.innerHTML =
+              '<img src="' +
+              img.src +
+              '" alt="' +
+              img.label +
+              '" class="carousel-image" onerror="this.style.display=\'none\'">';
             wrapperChambres.appendChild(slide);
 
             // Créer le bouton point pour la navigation
-            var dot = document.createElement('button');
+            var dot = document.createElement("button");
             if (i === 0) {
-              dot.className = 'carousel-dot active';
+              dot.className = "carousel-dot active";
             } else {
-              dot.className = 'carousel-dot';
+              dot.className = "carousel-dot";
             }
             dot.index = i;
-            dot.onclick = function() {
+            dot.onclick = function () {
               goToSlideChambres(this.index);
             };
             controlsChambres.appendChild(dot);
           }
-
         }
 
         // Initialiser le carrousel des terrains
-        var wrapperTerrain = document.getElementById('carouselTerrainWrapper');
-        var controlsTerrain = document.getElementById('carouselTerrainControls');
+        var wrapperTerrain = document.getElementById("carouselTerrainWrapper");
+        var controlsTerrain = document.getElementById(
+          "carouselTerrainControls",
+        );
         if (wrapperTerrain && controlsTerrain) {
-          wrapperTerrain.innerHTML = '';
-          controlsTerrain.innerHTML = '';
+          wrapperTerrain.innerHTML = "";
+          controlsTerrain.innerHTML = "";
 
           for (var j = 0; j < imagesTerrain.length; j++) {
             var imgTer = imagesTerrain[j];
-            var slideTer = document.createElement('div');
+            var slideTer = document.createElement("div");
             if (j === 0) {
-              slideTer.className = 'carousel-slide active';
+              slideTer.className = "carousel-slide active";
             } else {
-              slideTer.className = 'carousel-slide';
+              slideTer.className = "carousel-slide";
             }
-            slideTer.innerHTML = '<img src="' + imgTer.src + '" alt="' + imgTer.label + '" class="carousel-image" onerror="this.style.display=\'none\'">';
+            slideTer.innerHTML =
+              '<img src="' +
+              imgTer.src +
+              '" alt="' +
+              imgTer.label +
+              '" class="carousel-image" onerror="this.style.display=\'none\'">';
             wrapperTerrain.appendChild(slideTer);
 
-            var dotTer = document.createElement('button');
+            var dotTer = document.createElement("button");
             if (j === 0) {
-              dotTer.className = 'carousel-dot active';
+              dotTer.className = "carousel-dot active";
             } else {
-              dotTer.className = 'carousel-dot';
+              dotTer.className = "carousel-dot";
             }
             dotTer.index = j;
-            dotTer.onclick = function() {
+            dotTer.onclick = function () {
               goToSlideTerrain(this.index);
             };
             controlsTerrain.appendChild(dotTer);
           }
-
         }
       }
 
@@ -2824,41 +3189,50 @@
         }
 
         // Mettre à jour les slides actives
-        var slides = document.querySelectorAll('#carouselChambresWrapper .carousel-slide');
+        var slides = document.querySelectorAll(
+          "#carouselChambresWrapper .carousel-slide",
+        );
         for (var k = 0; k < slides.length; k++) {
           if (k === currentChambresIndex) {
-            slides[k].classList.add('active');
+            slides[k].classList.add("active");
           } else {
-            slides[k].classList.remove('active');
+            slides[k].classList.remove("active");
           }
         }
 
         // Mettre à jour les points de navigation
-        var dots = document.querySelectorAll('#carouselChambresControls .carousel-dot');
+        var dots = document.querySelectorAll(
+          "#carouselChambresControls .carousel-dot",
+        );
         for (var l = 0; l < dots.length; l++) {
           if (l === currentChambresIndex) {
-            dots[l].classList.add('active');
+            dots[l].classList.add("active");
           } else {
-            dots[l].classList.remove('active');
+            dots[l].classList.remove("active");
           }
         }
       }
 
       // Scroller vers la section de réservation
       function scrollToReservation() {
-        var reservationSection = document.querySelector('.client .tab-content.active');
+        var reservationSection = document.querySelector(
+          ".client .tab-content.active",
+        );
         if (reservationSection) {
-          reservationSection.scrollIntoView({ behavior: 'smooth' });
+          reservationSection.scrollIntoView({ behavior: "smooth" });
         } else {
-          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+          });
         }
       }
 
       // Scroller vers la section des services
       function scrollToServices() {
-        var servicesSection = document.querySelector('.services-section');
+        var servicesSection = document.querySelector(".services-section");
         if (servicesSection) {
-          servicesSection.scrollIntoView({ behavior: 'smooth' });
+          servicesSection.scrollIntoView({ behavior: "smooth" });
         }
       }
 
@@ -2874,7 +3248,6 @@
         showSlideChambres(index);
       }
 
-
       // CARROUSEL TERRAINS
       function showSlideTerrain(index) {
         if (carouselTerrain.length === 0) return;
@@ -2887,21 +3260,25 @@
           currentTerrainIndex = index;
         }
 
-        const slides = document.querySelectorAll('#carouselTerrainWrapper .carousel-slide');
+        const slides = document.querySelectorAll(
+          "#carouselTerrainWrapper .carousel-slide",
+        );
         for (var m = 0; m < slides.length; m++) {
           if (m === currentTerrainIndex) {
-            slides[m].classList.add('active');
+            slides[m].classList.add("active");
           } else {
-            slides[m].classList.remove('active');
+            slides[m].classList.remove("active");
           }
         }
 
-        const dots = document.querySelectorAll('#carouselTerrainControls .carousel-dot');
+        const dots = document.querySelectorAll(
+          "#carouselTerrainControls .carousel-dot",
+        );
         for (var n = 0; n < dots.length; n++) {
           if (n === currentTerrainIndex) {
-            dots[n].classList.add('active');
+            dots[n].classList.add("active");
           } else {
-            dots[n].classList.remove('active');
+            dots[n].classList.remove("active");
           }
         }
       }
@@ -2917,7 +3294,6 @@
       function goToSlideTerrain(index) {
         showSlideTerrain(index);
       }
-
 
       // Auto-rotation pour chambres
       setInterval(() => {
@@ -2941,4 +3317,3 @@
     </script>
   </body>
 </html>
-

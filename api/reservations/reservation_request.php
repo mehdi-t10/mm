@@ -44,8 +44,19 @@ if (!$arrival || !$departure || $arrival >= $departure) {
     ]);
 }
 
-// Create reservation
+// Check if reservation with same email already exists with status "en_attente" or "validee"
 $reservations = readJson('reservations.json');
+
+foreach ($reservations as $res) {
+    if ($res['email'] === $email && in_array($res['status'], ['en_attente', 'validee'])) {
+        jsonResponse([
+            'success' => false,
+            'message' => 'Une demande de réservation est déjà en cours pour cet email. Veuillez attendre la validation ou contacter l\'administrateur.'
+        ]);
+    }
+}
+
+// Create reservation
 
 $newReservation = [
     'id' => nextId($reservations),
