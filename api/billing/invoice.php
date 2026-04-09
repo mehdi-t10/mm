@@ -44,8 +44,26 @@ foreach ($settings['activities_catalog'] as $activity) {
 }
 
 $servicesTotal = 0;
-foreach ($targetReservation['services'] as $service) {
-    $servicesTotal += $service['price'] * $service['quantity'];
+
+if (!empty($targetReservation['selected_services']) && is_array($targetReservation['selected_services'])) {
+    foreach ($targetReservation['selected_services'] as $serviceId => $quantity) {
+        if ($quantity > 0) {
+            foreach ($settings['services_catalog'] as $service) {
+                if ($service['id'] === $serviceId) {
+                    $servicePrice = $service['price'];
+
+                    if ($service['type'] === 'meals') {
+                        $servicePrice = $service['price'] * $targetReservation['nb_personnes'] * $nights;
+                    } elseif ($service['type'] === 'transport_per_person' || $service['type'] === 'merchandise_per_person') {
+                        $servicePrice = $service['price'] * $targetReservation['nb_personnes'];
+                    }
+
+                    $servicesTotal += $servicePrice;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 $subtotal = $roomTotal + $activitiesTotal + $servicesTotal;

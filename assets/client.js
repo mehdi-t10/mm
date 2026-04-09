@@ -63,81 +63,81 @@ $(function () {
       }
     }).done(function (obj) {
       $("#loginMessage").html(
-        "<div class='alert alert-info'>" + obj.message + "</div>"
+          "<div class='alert alert-info'>" + obj.message + "</div>"
       );
     }).fail(function (e) {
       $("#loginMessage").html(
-        "<div class='alert alert-danger'>Erreur réseau pendant la connexion.</div>"
+          "<div class='alert alert-danger'>Erreur réseau pendant la connexion.</div>"
       );
     });
 
-  $("#serviceForm").on("submit", function (event) {
-    event.preventDefault();
+    $("#serviceForm").on("submit", function (event) {
+      event.preventDefault();
 
-    let email = $("#service_email").val();
-    let service_name = $("#service_name").val();
-    let quantity = $("#quantity").val();
+      let email = $("#service_email").val();
+      let service_name = $("#service_name").val();
+      let quantity = $("#quantity").val();
 
-    $.ajax({
-      method: "POST",
-      dataType: "json",
-      url: "api/add_service.php",
-      data: {
-        email: email,
-        service_name: service_name,
-        quantity: quantity
-      }
-    }).done(function (obj) {
-      $("#serviceMessage").html(
-        "<div class='alert alert-info'>" + obj.message + "</div>"
-      );
-    }).fail(function (e) {
-      $("#serviceMessage").html(
-        "<div class='alert alert-danger'>Erreur réseau pendant l'ajout de prestation.</div>"
-      );
+      $.ajax({
+        method: "POST",
+        dataType: "json",
+        url: "api/add_service.php",
+        data: {
+          email: email,
+          service_name: service_name,
+          quantity: quantity
+        }
+      }).done(function (obj) {
+        $("#serviceMessage").html(
+            "<div class='alert alert-info'>" + obj.message + "</div>"
+        );
+      }).fail(function (e) {
+        $("#serviceMessage").html(
+            "<div class='alert alert-danger'>Erreur réseau pendant l'ajout de prestation.</div>"
+        );
+      });
     });
-  });
 
-  $("#btnInvoice").on("click", function () {
-    let email = $("#email").val();
+    $("#btnInvoice").on("click", function () {
+      let email = $("#email").val();
 
-    if (email === "") {
-      $("#invoiceBox").html(
-        "<div class='alert alert-warning'>Entre d'abord l'email du client.</div>"
-      );
-      return;
-    }
-
-    $.ajax({
-      method: "POST",
-      dataType: "json",
-      url: "api/billing/invoice.php",
-      data: {
-        email: email
-      }
-    }).done(function (obj) {
-      if (!obj.success) {
+      if (email === "") {
         $("#invoiceBox").html(
-          "<div class='alert alert-warning'>" + obj.message + "</div>"
+            "<div class='alert alert-warning'>Entre d'abord l'email du client.</div>"
         );
         return;
       }
 
-      $("#invoiceBox").html(
-        "<div class='alert alert-secondary'>" +
-          "<strong>Facture prévisionnelle</strong><br>" +
-          "Hébergement : " + obj.room_total + " €<br>" +
-          "Activités : " + obj.activities_total + " €<br>" +
-          "Prestations : " + obj.services_total + " €<br>" +
-          "Réduction : -" + obj.discount_amount + " €<br>" +
-          "<strong>Total : " + obj.total + " €</strong>" +
-        "</div>"
-      );
-    }).fail(function (e) {
-      $("#invoiceBox").html(
-        "<div class='alert alert-danger'>Erreur réseau pendant le calcul de la facture.</div>"
-      );
+      $.ajax({
+        method: "POST",
+        dataType: "json",
+        url: "api/billing/invoice.php",
+        data: {
+          email: email
+        }
+      }).done(function (obj) {
+        if (!obj.success) {
+          $("#invoiceBox").html(
+              "<div class='alert alert-warning'>" + obj.message + "</div>"
+          );
+          return;
+        }
+
+        $("#invoiceBox").html(
+            "<div class='alert alert-secondary'>" +
+            "<strong>Facture prévisionnelle</strong><br>" +
+            "Hébergement : " + obj.room_total + " €<br>" +
+            "Activités : " + obj.activities_total + " €<br>" +
+            "Prestations : " + obj.services_total + " €<br>" +
+            "Réduction : -" + obj.discount_amount + " €<br>" +
+            "<strong>Total : " + obj.total + " €</strong>" +
+            "</div>"
+        );
+      }).fail(function (e) {
+        $("#invoiceBox").html(
+            "<div class='alert alert-danger'>Erreur réseau pendant le calcul de la facture.</div>"
+        );
+      });
     });
-  });
 
 });

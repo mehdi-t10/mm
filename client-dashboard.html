@@ -422,20 +422,20 @@
           <h2 style="margin: 0; color: var(--green); font-size: 1.3rem">
             [USER] Mon Profil
           </h2>
-          <button
-            onclick="toggleCredentialsDisplay()"
-            style="
-              background: rgba(0, 230, 118, 0.15);
-              color: var(--green);
-              border: 1px solid var(--green);
-              padding: 8px 16px;
-              border-radius: 8px;
-              cursor: pointer;
-              font-weight: 600;
-            "
-          >
-            🔐 Afficher identifiants
-          </button>
+           <button
+             onclick="toggleCredentialsDisplay()"
+             style="
+               background: rgba(0, 230, 118, 0.15);
+               color: var(--green);
+               border: 1px solid var(--green);
+               padding: 8px 16px;
+               border-radius: 8px;
+               cursor: pointer;
+               font-weight: 600;
+             "
+           >
+             Afficher identifiants
+           </button>
         </div>
 
         <div
@@ -763,7 +763,7 @@
                 type="number"
                 id="nb_personnes"
                 min="1"
-                onchange="loadRoomsForReservation(); validateActivityConstraints(); updateActivitiesAvailability();"
+                onchange="loadRoomsForReservation(); validateActivityConstraints(); updateActivitiesAvailability(); updateServicesTotalDisplay();"
                 required
                 style="
                   width: 100%;
@@ -792,6 +792,42 @@
               "
             >
               <div id="activitiesByDayContent"></div>
+            </div>
+          </div>
+
+           <!-- SERVICES/PRESTATIONS SECTION -->
+           <div style="margin-bottom: 20px">
+             <label style="display: block; margin-bottom: 12px; font-weight: 600">
+               Prestations (Optionnel)
+             </label>
+            <div
+              id="servicesContainer"
+              style="
+                background: rgba(255, 215, 64, 0.05);
+                border: 1px solid rgba(255, 215, 64, 0.3);
+                border-radius: 8px;
+                padding: 16px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+              "
+            >
+              <div id="servicesContent"></div>
+            </div>
+            <div
+              id="servicesTotal"
+              style="
+                margin-top: 12px;
+                padding: 12px;
+                background: rgba(255, 215, 64, 0.1);
+                border: 1px solid rgba(255, 215, 64, 0.3);
+                border-radius: 8px;
+                font-size: 0.9rem;
+                color: var(--gold);
+                display: none;
+              "
+            >
+              <strong>Total prestations:</strong> <span id="servicesTotalAmount">0€</span>
             </div>
           </div>
 
@@ -892,22 +928,25 @@
       let allActivities = [];
       let availableActivities = [];
       let availableRoomTypes = [];
+      let availableServices = [];
       let facilityData = {};
       let activitiesByDay = {};
+      let selectedServices = {}; // { serviceId: quantity }
       let selectedRooms = {}; // { roomType: quantity }
       let selectedRoomsDashboard = {};
 
-        // ===== INIT =====
-        document.addEventListener("DOMContentLoaded", function () {
-        // Ajouter un délai pour laisser le temps à localStorage d'être disponible et synchronisé
-           setTimeout(() => {
-             initializeUserData();
-             loadMyReservations();
-             loadActivities();
-             loadReservations();
-             setupDateValidation();
-           }, 300);
-        });
+         // ===== INIT =====
+         document.addEventListener("DOMContentLoaded", function () {
+         // Ajouter un délai pour laisser le temps à localStorage d'être disponible et synchronisé
+            setTimeout(() => {
+              initializeUserData();
+              loadMyReservations();
+              loadActivities();
+              loadServices();
+              loadReservations();
+              setupDateValidation();
+            }, 300);
+         });
 
         // ===== SYSTÈME D'AUTHENTIFICATION UNIQUE =====
         // Tous les utilisateurs passent par SessionManager
@@ -1184,20 +1223,34 @@
              </div>
 
 
-             <div style="background: rgba(255,255,255,0.04); padding: 20px; border-radius: 12px; margin-top: 20px;">
-               <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                 <strong>Hébergement</strong>
-                 <span>${invoice.room_total.toFixed(2)}€</span>
-               </div>
-               <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                 <strong>Activités</strong>
-                 <span>${invoice.activities_cost.toFixed(2)}€</span>
-               </div>
-               <div style="display: flex; justify-content: space-between; font-weight: 700; padding-top: 12px; border-top: 1px solid var(--border);">
-                 <strong>Total à payer</strong>
-                 <span>${invoice.amount_due.toFixed(2)}€</span>
-               </div>
-             </div>
+              <div style="background: rgba(255,255,255,0.04); padding: 20px; border-radius: 12px; margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                  <strong>Hébergement</strong>
+                  <span>${invoice.room_total.toFixed(2)}€</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                  <strong>Activités</strong>
+                  <span>${invoice.activities_cost.toFixed(2)}€</span>
+                </div>
+                ${invoice.services_cost > 0 ? `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-top: 1px solid rgba(255,215,64,0.2);">
+                  <strong>Prestations</strong>
+                  <span>${invoice.services_cost.toFixed(2)}€</span>
+                </div>
+                ${invoice.services_details && invoice.services_details.length > 0 ? `
+                <div style="margin: 8px 0 12px 20px; padding: 8px; background: rgba(255,215,64,0.05); border-left: 3px solid var(--gold); border-radius: 4px;">
+                  ${invoice.services_details.map(service => `<div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; color: var(--muted);">
+                    <span>• ${service.name}</span>
+                    <span style="color: var(--gold);">${service.total.toFixed(2)}€</span>
+                  </div>`).join('')}
+                </div>
+                ` : ''}
+                ` : ''}
+                <div style="display: flex; justify-content: space-between; font-weight: 700; padding-top: 12px; border-top: 1px solid var(--border);">
+                  <strong>Total à payer</strong>
+                  <span>${invoice.amount_due.toFixed(2)}€</span>
+                </div>
+              </div>
            </div>
            <div style="display: flex; gap: 12px; padding: 20px; border-top: 1px solid var(--border); background: rgba(0,230,118,0.05);">
              <button onclick="downloadInvoice(${invoice.id})" style="flex: 1; padding: 12px; background: var(--green); color: #001a0a; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
@@ -1279,16 +1332,139 @@
              facilityData[room.number] = room;
            });
          });
-      }
+       }
 
-       function onActivityChange() {
-         const arrivalVal = document.getElementById("date_arrivee").value;
-         const departureVal = document.getElementById("date_depart").value;
+        function onActivityChange() {
+          const arrivalVal = document.getElementById("date_arrivee").value;
+          const departureVal = document.getElementById("date_depart").value;
 
-         if (arrivalVal && departureVal) {
-           loadRoomsForReservation();
+          if (arrivalVal && departureVal) {
+            loadRoomsForReservation();
+          }
+        }
+
+       // ===== SERVICES/PRESTATIONS =====
+       function loadServices() {
+         $.get("data/settings.json", function (settings) {
+           availableServices = settings.services_catalog || [];
+           generateServicesUI();
+         }).fail(function() {
+           console.error("Erreur lors du chargement des services");
+         });
+       }
+
+       function generateServicesUI() {
+         const container = document.getElementById("servicesContent");
+         if (!container) return;
+
+         container.innerHTML = "";
+         selectedServices = {};
+
+         availableServices.forEach((service) => {
+           selectedServices[service.id] = 0;
+
+           const div = document.createElement("div");
+           div.style.cssText = `
+             padding: 14px;
+             background: rgba(255, 255, 255, 0.04);
+             border: 1px solid rgba(255, 215, 64, 0.3);
+             border-radius: 8px;
+             cursor: pointer;
+             transition: all 0.2s;
+           `;
+
+           div.innerHTML = `
+             <div style="display: flex; align-items: flex-start; gap: 10px;">
+               <input
+                 type="checkbox"
+                 class="service-checkbox"
+                 value="${service.id}"
+                 data-service-id="${service.id}"
+                 onchange="updateServiceSelection()"
+                 style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--gold); margin-top: 2px;"
+               />
+               <div style="flex: 1;">
+                 <div style="font-weight: 600; color: var(--text);">
+                   ${service.icon} ${service.name}
+                 </div>
+                 <div style="font-size: 0.85rem; color: var(--muted); margin-top: 2px;">
+                   ${service.description}
+                 </div>
+                 <div style="font-size: 0.9rem; color: var(--gold); font-weight: 600; margin-top: 6px;">
+                   ${service.price}€ ${service.per_unit ? '<span style="color: var(--muted); font-weight: 400;">(' + service.per_unit + ')</span>' : ''}
+                 </div>
+               </div>
+             </div>
+           `;
+
+           div.addEventListener("mouseover", () => {
+             div.style.borderColor = "rgba(255, 215, 64, 0.6)";
+             div.style.background = "rgba(255, 215, 64, 0.08)";
+           });
+           div.addEventListener("mouseout", () => {
+             div.style.borderColor = "rgba(255, 215, 64, 0.3)";
+             div.style.background = "rgba(255, 255, 255, 0.04)";
+           });
+
+           container.appendChild(div);
+         });
+       }
+
+       function updateServiceSelection() {
+         const checkboxes = document.querySelectorAll(".service-checkbox:checked");
+         let totalServices = 0;
+
+         checkboxes.forEach((checkbox) => {
+           const serviceId = parseInt(checkbox.value);
+           const service = availableServices.find(s => s.id === serviceId);
+           if (service) {
+             selectedServices[serviceId] = 1;
+             totalServices++;
+           }
+         });
+
+         const servicesTotal = document.getElementById("servicesTotal");
+         if (checkboxes.length > 0) {
+           servicesTotal.style.display = "block";
+           updateServicesTotalDisplay();
+         } else {
+           servicesTotal.style.display = "none";
+           updateServicesTotalDisplay();
          }
        }
+
+        function updateServicesTotalDisplay() {
+          let totalAmount = 0;
+
+          document.querySelectorAll(".service-checkbox:checked").forEach((checkbox) => {
+            const serviceId = parseInt(checkbox.value);
+            const service = availableServices.find(s => s.id === serviceId);
+            if (service) {
+              let servicePrice = service.price;
+              const nbPersonnes = parseInt(document.getElementById("nb_personnes").value || 1);
+
+              if (service.type === "meals") {
+                const dateArrivee = document.getElementById("date_arrivee").value;
+                const dateDepart = document.getElementById("date_depart").value;
+                if (dateArrivee && dateDepart) {
+                  const arrival = new Date(dateArrivee);
+                  const departure = new Date(dateDepart);
+                  const nights = Math.ceil((departure - arrival) / (1000 * 60 * 60 * 24));
+                  servicePrice = service.price * nbPersonnes * nights;
+                }
+              } else if (service.type === "transport_per_person" || service.type === "merchandise_per_person") {
+                servicePrice = service.price * nbPersonnes;
+              }
+
+              totalAmount += servicePrice;
+            }
+          });
+
+          const servicesAmountSpan = document.getElementById("servicesTotalAmount");
+          if (servicesAmountSpan) {
+            servicesAmountSpan.textContent = totalAmount.toFixed(2) + "€";
+          }
+        }
 
       // ===== DATE VALIDATION =====
       function setupDateValidation() {
@@ -1581,25 +1757,26 @@
          const originalText = btn.innerHTML;
          btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
 
-         $.ajax({
-           method: "POST",
-           url: "api/reservations/reservation_request.php",
-           data: JSON.stringify({
-             nom: nom,
-             prenom: prenom,
-             email: email,
-             telephone: telephone,
-             date_arrivee: date_arrivee,
-             date_depart: date_depart,
-             nb_personnes: nb_personnes,
-             activities: selectedActivities,
-             activities_by_day: activitiesByDay,
-             selected_rooms: selectedRooms,
-           }),
-           contentType: "application/json",
-           dataType: "json",
-           timeout: 8000
-         })
+          $.ajax({
+            method: "POST",
+            url: "api/reservations/reservation_request.php",
+            data: JSON.stringify({
+              nom: nom,
+              prenom: prenom,
+              email: email,
+              telephone: telephone,
+              date_arrivee: date_arrivee,
+              date_depart: date_depart,
+              nb_personnes: nb_personnes,
+              activities: selectedActivities,
+              activities_by_day: activitiesByDay,
+              selected_rooms: selectedRooms,
+              selected_services: selectedServices,
+            }),
+            contentType: "application/json",
+            dataType: "json",
+            timeout: 8000
+          })
          .done(function(resp) {
            if (!resp.success) {
              showMsg(
@@ -2043,9 +2220,10 @@
           });
         }
 
-        updateActivitiesAvailability();
-        loadFacilitiesForActivities();
-      }
+         updateActivitiesAvailability();
+         loadFacilitiesForActivities();
+         updateServicesTotalDisplay();
+       }
 
       function updateActivitiesAvailability() {
         const nb_personnes = parseInt(document.getElementById("nb_personnes").value) || 0;

@@ -207,11 +207,69 @@
             "double": 1,
             "triple": 6
         },
-        "status": "en_attente",
+        "status": "validee",
         "deposit": 80,
         "room": null,
         "room_type": null,
         "room_id": null,
-        "created_at": "2026-04-09 00:45:26"
+        "created_at": "2026-04-09 00:45:26",
+        "room_numbers": [
+            102,
+            157,
+            158,
+            159,
+            160,
+            161,
+            162
+        ],
+        "room_number": 102
+    },
+    {
+        "id": 6,
+        "nom": "zz",
+        "prenom": "zz",
+        "email": "zz@zz.com",
+        "telephone": "0102030450",
+        "date_arrivee": "2026-04-10",
+        "date_depart": "2026-04-12",
+        "nb_personnes": 20,
+        "activities": [
+            2
+        ],
+        "activities_by_day": [
+            [
+                2
+            ],
+            [
+                2
+            ]
+        ],
+        "selected_facilities": [],
+        "selected_rooms": {
+            "simple": 0,
+            "double": 1,
+            "triple": 6
+        },
+        "selected_services": {
+            "1": 1,
+            "2": 1,
+            "3": 1
+        },
+        "status": "validee",
+        "deposit": 80,
+        "room": null,
+        "room_type": null,
+        "room_id": null,
+        "created_at": "2026-04-09 01:18:44",
+        "room_numbers": [
+            112,
+            160,
+            161,
+            162,
+            163,
+            164,
+            165
+        ],
+        "room_number": 112
     }
 ]

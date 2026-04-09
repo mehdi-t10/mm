@@ -22,16 +22,28 @@
   ],
   "services_catalog": [
     {
-      "name": "Repas VIP",
-      "price": 25
+      "id": 1,
+      "name": "Transport aéroport",
+      "description": "Moyen de transport depuis l'aéroport jusqu'au site",
+      "price": 35,
+      "type": "transport_per_person",
+      "per_unit": "par personne"
     },
     {
-      "name": "Maillot personnalise",
-      "price": 30
+      "id": 2,
+      "name": "Petits déjeuners",
+      "description": "Petits déjeuners inclus chaque matin",
+      "price": 8,
+      "type": "meals",
+      "per_unit": "par personne et par nuit"
     },
     {
-      "name": "Transport stade",
-      "price": 15
+      "id": 3,
+      "name": "Maillots d'échauffement",
+      "description": "Maillots d'échauffement à très bas prix",
+      "price": 12,
+      "type": "merchandise_per_person",
+      "per_unit": "par personne"
     }
   ]
 }

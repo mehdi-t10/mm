@@ -56,6 +56,15 @@ if (!empty($_POST['selected_rooms'])) {
     }
 }
 
+// Handle selected_services (prestations)
+$selected_services = [];
+if (!empty($_POST['selected_services'])) {
+    $selected_services = json_decode($_POST['selected_services'], true);
+    if (!is_array($selected_services)) {
+        $selected_services = [];
+    }
+}
+
 $newReservation = [
     'id' => nextId($reservations),
     'nom' => $nom,
@@ -69,6 +78,7 @@ $newReservation = [
     'activities_by_day' => [], // Will be set by admin when validating
     'selected_facilities' => [],
     'selected_rooms' => $selected_rooms, // Store selected room types and quantities
+    'selected_services' => $selected_services, // Store selected services/prestations
     'services' => [],
     'discount_percent' => 0,
     'status' => 'en_attente',

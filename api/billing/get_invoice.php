@@ -116,7 +116,43 @@ foreach ($activitiesCount as $actId => $count) {
     }
 }
 
-$subtotal = $roomPrice + $activitiesCost;
+// Calculer les prestations
+$servicesCost = 0;
+$servicesDetails = [];
+$settings = readJson('settings.json');
+
+if (!empty($reservation['selected_services']) && is_array($reservation['selected_services'])) {
+    foreach ($reservation['selected_services'] as $serviceId => $quantity) {
+        if ($quantity > 0) {
+            foreach ($settings['services_catalog'] as $service) {
+                if ($service['id'] === $serviceId) {
+                    $servicePrice = $service['price'];
+
+                    if ($service['type'] === 'meals') {
+                        $servicePrice = $service['price'] * $reservation['nb_personnes'] * intval($nights);
+                    } elseif ($service['type'] === 'transport_per_person' || $service['type'] === 'merchandise_per_person') {
+                        $servicePrice = $service['price'] * $reservation['nb_personnes'];
+                    }
+
+                    $servicesCost += $servicePrice;
+                    $servicesDetails[] = [
+                        'id' => $service['id'],
+                        'name' => $service['name'],
+                        'description' => $service['description'],
+                        'price' => $service['price'],
+                        'type' => $service['type'],
+                        'per_unit' => $service['per_unit'] ?? '',
+                        'nb_personnes' => $reservation['nb_personnes'],
+                        'total' => $servicePrice
+                    ];
+                    break;
+                }
+            }
+        }
+    }
+}
+
+$subtotal = $roomPrice + $activitiesCost + $servicesCost;
 $totalDue = $subtotal;
 
 // Reponse JSON
@@ -137,6 +173,8 @@ jsonResponse([
         'activities_cost' => round($activitiesCost, 2),
         'activities_details' => $activitiesDetails,
         'activities_by_day' => $reservation['activities_by_day'] ?? [],
+        'services_cost' => round($servicesCost, 2),
+        'services_details' => $servicesDetails,
         'subtotal' => round($subtotal, 2),
         'amount_due' => round($totalDue, 2),
         'status' => $reservation['status']

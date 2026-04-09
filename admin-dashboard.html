@@ -2030,6 +2030,20 @@
                  <strong>Activités</strong>
                  <span style="color: var(--gold);">${invoice.activities_cost.toFixed(2)}€</span>
                </div>
+               ${invoice.services_cost > 0 ? `
+               <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-top: 1px solid rgba(255,215,64,0.2);">
+                 <strong>Prestations</strong>
+                 <span style="color: var(--gold);">${invoice.services_cost.toFixed(2)}€</span>
+               </div>
+               ${invoice.services_details && invoice.services_details.length > 0 ? `
+               <div style="margin: 8px 0 12px 20px; padding: 8px; background: rgba(255,215,64,0.05); border-left: 3px solid var(--gold); border-radius: 4px;">
+                 ${invoice.services_details.map(service => `<div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; color: var(--muted);">
+                   <span>• ${service.name}</span>
+                   <span style="color: var(--gold);">${service.total.toFixed(2)}€</span>
+                 </div>`).join('')}
+               </div>
+               ` : ''}
+               ` : ''}
                <div style="display: flex; justify-content: space-between; font-weight: 700; padding-top: 12px; border-top: 1px solid var(--border);">
                  <strong style="font-size: 1.1rem;">Montant total</strong>
                  <span style="color: var(--green); font-size: 1.2rem;">${invoice.amount_due.toFixed(2)}€</span>

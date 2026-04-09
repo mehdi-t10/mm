@@ -121,24 +121,12 @@ Veuillez conserver ces identifiants en un lieu sur.
 Cordialement,
 L'equipe FootCamp Dreams";
 
-        // Envoyer l'email via SMTP
-        $mailSent = sendEmailViaSMTP($reservation['email'], $emailSubject, $emailBody);
-
-        // Enregistrer dans logs
-        logEmail([
-            'timestamp' => date('Y-m-d H:i:s'),
-            'to' => $reservation['email'],
-            'type' => 'credentials',
-            'reservation_id' => $reservation['id'],
-            'subject' => $emailSubject,
-            'body' => $emailBody,
-            'sent' => $mailSent
-        ]);
+        // DÉSACTIVÉ: Envoi d'email ne fonctionne pas
+        // $mailSent = sendEmailViaSMTP($reservation['email'], $emailSubject, $emailBody);
+        // logEmail(...);
 
         $message = '✅ Réservation validée avec succès!';
-        if ($mailSent) {
-            $message .= "\n📧 Email avec les identifiants envoyé à: " . $reservation['email'];
-        }
+        // $message .= "\n📧 Email avec les identifiants envoyé à: " . $reservation['email'];
 
         jsonResponse([
             'success' => true,

@@ -15,6 +15,7 @@ $activities = $input['activities'] ?? [];
 $activities_by_day = $input['activities_by_day'] ?? [];
 $selected_facilities = $input['selected_facilities'] ?? [];
 $selected_rooms = $input['selected_rooms'] ?? [];
+$selected_services = $input['selected_services'] ?? [];
 
 // Validation
 if (!$nom || !$prenom || !$email || !$telephone || !$date_arrivee || !$date_depart) {
@@ -59,6 +60,7 @@ $newReservation = [
     'activities_by_day' => is_array($activities_by_day) ? $activities_by_day : [],
     'selected_facilities' => is_array($selected_facilities) ? $selected_facilities : [],
     'selected_rooms' => is_array($selected_rooms) ? $selected_rooms : [],
+    'selected_services' => is_array($selected_services) ? $selected_services : [],
     'status' => 'en_attente',
     'deposit' => 80,
     'room' => null,
@@ -70,44 +72,15 @@ $newReservation = [
 $reservations[] = $newReservation;
 writeJson('reservations.json', $reservations);
 
-// Envoyer un email de confirmation
-$emailSubject = 'FootCamp Dreams - Reservation recue!';
-$emailBody = "Bonjour $prenom $nom,
-
-Nous avons bien recu votre demande de reservation pour votre sejour au centre FootCamp Dreams.
-
-DETAILS DE VOTRE DEMANDE:
-- Arrivee: " . date('d/m/Y', $arrival) . "
-- Depart: " . date('d/m/Y', $departure) . "
-- Nombre de personnes: $nb_personnes
-- Depot: 80€
-
-Un administrateur examinera votre demande et vous enverra un email avec:
-- Votre numero de reservation
-- Vos identifiants de connexion
-- Les details complets de votre facture
-- Les instructions de paiement
-
-Ce processus peut prendre 24h. Merci d'avoir choisi FootCamp Dreams!
-
-Cordialement,
-L'equipe FootCamp Dreams";
-
-$mailSent = sendEmailViaSMTP($email, $emailSubject, $emailBody);
-
-logEmail([
-    'timestamp' => date('Y-m-d H:i:s'),
-    'to' => $email,
-    'type' => 'reservation_confirmation',
-    'reservation_id' => $newReservation['id'],
-    'subject' => $emailSubject,
-    'body' => $emailBody,
-    'sent' => $mailSent
-]);
+// DÉSACTIVÉ: Envoi d'email ne fonctionne pas
+// $emailSubject = ...
+// $emailBody = ...
+// $mailSent = sendEmailViaSMTP(...)
+// logEmail(...)
 
 jsonResponse([
     'success' => true,
-    'message' => 'Reservation soumise avec succes! Un email de confirmation a ete envoye a ' . $email . '. Un administrateur examinera votre demande et vous enverra un email avec vos identifiants.',
+    'message' => 'Reservation soumise avec succes! (Email de confirmation désactivé)',
     'reservation_id' => $newReservation['id'],
-    'email_sent' => $mailSent
+    'email_sent' => false
 ]);

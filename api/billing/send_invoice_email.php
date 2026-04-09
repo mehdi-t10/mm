@@ -15,6 +15,8 @@ if (!$reservationId) {
 
 $reservations = readJson('reservations.json');
 $rooms = readJson('rooms.json');
+$settings = readJson('settings.json');
+$activities = readJson('activities.json');
 
 $reservation = null;
 foreach ($reservations as $res) {
@@ -35,14 +37,81 @@ $nights = $departure->diff($arrival)->days;
 
 // Trouver le prix de la chambre
 $roomPrice = 120; // prix par défaut
-foreach ($rooms as $room) {
-    if ($room['id'] == $reservation['room']) {
-        $roomPrice = $room['price_per_night'];
-        break;
+if (isset($rooms['types']) && is_array($rooms['types'])) {
+    $roomTypesMap = [];
+    foreach ($rooms['rooms'] ?? [] as $r) {
+        $roomTypesMap[$r['number']] = $r['type'];
+    }
+    
+    if (!empty($reservation['room_numbers']) && is_array($reservation['room_numbers'])) {
+        $roomPrice = 0;
+        foreach ($reservation['room_numbers'] as $roomNum) {
+            if (isset($roomTypesMap[$roomNum])) {
+                $roomType = $roomTypesMap[$roomNum];
+                foreach ($rooms['types'] as $type) {
+                    if ($type['type'] === $roomType) {
+                        $roomPrice += $type['price_per_night'] * $nights;
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 
-$subtotal = $roomPrice * $nights;
+// Calculer les activités
+$activitiesCost = 0;
+if (isset($reservation['activities_by_day']) && is_array($reservation['activities_by_day'])) {
+    $activitiesCount = [];
+    foreach ($reservation['activities_by_day'] as $dayActivities) {
+        if (is_array($dayActivities)) {
+            foreach ($dayActivities as $actId) {
+                $actId = intval($actId);
+                $activitiesCount[$actId] = ($activitiesCount[$actId] ?? 0) + 1;
+            }
+        }
+    }
+    
+    foreach ($activitiesCount as $actId => $count) {
+        foreach ($activities as $act) {
+            if ((int)$act['id'] === $actId) {
+                $activitiesCost += ($act['price'] ?? 0) * $count;
+                break;
+            }
+        }
+    }
+}
+
+// Calculer les prestations
+$servicesCost = 0;
+$servicesDetails = [];
+if (!empty($reservation['selected_services']) && is_array($reservation['selected_services'])) {
+    foreach ($reservation['selected_services'] as $serviceId => $quantity) {
+        if ($quantity > 0) {
+            foreach ($settings['services_catalog'] as $service) {
+                if ($service['id'] === $serviceId) {
+                    $servicePrice = $service['price'];
+
+                    if ($service['type'] === 'meals') {
+                        $servicePrice = $service['price'] * $reservation['nb_personnes'] * $nights;
+                    } elseif ($service['type'] === 'transport_per_person' || $service['type'] === 'merchandise_per_person') {
+                        $servicePrice = $service['price'] * $reservation['nb_personnes'];
+                    }
+
+                    $servicesCost += $servicePrice;
+                    $servicesDetails[] = [
+                        'name' => $service['name'],
+                        'price' => $service['price'],
+                        'total' => $servicePrice
+                    ];
+                    break;
+                }
+            }
+        }
+    }
+}
+
+$subtotal = $roomPrice + $activitiesCost + $servicesCost;
 $discount = ($reservation['discount_percent'] ?? 0) > 0 ? ($subtotal * $reservation['discount_percent'] / 100) : 0;
 $total = $subtotal - $discount;
 $balance = max(0, $total - $reservation['deposit']);
@@ -150,9 +219,29 @@ $invoiceHtml = "
                     <tr>
                         <td>Hébergement en chambre</td>
                         <td class='text-right'>$nights nuit(s)</td>
-                        <td class='text-right'>" . number_format($roomPrice, 2, ',', ' ') . "€</td>
-                        <td class='text-right'><strong>" . number_format($subtotal, 2, ',', ' ') . "€</strong></td>
+                        <td class='text-right'>" . number_format($roomPrice / $nights, 2, ',', ' ') . "€</td>
+                        <td class='text-right'><strong>" . number_format($roomPrice, 2, ',', ' ') . "€</strong></td>
                     </tr>";
+
+if ($activitiesCost > 0) {
+    $invoiceHtml .= "
+                    <tr>
+                        <td>Activités</td>
+                        <td class='text-right'>-</td>
+                        <td class='text-right'>-</td>
+                        <td class='text-right'><strong>" . number_format($activitiesCost, 2, ',', ' ') . "€</strong></td>
+                    </tr>";
+}
+
+foreach ($servicesDetails as $service) {
+    $invoiceHtml .= "
+                    <tr>
+                        <td>" . htmlspecialchars($service['name']) . "</td>
+                        <td class='text-right'>-</td>
+                        <td class='text-right'>" . number_format($service['price'], 2, ',', ' ') . "€</td>
+                        <td class='text-right'><strong>" . number_format($service['total'], 2, ',', ' ') . "€</strong></td>
+                    </tr>";
+}
 
 if ($discount > 0) {
     $invoiceHtml .= "
@@ -169,6 +258,28 @@ $invoiceHtml .= "
 
         <div class='section'>
             <div class='summary'>
+                <div class='summary-row'>
+                    <span>Hébergement</span>
+                    <span>" . number_format($roomPrice, 2, ',', ' ') . "€</span>
+                </div>";
+
+if ($activitiesCost > 0) {
+    $invoiceHtml .= "
+                <div class='summary-row'>
+                    <span>Activités</span>
+                    <span>" . number_format($activitiesCost, 2, ',', ' ') . "€</span>
+                </div>";
+}
+
+if ($servicesCost > 0) {
+    $invoiceHtml .= "
+                <div class='summary-row'>
+                    <span>Prestations</span>
+                    <span>" . number_format($servicesCost, 2, ',', ' ') . "€</span>
+                </div>";
+}
+
+$invoiceHtml .= "
                 <div class='summary-row'>
                     <span>Sous-total</span>
                     <span>" . number_format($subtotal, 2, ',', ' ') . "€</span>
@@ -213,25 +324,12 @@ $invoiceHtml .= "
 </html>
 ";
 
-// Envoyer l'email
-$to = $reservation['email'];
-$subject = 'Facture de réservation FootCamp Dreams #' . str_pad($reservationId, 6, '0', STR_PAD_LEFT);
-
-$mailSent = sendEmailViaSMTP($to, $subject, $invoiceHtml, 'text/html');
-
-// Enregistrer l'envoi dans logs
-logEmailSent([
-    'timestamp' => date('Y-m-d H:i:s'),
-    'to' => $to,
-    'type' => 'invoice',
-    'reservation_id' => $reservationId,
-    'subject' => $subject,
-    'sent' => $mailSent
-]);
+// DÉSACTIVÉ: Envoi d'email ne fonctionne pas
+// L'email reste disponible au frontend pour affichage
 
 jsonResponse([
     'success' => true,
-    'message' => 'Facture envoyée à ' . $to,
+    'message' => 'Facture générée avec succès (envoi email désactivé)',
     'html' => $invoiceHtml
 ]);
 
